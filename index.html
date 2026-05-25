@@ -2,2058 +2,1983 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DataVault</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script src="https://apis.google.com/js/api.js" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
 :root{
-  --bg:#1e1e1e;--bg1:#252526;--bg2:#2d2d30;--bg3:#333337;--bg4:#3c3c3f;
-  --surface:#37373d;--border:#454545;--b2:rgba(255,255,255,0.08);
-  --text:#d4d4d4;--t2:#9d9d9d;--t3:#6b6b6b;
-  --accent:#569cd6;--ag:rgba(86,156,214,0.12);
-  --green:#4ec9b0;--gg:rgba(78,201,176,0.1);
-  --amber:#dcdcaa;--amg:rgba(220,220,170,0.1);
-  --red:#f44747;--rg:rgba(244,71,71,0.1);
-  --purple:#c586c0;--pg:rgba(197,134,192,0.1);
-  --orange:#ce9178;--yellow:#d7ba7d;
-  --tab-active:#1e1e1e;--tab-inactive:#2d2d30;
-  --sidebar:#252526;--activity:#333333;
-  --fh:'Syne',sans-serif;--fb:'Inter',sans-serif;--fm:'JetBrains Mono',monospace;
-  --r:4px;--rl:6px;--rx:8px;
+  --bg:#07080c;--bg1:#0d0f17;--bg2:#12151f;--bg3:#181c29;--bg4:#1e2334;
+  --surface:#232840;--s2:#2c3352;--border:rgba(255,255,255,0.055);
+  --b2:rgba(255,255,255,0.10);--b3:rgba(255,255,255,0.18);
+  --text:#dde2f0;--t2:#8892aa;--t3:#4a5270;
+  --accent:#5b7fff;--ag:rgba(91,127,255,0.12);
+  --green:#2dd98f;--gg:rgba(45,217,143,0.1);
+  --amber:#f5a623;--amg:rgba(245,166,35,0.1);
+  --red:#ff4f6d;--rg:rgba(255,79,109,0.1);
+  --purple:#a855f7;--pg:rgba(168,85,247,0.1);
+  --teal:#22d3ee;--tg:rgba(34,211,238,0.1);
+  --pink:#f472b6;--pkg:rgba(244,114,182,0.1);
+  --cyan:#06b6d4;
+  --r:8px;--rl:12px;--rx:18px;
+  --fh:'Syne',sans-serif;--fb:'Plus Jakarta Sans',sans-serif;--fm:'DM Mono',monospace;
 }
-body{font-family:var(--fb);background:var(--bg);color:var(--text);display:flex;flex-direction:column;font-size:13px;line-height:1.5}
-button{font-family:var(--fb)}
-input,textarea,select{font-family:var(--fb)}
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:var(--surface)}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fb);font-size:14px;overflow:hidden}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg1)}
+::-webkit-scrollbar-thumb{background:var(--s2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+button{cursor:pointer;font-family:var(--fb);border:none;outline:none}
+input,textarea,select{font-family:var(--fb);outline:none}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<style>
-/* ── LOCK SCREEN ─────────────────────────────────────────── */
-#lockScreen{position:fixed;inset:0;z-index:99999;background:#1e1e1e;display:flex;align-items:center;justify-content:center}
-.lock-box{background:#252526;border:1px solid #454545;border-radius:12px;padding:44px 40px;width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center;box-shadow:0 32px 80px rgba(0,0,0,0.8)}
-.lock-icon{font-size:40px;margin-bottom:18px}
-.lock-title{font-family:var(--fh);font-size:24px;font-weight:800;color:#d4d4d4;margin-bottom:6px}
-.lock-sub{font-size:12px;color:#6b6b6b;margin-bottom:28px;text-align:center;line-height:1.7}
-.lock-input-wrap{position:relative;width:100%;margin-bottom:12px}
-.lock-input{width:100%;background:#1e1e1e;border:1px solid #454545;border-radius:var(--r);color:#d4d4d4;font-family:var(--fm);font-size:14px;padding:11px 42px 11px 14px;outline:none;transition:border-color .2s;letter-spacing:1px}
-.lock-input:focus{border-color:#569cd6}
-.lock-input.err{border-color:#f44747;animation:shake .4s ease}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-.lock-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#6b6b6b;font-size:15px;user-select:none;transition:color .15s}
-.lock-eye:hover{color:#9d9d9d}
-.lock-btn{width:100%;background:#0e639c;border:none;border-radius:var(--r);padding:11px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:4px}
-.lock-btn:hover{background:#1177bb}
-.lock-btn:disabled{background:#3c3c3f;color:#6b6b6b;cursor:not-allowed}
-.lock-msg{font-size:11px;min-height:16px;margin-top:8px;text-align:center}
-.lock-msg.err{color:#f44747}
-.lock-msg.warn{color:#dcdcaa}
-.lock-msg.ok{color:#4ec9b0}
-.lock-divider{width:100%;border:none;border-top:1px solid #454545;margin:20px 0}
-.lock-recovery-link{font-size:11px;color:#569cd6;cursor:pointer;text-decoration:none;background:none;border:none;padding:0}
-.lock-recovery-link:hover{text-decoration:underline}
-.recovery-form{width:100%;display:none;flex-direction:column;gap:10px}
-.recovery-form.show{display:flex}
-.recovery-label{font-size:11px;color:#9d9d9d;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
-</style>
-<style>
-/* ── TITLEBAR ─────────────────────────────────────────────── */
-.titlebar{height:30px;background:#323233;display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0;border-bottom:1px solid #1e1e1e;user-select:none}
-.titlebar-logo{font-family:var(--fh);font-size:12px;font-weight:800;color:#d4d4d4;display:flex;align-items:center;gap:6px}
-.titlebar-logo span{color:#569cd6}
-.titlebar-menu{display:flex;gap:2px;margin-left:8px}
-.tmenu-item{padding:2px 8px;border-radius:3px;font-size:12px;color:#cccccc;cursor:pointer;transition:background .1s}
-.tmenu-item:hover{background:rgba(255,255,255,0.08)}
-.titlebar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.gh-pill{display:flex;align-items:center;gap:5px;padding:2px 10px;border-radius:3px;font-size:11px;color:#9d9d9d;cursor:pointer;transition:background .1s;border:1px solid transparent}
-.gh-pill:hover{background:rgba(255,255,255,0.06);border-color:#454545}
-.gh-dot{width:6px;height:6px;border-radius:50%;background:#6b6b6b;flex-shrink:0;transition:background .3s}
-.gh-dot.ok{background:#4ec9b0}
-.gh-dot.err{background:#f44747}
-.gh-dot.busy{background:#dcdcaa;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-/* ── ACTIVITY BAR ─────────────────────────────────────────── */
-.app-shell{display:flex;flex:1;overflow:hidden}
-.activity-bar{width:48px;background:var(--activity);display:flex;flex-direction:column;align-items:center;padding:4px 0;gap:2px;flex-shrink:0;border-right:1px solid #1e1e1e}
-.act-btn{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#858585;font-size:18px;transition:color .15s,background .15s;border:none;background:transparent;position:relative}
-.act-btn:hover{color:#d4d4d4}
-.act-btn.active{color:#d4d4d4}
-.act-btn.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:24px;background:#d4d4d4;border-radius:0 2px 2px 0}
-/* ── SIDEBAR ──────────────────────────────────────────────── */
-.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;border-right:1px solid #1e1e1e;overflow:hidden;transition:width .2s}
-.sidebar.collapsed{width:0}
-.sidebar-header{padding:8px 12px;display:flex;align-items:center;gap:6px;flex-shrink:0}
-.sidebar-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#bbbbbe;flex:1}
-.sidebar-actions{display:flex;gap:2px}
-.sb-btn{width:22px;height:22px;background:transparent;border:none;border-radius:3px;color:#858585;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:color .15s,background .15s}
-.sb-btn:hover{color:#d4d4d4;background:rgba(255,255,255,0.06)}
-.sidebar-search{padding:0 8px 6px;flex-shrink:0}
-.sidebar-search input{width:100%;background:#3c3c3f;border:1px solid transparent;border-radius:var(--r);color:#d4d4d4;font-size:12px;padding:4px 8px;outline:none;font-family:var(--fb)}
-.sidebar-search input:focus{border-color:#569cd6;background:#2d2d30}
-.sidebar-search input::placeholder{color:#6b6b6b}
-.file-tree{flex:1;overflow-y:auto;padding:2px 0}
-.ft-section{margin-bottom:2px}
-.ft-section-head{display:flex;align-items:center;gap:4px;padding:3px 12px;cursor:pointer;color:#bbbbbe;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;user-select:none}
-.ft-section-head:hover{background:rgba(255,255,255,0.04)}
-.ft-arrow{font-size:9px;transition:transform .15s;display:inline-block}
-.ft-arrow.open{transform:rotate(90deg)}
-.ft-items{padding:0}
-.ft-item{display:flex;align-items:center;gap:6px;padding:3px 12px 3px 24px;cursor:pointer;color:#cccccc;font-size:12px;border-left:2px solid transparent;transition:background .1s;user-select:none;position:relative}
-.ft-item:hover{background:rgba(255,255,255,0.05)}
-.ft-item.active{background:rgba(255,255,255,0.08);border-left-color:#569cd6;color:#fff}
-.ft-item-icon{font-size:13px;flex-shrink:0}
-.ft-item-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ft-item-actions{display:none;gap:2px;flex-shrink:0}
-.ft-item:hover .ft-item-actions{display:flex}
-.ft-act{width:18px;height:18px;background:transparent;border:none;border-radius:2px;color:#858585;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:color .1s}
-.ft-act:hover{color:#d4d4d4;background:rgba(255,255,255,0.1)}
-.ft-empty{padding:16px 12px;font-size:11px;color:#6b6b6b;text-align:center}
-</style>
-<style>
-/* ── EDITOR AREA ──────────────────────────────────────────── */
-.editor-area{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.tab-bar{height:35px;background:#2d2d30;display:flex;align-items:flex-end;overflow-x:auto;flex-shrink:0;border-bottom:1px solid #1e1e1e}
-.tab-bar::-webkit-scrollbar{height:3px}
-.editor-tab{display:flex;align-items:center;gap:6px;padding:0 14px;height:35px;background:#2d2d30;color:#9d9d9d;font-size:12px;cursor:pointer;border-right:1px solid #1e1e1e;white-space:nowrap;transition:background .1s;flex-shrink:0;position:relative}
-.editor-tab:hover{background:#1f1f1f;color:#d4d4d4}
-.editor-tab.active{background:#1e1e1e;color:#d4d4d4;border-top:1px solid #569cd6}
-.editor-tab .tab-icon{font-size:13px}
-.editor-tab .tab-close{width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#6b6b6b;transition:all .1s;background:transparent;border:none;cursor:pointer;padding:0}
-.editor-tab .tab-close:hover{background:rgba(255,255,255,0.1);color:#d4d4d4}
-.tab-new{width:35px;height:35px;display:flex;align-items:center;justify-content:center;color:#6b6b6b;cursor:pointer;font-size:18px;transition:color .1s;flex-shrink:0;background:transparent;border:none}
-.tab-new:hover{color:#d4d4d4}
-.editor-content{flex:1;display:flex;overflow:hidden}
-.welcome-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b6b6b;padding:40px}
-.welcome-screen h1{font-family:var(--fh);font-size:28px;font-weight:800;color:#d4d4d4;margin-bottom:4px}
-.welcome-screen p{font-size:13px;color:#6b6b6b;max-width:400px;text-align:center;line-height:1.7}
-.welcome-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;width:100%;max-width:440px}
-.ws-item{background:#252526;border:1px solid #454545;border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .15s}
-.ws-item:hover{border-color:#569cd6}
-.ws-key{font-family:var(--fm);font-size:10px;background:#3c3c3f;border:1px solid #555;border-radius:3px;padding:2px 6px;color:#d4d4d4;white-space:nowrap}
-.ws-label{font-size:12px;color:#9d9d9d}
-.doc-editor{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.doc-toolbar{height:36px;background:#2d2d30;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;padding:0 10px;gap:4px;flex-shrink:0}
-.tb-btn{height:24px;padding:0 8px;background:transparent;border:1px solid transparent;border-radius:var(--r);color:#9d9d9d;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .1s;white-space:nowrap;font-family:var(--fb)}
-.tb-btn:hover{background:rgba(255,255,255,0.06);border-color:#454545;color:#d4d4d4}
-.tb-btn.active{background:rgba(86,156,214,0.15);border-color:#569cd6;color:#569cd6}
-.tb-sep{width:1px;height:18px;background:#454545;margin:0 4px;flex-shrink:0}
-.tb-select{height:24px;background:#3c3c3f;border:1px solid #454545;border-radius:var(--r);color:#d4d4d4;font-size:11px;padding:0 6px;outline:none;cursor:pointer;font-family:var(--fm)}
-.tb-select option{background:#2d2d30}
-.doc-body{flex:1;display:flex;overflow:hidden}
-.editor-pane{flex:1;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid #1e1e1e;min-width:0}
-.preview-pane{flex:1;overflow-y:auto;padding:24px 28px;min-width:0;background:#1e1e1e}
-.preview-pane.hidden{display:none}
-.editor-pane.full{flex:2}
-.code-editor-wrap{flex:1;display:flex;overflow:hidden;position:relative}
-.line-numbers{padding:12px 0;background:#1e1e1e;color:#858585;font-family:var(--fm);font-size:13px;line-height:1.6;text-align:right;user-select:none;flex-shrink:0;min-width:44px;border-right:1px solid #333;overflow:hidden}
-.line-numbers span{display:block;padding:0 10px 0 6px}
-.editor-textarea{flex:1;background:#1e1e1e;border:none;color:#d4d4d4;font-family:var(--fm);font-size:13px;line-height:1.6;padding:12px 16px;outline:none;resize:none;tab-size:2;white-space:pre;overflow-wrap:normal;overflow-x:auto}
-.editor-textarea::selection{background:rgba(86,156,214,0.3)}
-.status-bar{height:22px;background:#007acc;display:flex;align-items:center;padding:0 12px;gap:12px;flex-shrink:0}
-.sb-item{font-size:11px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:4px;cursor:pointer;padding:0 4px;border-radius:2px;transition:background .1s;white-space:nowrap}
-.sb-item:hover{background:rgba(255,255,255,0.15)}
-.sb-right{margin-left:auto;display:flex;gap:4px}
-</style>
-<style>
-/* ── MARKDOWN PREVIEW ─────────────────────────────────────── */
-.md-preview{font-family:var(--fb);color:#d4d4d4;line-height:1.7;max-width:860px}
-.md-preview h1{font-family:var(--fh);font-size:26px;font-weight:800;color:#fff;border-bottom:1px solid #454545;padding-bottom:10px;margin:0 0 20px}
-.md-preview h2{font-family:var(--fh);font-size:20px;font-weight:700;color:#fff;border-bottom:1px solid #333;padding-bottom:6px;margin:28px 0 12px}
-.md-preview h3{font-size:16px;font-weight:600;color:#d4d4d4;margin:20px 0 8px}
-.md-preview h4{font-size:14px;font-weight:600;color:#9d9d9d;margin:16px 0 6px}
-.md-preview p{margin:0 0 14px;font-size:14px;line-height:1.8}
-.md-preview ul,.md-preview ol{padding-left:22px;margin:0 0 14px}
-.md-preview li{margin-bottom:5px;font-size:14px;line-height:1.7}
-.md-preview code{font-family:var(--fm);font-size:12px;background:#2d2d30;border:1px solid #454545;border-radius:3px;padding:1px 5px;color:#ce9178}
-.md-preview pre{background:#1a1a1a;border:1px solid #454545;border-radius:var(--r);margin:0 0 16px;overflow:hidden}
-.md-preview pre code{background:none;border:none;padding:0;color:#d4d4d4;font-size:12.5px;display:block;padding:14px 16px;overflow-x:auto}
-.md-preview blockquote{border-left:3px solid #569cd6;padding:8px 16px;margin:0 0 14px;background:rgba(86,156,214,0.08);border-radius:0 var(--r) var(--r) 0;color:#9d9d9d}
-.md-preview hr{border:none;border-top:1px solid #454545;margin:20px 0}
-.md-preview strong{font-weight:600;color:#fff}
-.md-preview em{color:#9d9d9d;font-style:italic}
-.md-preview a{color:#569cd6;text-decoration:none}
-.md-preview a:hover{text-decoration:underline}
-.md-preview table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:13px}
-.md-preview th{background:#2d2d30;padding:8px 12px;text-align:left;border:1px solid #454545;font-weight:600;color:#d4d4d4}
-.md-preview td{padding:7px 12px;border:1px solid #333;color:#cccccc}
-.md-preview tr:nth-child(even) td{background:rgba(255,255,255,0.02)}
-.md-preview img{max-width:100%;border-radius:var(--r);border:1px solid #454545}
-.md-preview a.url-link{color:#569cd6;text-decoration:none;display:inline-flex;align-items:center;gap:3px}
-.md-preview a.url-link::after{content:'↗';font-size:10px;opacity:0.6}
-.md-preview a.url-link:hover{text-decoration:underline;color:#79b8ff}
-.auto-link{color:#569cd6;text-decoration:none;cursor:pointer}
-.auto-link:hover{text-decoration:underline}
-</style>
-<style>
-/* ── MODALS ───────────────────────────────────────────────── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
-.overlay.on{opacity:1;pointer-events:all}
-.modal{background:#252526;border:1px solid #454545;border-radius:var(--rx);padding:24px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform .2s cubic-bezier(.34,1.56,.64,1);box-shadow:0 24px 60px rgba(0,0,0,0.8)}
-.overlay.on .modal{transform:translateY(0) scale(1)}
-.modal-hd{display:flex;align-items:center;margin-bottom:18px;gap:10px}
-.modal-hd h2{font-family:var(--fh);font-size:16px;font-weight:700;flex:1;color:#d4d4d4}
-.modal-x{width:26px;height:26px;background:transparent;border:1px solid #454545;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#9d9d9d;font-size:14px;transition:all .15s}
-.modal-x:hover{background:var(--rg);color:var(--red);border-color:var(--red)}
-.fg{margin-bottom:14px}
-.fl{display:block;font-size:11px;font-weight:600;letter-spacing:0.4px;color:#9d9d9d;margin-bottom:5px;text-transform:uppercase}
-.fi,.fs,.fta{width:100%;background:#1e1e1e;border:1px solid #454545;border-radius:var(--r);color:#d4d4d4;font-family:var(--fb);font-size:12px;padding:7px 10px;outline:none;transition:border-color .2s}
-.fta{resize:vertical;min-height:80px;line-height:1.6;font-family:var(--fm)}
-.fi:focus,.fs:focus,.fta:focus{border-color:#569cd6}
-.fi::placeholder,.fta::placeholder{color:#6b6b6b}
-.fs option{background:#2d2d30}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-ft{display:flex;gap:6px;justify-content:flex-end;margin-top:18px;padding-top:16px;border-top:1px solid #333}
-.btn-cancel{background:transparent;border:1px solid #454545;border-radius:var(--r);padding:7px 14px;color:#9d9d9d;font-size:12px;cursor:pointer;transition:all .15s}
-.btn-cancel:hover{background:rgba(255,255,255,0.06);color:#d4d4d4}
-.btn-primary{background:#0e639c;border:none;border-radius:var(--r);padding:7px 18px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
-.btn-primary:hover{background:#1177bb}
-.btn-danger{background:#c72e2e;border:none;border-radius:var(--r);padding:7px 18px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s}
-.btn-danger:hover{opacity:.85}
-.btn-gdrive{background:#1a73e8;border:none;border-radius:var(--r);padding:7px 14px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:6px}
-.btn-gdrive:hover{background:#1557b0}
-/* ── TOAST ────────────────────────────────────────────────── */
-.toast-box{position:fixed;bottom:30px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:5px;pointer-events:none}
-.toast{background:#252526;border:1px solid #454545;border-radius:var(--r);padding:8px 14px;font-size:12px;color:#d4d4d4;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(0,0,0,.6);animation:tIn .25s ease;max-width:280px}
-.toast.ok{border-left:3px solid #4ec9b0}
-.toast.err{border-left:3px solid #f44747}
-.toast.warn{border-left:3px solid #dcdcaa}
-@keyframes tIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
-@keyframes tOut{to{opacity:0;transform:translateX(12px)}}
-/* ── CONTEXT MENU ─────────────────────────────────────────── */
-.ctx-menu{position:fixed;background:#252526;border:1px solid #454545;border-radius:var(--r);padding:4px 0;z-index:5000;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,.6);display:none}
-.ctx-menu.show{display:block}
-.ctx-item{padding:6px 16px;font-size:12px;color:#d4d4d4;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .1s}
-.ctx-item:hover{background:rgba(86,156,214,0.15);color:#fff}
-.ctx-item.danger{color:#f44747}
-.ctx-item.danger:hover{background:rgba(244,71,71,0.15)}
-.ctx-sep{height:1px;background:#454545;margin:3px 0}
-/* ── GH MODAL ─────────────────────────────────────────────── */
-.gh-info{background:#1e1e1e;border:1px solid #333;border-radius:var(--r);padding:10px 12px;font-size:11px;color:#9d9d9d;line-height:1.7;margin-bottom:14px}
-.gh-info a{color:#569cd6;text-decoration:none}
-.gh-info a:hover{text-decoration:underline}
-.gh-test-result{padding:8px 12px;border-radius:var(--r);font-size:12px;margin-bottom:12px;display:none}
-/* ── MEDIA PANEL ──────────────────────────────────────────── */
-.media-titlebar{height:36px;background:#252526;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
-.media-titlebar h2{font-family:var(--fh);font-size:14px;font-weight:700;color:#d4d4d4;flex:1}
-.media-body{flex:1;display:flex;overflow:hidden}
-.media-sidebar{width:200px;background:#252526;border-right:1px solid #1e1e1e;display:flex;flex-direction:column;flex-shrink:0;padding:8px 0}
-.media-cat{padding:6px 16px;font-size:12px;color:#9d9d9d;cursor:pointer;border-left:2px solid transparent;transition:all .1s;display:flex;align-items:center;gap:8px}
-.media-cat:hover{background:rgba(255,255,255,0.05);color:#d4d4d4}
-.media-cat.active{background:rgba(86,156,214,0.1);border-left-color:#569cd6;color:#d4d4d4}
-.media-cat-count{margin-left:auto;font-size:10px;background:#3c3c3f;border-radius:10px;padding:1px 6px;color:#9d9d9d}
-.media-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.media-toolbar{height:44px;background:#2d2d30;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0}
-.media-search{flex:1;max-width:300px;background:#1e1e1e;border:1px solid #454545;border-radius:var(--r);color:#d4d4d4;font-size:12px;padding:5px 10px;outline:none;font-family:var(--fb)}
-.media-search:focus{border-color:#569cd6}
-.media-search::placeholder{color:#6b6b6b}
-.media-upload-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:#0e639c;border:none;border-radius:var(--r);color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
-.media-upload-btn:hover{background:#1177bb}
-.media-grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;align-content:start}
-.media-grid.list-view{grid-template-columns:1fr;gap:4px}
-.media-card{background:#252526;border:1px solid #333;border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative}
-.media-card:hover{border-color:#569cd6;transform:translateY(-1px)}
-.media-card.list-view{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:var(--r)}
-.media-thumb{width:100%;aspect-ratio:16/10;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;flex-shrink:0}
-.media-thumb img{width:100%;height:100%;object-fit:cover}
-.media-thumb video{width:100%;height:100%;object-fit:cover}
-.media-card.list-view .media-thumb{width:40px;height:40px;aspect-ratio:1;border-radius:var(--r);font-size:20px}
-.media-info{padding:8px 10px}
-.media-card.list-view .media-info{flex:1;padding:0}
-.media-name{font-size:12px;color:#d4d4d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
-.media-meta{font-size:10px;color:#6b6b6b;display:flex;gap:6px;align-items:center}
-.media-card-actions{position:absolute;top:6px;right:6px;display:none;gap:4px}
-.media-card:hover .media-card-actions{display:flex}
-.media-card.list-view .media-card-actions{position:static;display:flex;flex-shrink:0}
-.mca-btn{width:24px;height:24px;background:rgba(30,30,30,0.9);border:1px solid #454545;border-radius:3px;color:#d4d4d4;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .1s}
-.mca-btn:hover{background:#569cd6;border-color:#569cd6}
-.mca-btn.del:hover{background:#f44747;border-color:#f44747}
-.media-empty{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#6b6b6b;text-align:center;gap:10px}
-.media-empty-icon{font-size:48px}
-.media-drop-zone{border:2px dashed #454545;border-radius:var(--rl);padding:40px;text-align:center;color:#6b6b6b;font-size:13px;transition:all .2s;cursor:pointer;margin:16px}
-.media-drop-zone.drag-over{border-color:#569cd6;background:rgba(86,156,214,0.08);color:#569cd6}
-.media-viewer{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-.media-viewer-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
-.media-viewer-close:hover{background:rgba(255,255,255,0.2)}
-.media-viewer img{max-width:90vw;max-height:80vh;border-radius:var(--r);box-shadow:0 8px 40px rgba(0,0,0,.8)}
-.media-viewer video{max-width:90vw;max-height:80vh;border-radius:var(--r)}
-.media-viewer audio{width:400px;max-width:90vw}
-.media-viewer-name{color:#9d9d9d;font-size:12px;margin-top:12px;font-family:var(--fm)}
-.media-viewer-actions{display:flex;gap:8px;margin-top:12px}
-.upload-progress{position:fixed;bottom:60px;right:16px;z-index:3000;background:#252526;border:1px solid #454545;border-radius:var(--r);padding:12px 16px;min-width:260px;box-shadow:0 4px 16px rgba(0,0,0,.6);display:none}
-.up-title{font-size:12px;color:#d4d4d4;margin-bottom:8px;font-weight:600}
-.up-bar-wrap{background:#1e1e1e;border-radius:2px;height:4px;overflow:hidden;margin-bottom:6px}
-.up-bar{height:100%;background:#569cd6;border-radius:2px;transition:width .3s;width:0%}
-.up-status{font-size:11px;color:#9d9d9d}
-/* Google Drive pill */
-.gdrive-pill{display:flex;align-items:center;gap:5px;padding:2px 10px;border-radius:3px;font-size:11px;color:#9d9d9d;cursor:pointer;transition:background .1s;border:1px solid transparent}
-.gdrive-pill:hover{background:rgba(255,255,255,0.06);border-color:#454545}
-.gdrive-dot{width:6px;height:6px;border-radius:50%;background:#6b6b6b;flex-shrink:0}
-.gdrive-dot.ok{background:#4ec9b0}
-.gdrive-dot.err{background:#f44747}
-/* Settings section divider */
-.modal-section{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#6b6b6b;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid #333}
-</style>
 
-<!-- ══ LOCK SCREEN ══════════════════════════════════════════ -->
-<div id="lockScreen" style="display:flex">
-  <div class="lock-box">
-    <div class="lock-icon">🔐</div>
-    <div class="lock-title">DataVault</div>
-    <div class="lock-sub">Enter your password to access the vault.<br>Your data is protected.</div>
-    <div class="lock-input-wrap">
-      <input class="lock-input" id="lockInput" type="password" placeholder="Password…" autocomplete="current-password" onkeydown="if(event.key==='Enter')tryUnlock()">
-      <span class="lock-eye" id="lockEye" onclick="toggleEye('lockInput','lockEye')">👁</span>
-    </div>
-    <button class="lock-btn" id="lockBtn" onclick="tryUnlock()">Unlock Vault</button>
-    <div class="lock-msg" id="lockMsg"></div>
-    <hr class="lock-divider">
-    <button class="lock-recovery-link" onclick="toggleRecovery()">Forgot password? Use recovery code</button>
-    <div class="recovery-form" id="recoveryForm">
-      <div class="recovery-label">Recovery Code</div>
-      <div class="lock-input-wrap">
-        <input class="lock-input" id="recoveryInput" type="password" placeholder="Enter recovery code…" onkeydown="if(event.key==='Enter')tryRecovery()">
-        <span class="lock-eye" onclick="toggleEye('recoveryInput',this)">👁</span>
-      </div>
-      <button class="lock-btn" onclick="tryRecovery()">Verify Recovery Code</button>
-      <div class="lock-msg" id="recoveryMsg"></div>
-      <div id="newPwForm" style="display:none;width:100%;margin-top:8px;flex-direction:column;gap:8px">
-        <div class="recovery-label" style="margin-top:4px">Set New Password</div>
-        <div class="lock-input-wrap">
-          <input class="lock-input" id="newPw1" type="password" placeholder="New password…">
-          <span class="lock-eye" onclick="toggleEye('newPw1',this)">👁</span>
-        </div>
-        <div class="lock-input-wrap">
-          <input class="lock-input" id="newPw2" type="password" placeholder="Confirm new password…" onkeydown="if(event.key==='Enter')setNewPassword()">
-          <span class="lock-eye" onclick="toggleEye('newPw2',this)">👁</span>
-        </div>
-        <button class="lock-btn" onclick="setNewPassword()">✅ Set New Password</button>
-        <div class="lock-msg" id="newPwMsg"></div>
-      </div>
-    </div>
+<!-- LOCK SCREEN -->
+<div id="lockScreen" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0">
+<style>
+#lockScreen{background:radial-gradient(ellipse at 50% 30%,#0d1228 0%,var(--bg) 70%)}
+.lock-card{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rx);padding:40px 44px;width:380px;max-width:95vw;box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px var(--border)}
+.lock-gem{width:56px;height:56px;border-radius:14px;background:conic-gradient(from 135deg,#5b7fff,#a855f7,#22d3ee,#2dd98f,#5b7fff);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 20px;box-shadow:0 0 30px rgba(91,127,255,0.4)}
+.lock-title{font-family:var(--fh);font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
+.lock-sub{color:var(--t2);font-size:13px;text-align:center;margin-bottom:28px}
+.lock-label{font-size:12px;color:var(--t2);margin-bottom:6px;font-weight:500}
+.lock-input-wrap{position:relative;margin-bottom:16px}
+.lock-input{width:100%;background:var(--bg3);border:1px solid var(--b2);border-radius:var(--r);padding:11px 42px 11px 14px;color:var(--text);font-size:14px;transition:border-color .2s}
+.lock-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--ag)}
+.lock-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;color:var(--t2);font-size:16px;padding:2px;transition:color .2s}
+.lock-eye:hover{color:var(--text)}
+.lock-btn{width:100%;padding:12px;background:var(--accent);color:#fff;border-radius:var(--r);font-size:14px;font-weight:600;font-family:var(--fh);letter-spacing:.5px;transition:opacity .2s,transform .1s;margin-top:4px}
+.lock-btn:hover{opacity:.9}
+.lock-btn:active{transform:scale(.98)}
+.lock-btn:disabled{opacity:.5;cursor:not-allowed}
+.lock-err{color:var(--red);font-size:12px;text-align:center;min-height:18px;margin-top:6px}
+.lock-recovery{color:var(--t2);font-size:12px;text-align:center;margin-top:16px;cursor:pointer;transition:color .2s}
+.lock-recovery:hover{color:var(--accent)}
+.lock-timer{color:var(--amber);font-size:13px;text-align:center;margin-top:8px;font-family:var(--fm)}
+</style>
+<div class="lock-card">
+  <div class="lock-gem">💎</div>
+  <div class="lock-title">DataVault</div>
+  <div class="lock-sub">Enter your password to continue</div>
+  <div class="lock-label">Password</div>
+  <div class="lock-input-wrap">
+    <input class="lock-input" id="lockPwInput" type="password" placeholder="Enter password…" autocomplete="current-password">
+    <button class="lock-eye" id="lockEye" onclick="toggleLockEye()" title="Show/hide">👁</button>
   </div>
+  <button class="lock-btn" id="lockBtn" onclick="submitLock()">Unlock</button>
+  <div class="lock-err" id="lockErr"></div>
+  <div class="lock-timer" id="lockTimer"></div>
+  <div class="lock-recovery" onclick="showRecovery()">Forgot password? Use recovery code</div>
+</div>
 </div>
 
-<!-- ══ APP SHELL ════════════════════════════════════════════ -->
-<div id="appShell" style="display:none;flex-direction:column;height:100%">
-  <!-- Titlebar -->
-  <div class="titlebar">
-    <div class="titlebar-logo">⬡ Data<span>Vault</span></div>
-    <div class="titlebar-menu">
-      <div class="tmenu-item" onclick="openNewDoc()">File</div>
-      <div class="tmenu-item" onclick="openGhModal()">GitHub</div>
-      <div class="tmenu-item" onclick="openDownloadModal()">Export</div>
-    </div>
-    <div class="titlebar-right">
-      <div class="gdrive-pill" id="gdrivePill" onclick="openGhModal()" title="Google Drive">
-        <span class="gdrive-dot" id="gdriveDot"></span>
-        <span id="gdrivePillText">Google Drive</span>
-      </div>
-      <div class="gh-pill" id="ghPill" onclick="openGhModal()">
-        <span class="gh-dot" id="ghDot"></span>
-        <span id="ghPillText">Connect GitHub</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="app-shell">
-    <!-- Activity Bar -->
-    <div class="activity-bar">
-      <button class="act-btn active" id="actFiles" onclick="setActivity('files')" title="Explorer">📁</button>
-      <button class="act-btn" id="actSearch" onclick="setActivity('search')" title="Search">🔍</button>
-      <button class="act-btn" id="actGh" onclick="openGhModal()" title="GitHub Sync">☁</button>
-      <button class="act-btn" id="actMedia" onclick="setActivity('media')" title="Media & Files">🗂</button>
-      <div style="flex:1"></div>
-      <button class="act-btn" onclick="openDownloadModal()" title="Export / Download">⬇</button>
-      <button class="act-btn" onclick="lockApp()" title="Lock Vault" style="margin-bottom:4px">🔒</button>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <span class="sidebar-title" id="sidebarTitle">Explorer</span>
-        <div class="sidebar-actions">
-          <button class="sb-btn" onclick="openNewDoc()" title="New File">+</button>
-          <button class="sb-btn" onclick="toggleSidebar()" title="Close">✕</button>
-        </div>
-      </div>
-      <div class="sidebar-search" id="sidebarSearchWrap">
-        <input type="text" id="sidebarSearch" placeholder="Filter files…" oninput="renderFileTree()">
-      </div>
-      <div class="file-tree" id="fileTree"></div>
-    </div>
-
-    <!-- Editor Area -->
-    <div class="editor-area" id="editorArea">
-      <div class="tab-bar" id="tabBar">
-        <button class="tab-new" onclick="openNewDoc()" title="New file (Ctrl+N)">+</button>
-      </div>
-      <div class="editor-content" id="editorContent">
-        <div class="welcome-screen" id="welcomeScreen">
-          <div style="font-size:48px;margin-bottom:8px">⬡</div>
-          <h1>DataVault</h1>
-          <p>A VS Code-style knowledge vault. Write markdown, code, URLs — everything synced to GitHub.</p>
-          <div class="welcome-shortcuts">
-            <div class="ws-item" onclick="openNewDoc()"><span class="ws-key">Ctrl+N</span><span class="ws-label">New document</span></div>
-            <div class="ws-item" onclick="setActivity('search')"><span class="ws-key">Ctrl+K</span><span class="ws-label">Search files</span></div>
-            <div class="ws-item" onclick="openGhModal()"><span class="ws-key">Ctrl+S</span><span class="ws-label">Sync to GitHub</span></div>
-            <div class="ws-item" onclick="openDownloadModal()"><span class="ws-key">Ctrl+E</span><span class="ws-label">Export data</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="status-bar" id="statusBar">
-        <span class="sb-item" id="sbBranch">⎇ main</span>
-        <span class="sb-item" id="sbLang">Plain Text</span>
-        <div class="sb-right">
-          <span class="sb-item" id="sbLines">Ln 1, Col 1</span>
-          <span class="sb-item" id="sbCount">0 files</span>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- RECOVERY MODAL -->
+<div id="recoveryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center">
+<div class="lock-card" style="width:360px">
+  <div class="lock-title" style="margin-bottom:6px">Recovery</div>
+  <div class="lock-sub">Enter recovery code then set new password</div>
+  <div class="lock-label">Recovery Code</div>
+  <div class="lock-input-wrap"><input class="lock-input" id="recCode" type="text" placeholder="VAULT-RESET-2024"></div>
+  <div class="lock-label">New Password</div>
+  <div class="lock-input-wrap"><input class="lock-input" id="recPw1" type="password" placeholder="New password"></div>
+  <div class="lock-label">Confirm Password</div>
+  <div class="lock-input-wrap"><input class="lock-input" id="recPw2" type="password" placeholder="Confirm password"></div>
+  <button class="lock-btn" onclick="submitRecovery()">Reset Password</button>
+  <div class="lock-err" id="recErr"></div>
+  <div class="lock-recovery" onclick="hideRecovery()">← Back to login</div>
+</div>
 </div>
 
-<!-- Context Menu -->
-<div class="ctx-menu" id="ctxMenu">
-  <div class="ctx-item" onclick="ctxAction('rename')">✏️ Rename</div>
-  <div class="ctx-item" onclick="ctxAction('duplicate')">📋 Duplicate</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item danger" onclick="ctxAction('delete')">🗑 Delete</div>
+<!-- MAIN APP -->
+<div id="app" style="display:none;height:100vh;display:none;flex-direction:column">
+<style>
+/* TOPBAR */
+#topbar{height:52px;background:var(--bg1);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:0 12px;flex-shrink:0;z-index:100}
+.tb-logo{display:flex;align-items:center;gap:9px;margin-right:4px;text-decoration:none}
+.tb-gem{width:32px;height:32px;border-radius:8px;background:conic-gradient(from 135deg,#5b7fff,#a855f7,#22d3ee,#2dd98f,#5b7fff);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;box-shadow:0 0 16px rgba(91,127,255,0.35)}
+.tb-name{font-family:var(--fh);font-size:17px;font-weight:700;color:var(--text);white-space:nowrap}
+.tb-name em{color:var(--accent);font-style:normal}
+.tb-sep{width:1px;height:24px;background:var(--border);margin:0 4px}
+.tb-icon-btn{width:34px;height:34px;border-radius:var(--r);background:transparent;color:var(--t2);font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;flex-shrink:0}
+.tb-icon-btn:hover{background:var(--bg3);color:var(--text)}
+.tb-search{flex:1;min-width:0;max-width:320px;position:relative}
+.tb-search input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px 7px 34px;color:var(--text);font-size:13px;transition:border-color .2s,box-shadow .2s}
+.tb-search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--ag)}
+.tb-search input::placeholder{color:var(--t3)}
+.tb-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:14px;pointer-events:none}
+.tb-chip{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--t2);font-family:var(--fm);white-space:nowrap}
+.gh-pill{display:flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--t2);cursor:pointer;transition:border-color .2s,background .2s;white-space:nowrap;flex-shrink:0}
+.gh-pill:hover{border-color:var(--b2);background:var(--bg3)}
+.gh-dot{width:7px;height:7px;border-radius:50%;background:var(--t3);flex-shrink:0;transition:background .3s}
+.gh-dot.ok{background:var(--green);box-shadow:0 0 6px var(--green)}
+.gh-dot.busy{background:var(--amber);box-shadow:0 0 6px var(--amber)}
+.gh-dot.err{background:var(--red);box-shadow:0 0 6px var(--red)}
+.tb-btn{height:32px;padding:0 14px;border-radius:var(--r);font-size:13px;font-weight:600;font-family:var(--fh);display:flex;align-items:center;gap:6px;transition:opacity .15s,transform .1s;flex-shrink:0}
+.tb-btn:active{transform:scale(.97)}
+.tb-btn-primary{background:var(--accent);color:#fff}
+.tb-btn-primary:hover{opacity:.88}
+.tb-btn-ghost{background:var(--bg3);color:var(--t2);border:1px solid var(--border)}
+.tb-btn-ghost:hover{color:var(--text);border-color:var(--b2)}
+/* LAYOUT */
+#layout{flex:1;display:flex;overflow:hidden}
+/* LEFT PANEL */
+#leftPanel{width:260px;background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;transition:width .25s,opacity .25s;overflow:hidden;flex-shrink:0}
+#leftPanel.collapsed{width:0;opacity:0;pointer-events:none}
+.panel-head{padding:12px 14px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.panel-head-title{font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.8px}
+.filter-tags{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 10px}
+.ftag{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg3);color:var(--t2);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-family:var(--fh)}
+.ftag:hover{border-color:var(--b2);color:var(--text)}
+.ftag.active{background:var(--ag);color:var(--accent);border-color:rgba(91,127,255,0.3)}
+.rec-list{flex:1;overflow-y:auto;padding:4px 8px 12px}
+.rec-card{padding:10px 12px;border-radius:var(--r);cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:3px;position:relative}
+.rec-card:hover{background:var(--bg2)}
+.rec-card.active{background:var(--ag);border-color:rgba(91,127,255,0.2)}
+.rec-card-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.rec-num{font-family:var(--fm);font-size:10px;color:var(--t3);min-width:20px}
+.rec-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.rec-name{font-size:13px;font-weight:500;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rec-tags{display:flex;flex-wrap:wrap;gap:3px;padding-left:28px}
+.rec-tag{font-size:10px;padding:1px 6px;border-radius:10px;background:var(--bg3);color:var(--t2);font-family:var(--fm)}
+.cat-general{background:#5b7fff}.cat-code{background:#2dd98f}.cat-docs{background:#f5a623}.cat-debug{background:#ff4f6d}
+</style>
+<div id="topbar">
+  <button class="tb-icon-btn" onclick="togglePanel()" title="Toggle panel (B)">☰</button>
+  <a class="tb-logo" href="#">
+    <div class="tb-gem">💎</div>
+    <span class="tb-name">Data<em>Vault</em></span>
+  </a>
+  <div class="tb-sep"></div>
+  <div class="tb-search">
+    <span class="tb-search-icon">🔍</span>
+    <input id="searchInput" type="text" placeholder="Search records… (Ctrl+K)" oninput="filterRecords()">
+  </div>
+  <span class="tb-chip" id="recCountChip">0 records</span>
+  <div class="gh-pill" id="ghPill" onclick="openGhModal()" title="GitHub settings">
+    <span class="gh-dot" id="ghDot"></span>
+    <span id="ghPillText">Not configured</span>
+  </div>
+  <button class="tb-btn tb-btn-ghost" onclick="openDownloadPanel()" title="Export/Download">⬇ Export</button>
+  <button class="tb-btn tb-btn-ghost" onclick="openFileManager()" title="File Manager">📁 Files</button>
+  <button class="tb-btn tb-btn-ghost" onclick="lockApp()" title="Lock">🔒</button>
+  <button class="tb-btn tb-btn-primary" onclick="openNewRecord()">＋ New Record</button>
 </div>
+<div id="layout">
+  <div id="leftPanel">
+    <div class="panel-head">
+      <span class="panel-head-title">Records</span>
+      <button class="tb-icon-btn" style="width:26px;height:26px;font-size:13px" onclick="openNewRecord()" title="New">＋</button>
+    </div>
+    <div class="filter-tags" id="filterTags">
+      <span class="ftag active" data-cat="all" onclick="setFilter('all',this)">All</span>
+      <span class="ftag" data-cat="general" onclick="setFilter('general',this)">General</span>
+      <span class="ftag" data-cat="code" onclick="setFilter('code',this)">Code</span>
+      <span class="ftag" data-cat="docs" onclick="setFilter('docs',this)">Docs</span>
+      <span class="ftag" data-cat="debug" onclick="setFilter('debug',this)">Debug</span>
+    </div>
+    <div class="rec-list" id="recList"></div>
+  </div>
 
-<!-- Media Panel (full overlay) -->
-<div id="mediaPanel" style="display:none;position:fixed;inset:0;z-index:500;background:#1e1e1e;flex-direction:column"></div>
-
-<!-- GitHub Modal -->
-<div class="overlay" id="ghOverlay" onclick="overlayClick(event,'ghOverlay')">
-  <div class="modal">
-    <div class="modal-hd"><h2>☁ GitHub & Integrations</h2><button class="modal-x" onclick="closeModal('ghOverlay')">✕</button></div>
-    <div class="gh-info">
-      Data is saved as <strong style="color:#d4d4d4">data/vault.json</strong> in your repo.<br>
-      Token needs <strong style="color:#d4d4d4">repo</strong> scope →
-      <a href="https://github.com/settings/tokens/new" target="_blank">Create token</a><br>
-      <span style="color:#6b6b6b">Token stored only in your browser localStorage.</span>
-    </div>
-    <div class="fg"><label class="fl">Personal Access Token *</label>
-      <input class="fi" id="ghToken" type="password" placeholder="ghp_xxxxxxxxxxxx"></div>
-    <div class="frow">
-      <div class="fg"><label class="fl">Username *</label><input class="fi" id="ghOwner" placeholder="your-username"></div>
-      <div class="fg"><label class="fl">Repository *</label><input class="fi" id="ghRepo" placeholder="my-vault"></div>
-    </div>
-    <div class="fg"><label class="fl">Branch</label><input class="fi" id="ghBranch" value="main" placeholder="main"></div>
-    <div class="gh-test-result" id="ghTestResult"></div>
-    <div class="modal-section">🔵 Google Drive</div>
-    <div class="gh-info">
-      Connect Google Drive to upload/import files. You need a Google API Client ID.<br>
-      <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Get Client ID</a> — enable Drive API + Picker API.
-    </div>
-    <div class="fg"><label class="fl">Google API Client ID</label>
-      <input class="fi" id="gdriveClientId" placeholder="xxxx.apps.googleusercontent.com"></div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px">
-      <button class="btn-gdrive" onclick="connectGoogleDrive()">🔵 Connect Google Drive</button>
-      <span id="gdriveStatus" style="font-size:11px;color:#6b6b6b">Not connected</span>
-    </div>
-    <div class="modal-ft">
-      <button class="btn-cancel" onclick="testGh()">🔌 Test GitHub</button>
-      <button class="btn-cancel" onclick="closeModal('ghOverlay')">Cancel</button>
-      <button class="btn-primary" onclick="saveGh()">💾 Save & Sync</button>
+  <!-- MAIN CONTENT -->
+  <div id="mainArea" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+  <style>
+  #mainArea{background:var(--bg)}
+  /* WELCOME */
+  #welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:var(--t2);padding:40px}
+  .welcome-gem{width:72px;height:72px;border-radius:18px;background:conic-gradient(from 135deg,#5b7fff,#a855f7,#22d3ee,#2dd98f,#5b7fff);display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 0 40px rgba(91,127,255,0.3);margin-bottom:8px}
+  .welcome-title{font-family:var(--fh);font-size:26px;font-weight:700;color:var(--text)}
+  .welcome-sub{font-size:14px;color:var(--t2);text-align:center;max-width:400px;line-height:1.6}
+  .welcome-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;max-width:420px;width:100%}
+  .ws-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px}
+  .ws-key{font-family:var(--fm);font-size:11px;background:var(--bg3);border:1px solid var(--b2);border-radius:4px;padding:2px 7px;color:var(--accent);white-space:nowrap}
+  .ws-desc{font-size:12px;color:var(--t2)}
+  /* RECORD DETAIL */
+  #recDetail{flex:1;display:none;flex-direction:column;overflow:hidden}
+  .rd-header{padding:20px 24px 0;flex-shrink:0}
+  .rd-title-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+  .rd-cat-dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex-shrink:0}
+  .rd-title{font-family:var(--fh);font-size:22px;font-weight:700;color:var(--text);flex:1;min-width:0;word-break:break-word}
+  .rd-actions{display:flex;gap:6px;flex-shrink:0}
+  .rd-action-btn{height:30px;padding:0 12px;border-radius:var(--r);font-size:12px;font-weight:600;font-family:var(--fh);display:flex;align-items:center;gap:5px;transition:all .15s}
+  .rd-action-btn.edit{background:var(--ag);color:var(--accent);border:1px solid rgba(91,127,255,0.25)}
+  .rd-action-btn.edit:hover{background:rgba(91,127,255,0.2)}
+  .rd-action-btn.del{background:var(--rg);color:var(--red);border:1px solid rgba(255,79,109,0.2)}
+  .rd-action-btn.del:hover{background:rgba(255,79,109,0.2)}
+  .rd-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .rd-meta-item{font-size:11px;color:var(--t2);font-family:var(--fm);display:flex;align-items:center;gap:4px}
+  .rd-tag{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg3);color:var(--t2);border:1px solid var(--border);font-family:var(--fm)}
+  /* TABS */
+  .tabs-bar{display:flex;gap:2px;border-bottom:1px solid var(--border);padding:0 24px;flex-shrink:0}
+  .tab-btn{padding:10px 16px;font-size:13px;font-weight:500;color:var(--t2);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color .15s,border-color .15s;font-family:var(--fb);margin-bottom:-1px}
+  .tab-btn:hover{color:var(--text)}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab-content{flex:1;overflow-y:auto;padding:20px 24px}
+  /* OVERVIEW TAB */
+  .ov-section{margin-bottom:20px}
+  .ov-label{font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;font-family:var(--fh)}
+  .ov-info{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;color:var(--text);font-size:14px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+  /* LINKS TAB */
+  .link-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;transition:border-color .15s}
+  .link-item:hover{border-color:var(--b2)}
+  .link-label{font-size:13px;font-weight:500;color:var(--text);min-width:100px}
+  .link-href{font-size:12px;color:var(--accent);font-family:var(--fm);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* CODE TAB */
+  .code-wrap{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+  .code-header{background:var(--bg3);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+  .code-lang{font-family:var(--fm);font-size:11px;color:var(--accent)}
+  .code-copy-btn{font-size:11px;padding:3px 10px;border-radius:5px;background:var(--bg4);color:var(--t2);border:1px solid var(--border);cursor:pointer;transition:all .15s}
+  .code-copy-btn:hover{color:var(--text);border-color:var(--b2)}
+  pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:var(--bg2);font-family:var(--fm);font-size:13px;line-height:1.6}
+  /* DEBUG TAB */
+  .debug-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px}
+  .debug-level{font-size:10px;font-weight:700;font-family:var(--fm);padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:1px}
+  .debug-level.info{background:var(--ag);color:var(--accent)}
+  .debug-level.warn{background:var(--amg);color:var(--amber)}
+  .debug-level.error{background:var(--rg);color:var(--red)}
+  .debug-msg{font-size:13px;color:var(--text);flex:1;word-break:break-word}
+  .debug-ts{font-size:10px;color:var(--t3);font-family:var(--fm);white-space:nowrap}
+  /* HISTORY TAB */
+  .hist-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+  .hist-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+  .hist-detail{flex:1;font-size:13px;color:var(--text)}
+  .hist-action{font-size:11px;color:var(--t2);font-family:var(--fm)}
+  .hist-ts{font-size:10px;color:var(--t3);font-family:var(--fm);white-space:nowrap}
+  /* README TAB */
+  .readme-body{color:var(--text);line-height:1.75;font-size:14px}
+  .readme-body h1,.readme-body h2,.readme-body h3,.readme-body h4{font-family:var(--fh);color:var(--text);margin:20px 0 10px}
+  .readme-body h1{font-size:22px;border-bottom:1px solid var(--border);padding-bottom:8px}
+  .readme-body h2{font-size:18px}
+  .readme-body h3{font-size:15px}
+  .readme-body p{margin-bottom:12px}
+  .readme-body code{font-family:var(--fm);background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--teal)}
+  .readme-body pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;overflow-x:auto;margin-bottom:14px}
+  .readme-body pre code{background:none;padding:0;color:var(--text)}
+  .readme-body blockquote{border-left:3px solid var(--accent);padding:8px 14px;background:var(--ag);border-radius:0 var(--r) var(--r) 0;margin-bottom:12px;color:var(--t2)}
+  .readme-body ul,.readme-body ol{padding-left:22px;margin-bottom:12px}
+  .readme-body li{margin-bottom:4px}
+  .readme-body table{width:100%;border-collapse:collapse;margin-bottom:14px}
+  .readme-body th{background:var(--bg3);padding:8px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--t2);border:1px solid var(--border)}
+  .readme-body td{padding:8px 12px;border:1px solid var(--border);font-size:13px}
+  .readme-body hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+  .readme-body strong{color:var(--text);font-weight:600}
+  .readme-body em{color:var(--t2);font-style:italic}
+  </style>
+  <div id="welcome" style="display:flex">
+    <div class="welcome-gem">💎</div>
+    <div class="welcome-title">Welcome to DataVault</div>
+    <div class="welcome-sub">Select a record from the left panel or create a new one to get started.</div>
+    <div class="welcome-shortcuts">
+      <div class="ws-item"><span class="ws-key">Ctrl+N</span><span class="ws-desc">New record</span></div>
+      <div class="ws-item"><span class="ws-key">Ctrl+S</span><span class="ws-desc">Save & push</span></div>
+      <div class="ws-item"><span class="ws-key">Ctrl+K</span><span class="ws-desc">Focus search</span></div>
+      <div class="ws-item"><span class="ws-key">B</span><span class="ws-desc">Toggle panel</span></div>
     </div>
   </div>
+  <div id="recDetail">
+    <div class="rd-header">
+      <div class="rd-title-row">
+        <div class="rd-cat-dot" id="rdCatDot"></div>
+        <div class="rd-title" id="rdTitle"></div>
+        <div class="rd-actions">
+          <button class="rd-action-btn edit" onclick="editCurrentRecord()">✏ Edit</button>
+          <button class="rd-action-btn del" onclick="deleteCurrentRecord()">🗑 Delete</button>
+        </div>
+      </div>
+      <div class="rd-meta" id="rdMeta"></div>
+    </div>
+    <div class="tabs-bar" id="tabsBar">
+      <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview',this)">Overview</button>
+      <button class="tab-btn" data-tab="links" onclick="switchTab('links',this)">Links</button>
+      <button class="tab-btn" data-tab="code" onclick="switchTab('code',this)">Code</button>
+      <button class="tab-btn" data-tab="readme" onclick="switchTab('readme',this)">README</button>
+      <button class="tab-btn" data-tab="debug" onclick="switchTab('debug',this)">Debug</button>
+      <button class="tab-btn" data-tab="history" onclick="switchTab('history',this)">History</button>
+    </div>
+    <div class="tab-content" id="tabContent"></div>
+  </div>
+  </div>
+</div>
 </div>
 
-<!-- New/Rename Doc Modal -->
-<div class="overlay" id="docModal" onclick="overlayClick(event,'docModal')">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-hd"><h2 id="docModalTitle">New Document</h2><button class="modal-x" onclick="closeModal('docModal')">✕</button></div>
-    <div class="fg"><label class="fl">Document Name *</label>
-      <input class="fi" id="docName" placeholder="e.g. my-notes, auth-module, README" onkeydown="if(event.key==='Enter')saveDocModal()"></div>
-    <div class="fg"><label class="fl">Type</label>
-      <select class="fs" id="docType">
-        <option value="md">📝 Markdown (.md)</option>
-        <option value="js">⚡ JavaScript (.js)</option>
-        <option value="ts">🔷 TypeScript (.ts)</option>
-        <option value="py">🐍 Python (.py)</option>
-        <option value="html">🌐 HTML (.html)</option>
-        <option value="css">🎨 CSS (.css)</option>
-        <option value="json">📋 JSON (.json)</option>
-        <option value="sql">🗄️ SQL (.sql)</option>
-        <option value="bash">🖥️ Shell (.sh)</option>
-        <option value="txt">📄 Plain Text (.txt)</option>
+<!-- MODALS -->
+<style>
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rx);width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,0.6)}
+.modal-head{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text)}
+.modal-close{width:28px;height:28px;border-radius:6px;background:var(--bg3);color:var(--t2);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:none}
+.modal-close:hover{background:var(--rg);color:var(--red)}
+.modal-body{padding:20px;overflow-y:auto;flex:1}
+.modal-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:600;color:var(--t2);margin-bottom:6px;display:block;font-family:var(--fh)}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--b2);border-radius:var(--r);padding:9px 12px;color:var(--text);font-size:13px;transition:border-color .2s,box-shadow .2s}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--ag)}
+.form-input::placeholder{color:var(--t3)}
+.form-textarea{resize:vertical;min-height:80px;font-family:var(--fb);line-height:1.6}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238892aa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;cursor:pointer}
+.form-code-area{font-family:var(--fm);font-size:12px;min-height:120px;line-height:1.6;tab-size:2}
+.btn{height:34px;padding:0 16px;border-radius:var(--r);font-size:13px;font-weight:600;font-family:var(--fh);display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:all .15s;border:none}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:.88}
+.btn-ghost{background:var(--bg3);color:var(--t2);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);border-color:var(--b2)}
+.btn-danger{background:var(--rg);color:var(--red);border:1px solid rgba(255,79,109,0.2)}
+.btn-danger:hover{background:rgba(255,79,109,0.2)}
+.btn-green{background:var(--gg);color:var(--green);border:1px solid rgba(45,217,143,0.2)}
+.btn-green:hover{background:rgba(45,217,143,0.2)}
+/* URL list in record form */
+.url-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.url-row{display:flex;gap:6px;align-items:center}
+.url-row input{flex:1}
+.url-row .url-label-in{width:120px;flex-shrink:0}
+.url-del-btn{width:28px;height:28px;border-radius:6px;background:var(--rg);color:var(--red);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.url-del-btn:hover{background:rgba(255,79,109,0.25)}
+/* Debug list in record form */
+.debug-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.debug-row{display:flex;gap:6px;align-items:center}
+.debug-row select{width:90px;flex-shrink:0}
+.debug-row input{flex:1}
+/* Toast */
+#toast{position:fixed;bottom:24px;right:24px;z-index:9000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast-item{background:var(--bg3);border:1px solid var(--b2);border-radius:var(--r);padding:10px 16px;font-size:13px;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,0.4);display:flex;align-items:center;gap:8px;animation:toastIn .25s ease;pointer-events:auto;max-width:320px}
+.toast-item.success{border-color:rgba(45,217,143,0.3);background:rgba(45,217,143,0.08)}
+.toast-item.error{border-color:rgba(255,79,109,0.3);background:rgba(255,79,109,0.08)}
+.toast-item.info{border-color:rgba(91,127,255,0.3);background:rgba(91,127,255,0.08)}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
+<!-- RECORD FORM MODAL -->
+<div class="modal-overlay" id="recordModal">
+<div class="modal" style="max-width:640px">
+  <div class="modal-head">
+    <span class="modal-title" id="recordModalTitle">New Record</span>
+    <button class="modal-close" onclick="closeModal('recordModal')">✕</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="recFormId">
+    <div class="form-group">
+      <label class="form-label">Name *</label>
+      <input class="form-input" id="recFormName" type="text" placeholder="Record name…">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-input form-select" id="recFormCat">
+        <option value="general">General</option>
+        <option value="code">Code</option>
+        <option value="docs">Docs</option>
+        <option value="debug">Debug</option>
       </select>
     </div>
-    <div class="modal-ft">
-      <button class="btn-cancel" onclick="closeModal('docModal')">Cancel</button>
-      <button class="btn-primary" onclick="saveDocModal()">Create</button>
+    <div class="form-group">
+      <label class="form-label">Tags (comma separated)</label>
+      <input class="form-input" id="recFormTags" type="text" placeholder="tag1, tag2, tag3">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Info / Notes</label>
+      <textarea class="form-input form-textarea" id="recFormInfo" placeholder="Notes, description…"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">URLs</label>
+      <div class="url-list" id="urlList"></div>
+      <button class="btn btn-ghost" style="font-size:12px;height:28px" onclick="addUrlRow()">＋ Add URL</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Code Language</label>
+      <input class="form-input" id="recFormCodeLang" type="text" placeholder="javascript, python, bash…">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Code Content</label>
+      <textarea class="form-input form-textarea form-code-area" id="recFormCode" placeholder="Paste code here…" style="min-height:140px"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">README (Markdown)</label>
+      <textarea class="form-input form-textarea" id="recFormReadme" placeholder="# Title&#10;Markdown content…" style="min-height:100px"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Debug Entries</label>
+      <div class="debug-list" id="debugList"></div>
+      <button class="btn btn-ghost" style="font-size:12px;height:28px" onclick="addDebugRow()">＋ Add Entry</button>
     </div>
   </div>
-</div>
-
-<!-- Delete Confirm Modal -->
-<div class="overlay" id="delModal" onclick="overlayClick(event,'delModal')">
-  <div class="modal" style="max-width:360px;text-align:center">
-    <div style="font-size:32px;margin-bottom:10px">🗑️</div>
-    <h2 style="font-family:var(--fh);font-size:18px;margin-bottom:8px;color:#d4d4d4">Delete File?</h2>
-    <p style="color:#9d9d9d;font-size:13px;margin-bottom:20px">Delete <strong id="delDocName" style="color:#d4d4d4"></strong>? This cannot be undone.</p>
-    <div class="modal-ft" style="justify-content:center;border:none;padding:0">
-      <button class="btn-cancel" onclick="closeModal('delModal')">Cancel</button>
-      <button class="btn-danger" onclick="confirmDelete()">Delete</button>
-    </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal('recordModal')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveRecord()">Save Record</button>
   </div>
 </div>
+</div>
 
-<!-- Export Modal -->
-<div class="overlay" id="exportModal" onclick="overlayClick(event,'exportModal')">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-hd"><h2>⬇ Export / Backup</h2><button class="modal-x" onclick="closeModal('exportModal')">✕</button></div>
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="exportJSON()">📦 Download all as JSON (full backup)</button>
-      <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="exportCurrentFile()">📄 Download current file (native ext)</button>
-      <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="pushToGitHub()">⬆ Push all to GitHub now</button>
-      <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="pullFromGitHub()">⬇ Pull latest from GitHub</button>
-      <button class="btn-gdrive" style="text-align:left;padding:10px 14px;border-radius:var(--r);justify-content:flex-start" onclick="gdriveUploadCurrent()">🔵 Upload current file to Google Drive</button>
-      <button class="btn-gdrive" style="text-align:left;padding:10px 14px;border-radius:var(--r);justify-content:flex-start" onclick="gdriveUploadAll()">🔵 Upload all files to Google Drive</button>
-      <button class="btn-gdrive" style="text-align:left;padding:10px 14px;border-radius:var(--r);justify-content:flex-start" onclick="gdriveImport()">🔵 Import file from Google Drive</button>
-      <label class="btn-cancel" style="text-align:left;padding:10px 14px;cursor:pointer">
-        📂 Import JSON backup <input type="file" accept=".json" onchange="importJSON(event)" style="display:none">
-      </label>
+<!-- GITHUB SETTINGS MODAL -->
+<div class="modal-overlay" id="ghModal">
+<div class="modal" style="max-width:480px">
+  <div class="modal-head">
+    <span class="modal-title">GitHub Settings</span>
+    <button class="modal-close" onclick="closeModal('ghModal')">✕</button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label class="form-label">Personal Access Token</label>
+      <input class="form-input" id="ghToken" type="password" placeholder="ghp_…">
     </div>
-    <div class="modal-ft" style="border:none;padding-top:8px">
-      <button class="btn-cancel" onclick="closeModal('exportModal')">Close</button>
+    <div class="form-group">
+      <label class="form-label">Owner (username or org)</label>
+      <input class="form-input" id="ghOwner" type="text" placeholder="username">
     </div>
+    <div class="form-group">
+      <label class="form-label">Repository</label>
+      <input class="form-input" id="ghRepo" type="text" placeholder="my-vault">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Branch</label>
+      <input class="form-input" id="ghBranch" type="text" placeholder="main" value="main">
+    </div>
+    <div id="ghTestResult" style="font-size:12px;margin-top:4px;min-height:18px;font-family:var(--fm)"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="testGhConnection()">Test Connection</button>
+    <button class="btn btn-ghost" onclick="closeModal('ghModal')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveGhConfig()">Save</button>
   </div>
 </div>
-
-<div class="toast-box" id="toastBox"></div>
-
-<!-- Upload Progress -->
-<div class="upload-progress" id="uploadProgress">
-  <div class="up-title">⬆ Uploading…</div>
-  <div class="up-bar-wrap"><div class="up-bar" id="upBar"></div></div>
-  <div class="up-status" id="upStatus">Preparing…</div>
 </div>
 
-<!-- Media Viewer -->
-<div class="media-viewer" id="mediaViewer" style="display:none" onclick="closeMediaViewer(event)">
-  <button class="media-viewer-close" onclick="closeMediaViewer()">✕</button>
-  <div id="mediaViewerContent"></div>
-  <div class="media-viewer-name" id="mediaViewerName"></div>
-  <div class="media-viewer-actions" id="mediaViewerActions"></div>
+<!-- DOWNLOAD / EXPORT PANEL MODAL -->
+<div class="modal-overlay" id="downloadModal">
+<div class="modal" style="max-width:440px">
+  <div class="modal-head">
+    <span class="modal-title">Export & Sync</span>
+    <button class="modal-close" onclick="closeModal('downloadModal')">✕</button>
+  </div>
+  <div class="modal-body" style="display:flex;flex-direction:column;gap:10px">
+    <button class="btn btn-ghost" style="justify-content:flex-start;height:42px" onclick="exportJSON()">📄 Download all records as JSON</button>
+    <button class="btn btn-ghost" style="justify-content:flex-start;height:42px" onclick="exportCSV()">📊 Download all records as CSV</button>
+    <button class="btn btn-ghost" style="justify-content:flex-start;height:42px" onclick="exportMarkdown()">📝 Download all records as Markdown</button>
+    <div style="height:1px;background:var(--border);margin:4px 0"></div>
+    <button class="btn btn-green" style="justify-content:flex-start;height:42px" onclick="pushToGitHub()">⬆ Push to GitHub</button>
+    <button class="btn btn-ghost" style="justify-content:flex-start;height:42px" onclick="pullFromGitHub()">⬇ Pull from GitHub</button>
+    <div style="height:1px;background:var(--border);margin:4px 0"></div>
+    <label class="btn btn-ghost" style="justify-content:flex-start;height:42px;cursor:pointer">
+      📥 Import JSON backup
+      <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
+    </label>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal('downloadModal')">Close</button>
+  </div>
 </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+<div class="modal" style="max-width:380px">
+  <div class="modal-head">
+    <span class="modal-title">Delete Record</span>
+    <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
+  </div>
+  <div class="modal-body">
+    <p style="color:var(--t2);font-size:14px;line-height:1.6">Are you sure you want to delete <strong id="deleteRecName" style="color:var(--text)"></strong>? This cannot be undone.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal('deleteModal')">Cancel</button>
+    <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+  </div>
+</div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast"></div>
+
+<!-- FILE MANAGER OVERLAY -->
+<div id="fileManager" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:500;flex-direction:column">
+<style>
+#fileManager{font-family:var(--fb)}
+.fm-topbar{height:52px;background:var(--bg1);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;padding:0 16px;flex-shrink:0}
+.fm-title{font-family:var(--fh);font-size:17px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.fm-layout{flex:1;display:flex;overflow:hidden}
+.fm-sidebar{width:200px;background:var(--bg1);border-right:1px solid var(--border);padding:12px 8px;display:flex;flex-direction:column;gap:2px;flex-shrink:0;overflow-y:auto}
+.fm-cat-btn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);cursor:pointer;transition:background .15s;border:none;background:transparent;color:var(--t2);font-size:13px;font-family:var(--fb);width:100%;text-align:left}
+.fm-cat-btn:hover{background:var(--bg2);color:var(--text)}
+.fm-cat-btn.active{background:var(--ag);color:var(--accent)}
+.fm-cat-count{margin-left:auto;font-size:11px;font-family:var(--fm);background:var(--bg3);padding:1px 6px;border-radius:10px}
+.fm-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.fm-toolbar{padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
+.fm-search{flex:1;max-width:280px;position:relative}
+.fm-search input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px 7px 32px;color:var(--text);font-size:13px}
+.fm-search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--ag)}
+.fm-search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:13px;pointer-events:none}
+.fm-grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;align-content:start}
+/* NEON FILE CARDS */
+.fm-card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--rl);padding:16px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
+.fm-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.02) 0%,transparent 60%);pointer-events:none}
+.fm-card:hover{transform:scale(1.03)}
+.fm-card-icon{font-size:42px;line-height:1;filter:drop-shadow(0 0 8px currentColor)}
+.fm-card-name{font-size:11px;color:var(--text);text-align:center;word-break:break-all;line-height:1.4;max-height:2.8em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;width:100%}
+.fm-card-meta{font-size:10px;color:var(--t3);font-family:var(--fm);text-align:center}
+.fm-card-actions{display:none;position:absolute;bottom:0;left:0;right:0;background:rgba(7,8,12,0.92);padding:8px;gap:4px;justify-content:center;border-top:1px solid var(--border)}
+.fm-card:hover .fm-card-actions{display:flex}
+.fm-act-btn{font-size:10px;font-weight:700;font-family:var(--fh);padding:3px 8px;border-radius:4px;border:1px solid;cursor:pointer;transition:all .15s;letter-spacing:.3px}
+/* Neon glow classes */
+.neon-pink{box-shadow:0 0 10px rgba(244,114,182,0.5),0 0 25px rgba(244,114,182,0.2);border-color:#f472b6}
+.neon-pink:hover{box-shadow:0 0 18px rgba(244,114,182,0.7),0 0 40px rgba(244,114,182,0.3);border-color:#f472b6}
+.neon-purple{box-shadow:0 0 10px rgba(168,85,247,0.5),0 0 25px rgba(168,85,247,0.2);border-color:#a855f7}
+.neon-purple:hover{box-shadow:0 0 18px rgba(168,85,247,0.7),0 0 40px rgba(168,85,247,0.3);border-color:#a855f7}
+.neon-teal{box-shadow:0 0 10px rgba(34,211,238,0.5),0 0 25px rgba(34,211,238,0.2);border-color:#22d3ee}
+.neon-teal:hover{box-shadow:0 0 18px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.3);border-color:#22d3ee}
+.neon-amber{box-shadow:0 0 10px rgba(245,166,35,0.5),0 0 25px rgba(245,166,35,0.2);border-color:#f5a623}
+.neon-amber:hover{box-shadow:0 0 18px rgba(245,166,35,0.7),0 0 40px rgba(245,166,35,0.3);border-color:#f5a623}
+.neon-green{box-shadow:0 0 10px rgba(45,217,143,0.5),0 0 25px rgba(45,217,143,0.2);border-color:#2dd98f}
+.neon-green:hover{box-shadow:0 0 18px rgba(45,217,143,0.7),0 0 40px rgba(45,217,143,0.3);border-color:#2dd98f}
+.neon-blue{box-shadow:0 0 10px rgba(91,127,255,0.5),0 0 25px rgba(91,127,255,0.2);border-color:#5b7fff}
+.neon-blue:hover{box-shadow:0 0 18px rgba(91,127,255,0.7),0 0 40px rgba(91,127,255,0.3);border-color:#5b7fff}
+/* Upload zone */
+.fm-upload-zone{border:2px dashed var(--b2);border-radius:var(--rl);padding:28px;text-align:center;cursor:pointer;transition:all .2s;margin:16px;flex-shrink:0}
+.fm-upload-zone:hover,.fm-upload-zone.drag{border-color:var(--accent);background:var(--ag);box-shadow:0 0 20px rgba(91,127,255,0.15)}
+.fm-upload-zone p{color:var(--t2);font-size:13px;margin-top:8px}
+.fm-progress{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin:0 16px 8px;display:none}
+.fm-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:2px;transition:width .3s;width:0}
+.fm-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--t2);padding:60px 20px;font-size:14px}
+.fm-empty-icon{font-size:48px;opacity:.4}
+</style>
+<div class="fm-topbar">
+  <span class="fm-title">📁 File Manager</span>
+  <div style="flex:1"></div>
+  <label class="btn btn-primary" style="cursor:pointer">
+    ⬆ Upload Files
+    <input type="file" id="fmFileInput" multiple style="display:none" onchange="handleFileUpload(this.files)">
+  </label>
+  <button class="btn btn-ghost" onclick="closeFileManager()">✕ Close</button>
+</div>
+<div class="fm-layout">
+  <div class="fm-sidebar" id="fmSidebar"></div>
+  <div class="fm-main">
+    <div class="fm-toolbar">
+      <div class="fm-search">
+        <span class="fm-search-icon">🔍</span>
+        <input type="text" placeholder="Search files…" id="fmSearch" oninput="renderFileGrid()">
+      </div>
+      <span id="fmFileCount" style="font-size:12px;color:var(--t2);font-family:var(--fm)"></span>
+      <button class="btn btn-ghost" id="emptyTrashBtn" style="display:none;font-size:12px;height:30px" onclick="emptyTrash()">🗑 Empty Trash</button>
+    </div>
+    <div class="fm-upload-zone" id="fmDropZone" onclick="document.getElementById('fmFileInput').click()" ondragover="fmDragOver(event)" ondragleave="fmDragLeave(event)" ondrop="fmDrop(event)">
+      <div style="font-size:32px">📂</div>
+      <p>Drag & drop files here or click to browse</p>
+      <p style="font-size:11px;color:var(--t3);margin-top:4px">Max 24MB per file for GitHub upload</p>
+    </div>
+    <div class="fm-progress" id="fmProgress"><div class="fm-progress-bar" id="fmProgressBar"></div></div>
+    <div class="fm-grid" id="fmGrid"></div>
+  </div>
+</div>
+</div>
+
+<!-- FILE VIEWER MODAL -->
+<div class="modal-overlay" id="fileViewerModal">
+<div class="modal" style="max-width:800px;max-height:92vh">
+  <div class="modal-head">
+    <span class="modal-title" id="fvTitle">File Viewer</span>
+    <button class="modal-close" onclick="closeModal('fileViewerModal')">✕</button>
+  </div>
+  <div class="modal-body" id="fvBody" style="padding:16px"></div>
+  <div class="modal-footer" id="fvFooter">
+    <button class="btn btn-ghost" id="fvDownloadBtn">⬇ Download</button>
+    <button class="btn btn-ghost" onclick="closeModal('fileViewerModal')">Close</button>
+  </div>
+</div>
+</div>
+
+<!-- NEON AUDIO PLAYER STYLES -->
+<style>
+.neon-audio-player{background:var(--bg3);border:1px solid var(--teal);border-radius:var(--rl);padding:20px;box-shadow:0 0 20px rgba(34,211,238,0.2)}
+.nap-title{font-family:var(--fh);font-size:15px;color:var(--teal);margin-bottom:16px;text-align:center}
+.nap-controls{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.nap-play-btn{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#000;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;flex-shrink:0;transition:box-shadow .2s}
+.nap-play-btn:hover{box-shadow:0 0 16px rgba(34,211,238,0.6)}
+.nap-progress-wrap{flex:1;height:4px;background:var(--bg4);border-radius:2px;cursor:pointer;position:relative}
+.nap-progress-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .1s;box-shadow:0 0 6px var(--teal)}
+.nap-time{font-family:var(--fm);font-size:11px;color:var(--teal);white-space:nowrap}
+.nap-vol{display:flex;align-items:center;gap:8px;margin-top:8px}
+.nap-vol-label{font-size:11px;color:var(--t2)}
+.nap-vol input{flex:1;accent-color:var(--teal)}
+/* Image viewer */
+.img-viewer{display:flex;align-items:center;justify-content:center;min-height:200px;max-height:60vh;overflow:hidden;border-radius:var(--r);background:var(--bg3);border:1px solid var(--border)}
+.img-viewer img{max-width:100%;max-height:60vh;object-fit:contain;border-radius:var(--r)}
+/* Video viewer */
+.vid-viewer video{width:100%;border-radius:var(--r);border:1px solid var(--purple);box-shadow:0 0 20px rgba(168,85,247,0.3)}
+/* Code viewer */
+.code-viewer-wrap{border:1px solid var(--green);border-radius:var(--r);overflow:hidden;box-shadow:0 0 15px rgba(45,217,143,0.15)}
+.code-viewer-header{background:var(--bg3);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.code-viewer-lang{font-family:var(--fm);font-size:11px;color:var(--green)}
+.code-viewer-pre{margin:0;max-height:50vh;overflow:auto;background:var(--bg2)}
+/* File info card */
+.fv-info-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fv-info-item label{font-size:11px;color:var(--t2);display:block;margin-bottom:2px;font-family:var(--fh)}
+.fv-info-item span{font-size:13px;color:var(--text);font-family:var(--fm)}
+</style>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// PASSWORD & AUTH
-// ═══════════════════════════════════════════════════════════
+// ============================================================
+// CONSTANTS & STATE
+// ============================================================
 const RECOVERY_CODE = 'VAULT-RESET-2024';
-let authUnlocked = false;
+const DEFAULT_PW_HASH = '4e9e0c4e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e'; // placeholder, computed on init
+let lockAttempts = 0;
+let lockUntil = 0;
+let lockTimerInterval = null;
+let currentRecordId = null;
+let currentTab = 'overview';
+let filterCat = 'all';
+let searchQuery = '';
+let ghPushTimer = null;
+let fmCategory = 'all';
 
-async function sha256(str) {
+const FILE_TYPES = {
+  jpg:'image',jpeg:'image',png:'image',gif:'image',webp:'image',svg:'image',bmp:'image',ico:'image',
+  mp4:'video',webm:'video',mov:'video',avi:'video',mkv:'video',ts:'video',m4v:'video',
+  mp3:'audio',wav:'audio',ogg:'audio',m4a:'audio',flac:'audio',aac:'audio',
+  zip:'archive',rar:'archive','7z':'archive',tar:'archive',gz:'archive',bz2:'archive',
+  py:'code',html:'code',css:'code',js:'code',ts:'code',c:'code',cpp:'code',h:'code',
+  java:'code',php:'code',rb:'code',go:'code',rs:'code',sh:'code',
+  pdf:'document',docx:'document',xlsx:'document',pptx:'document',txt:'document',
+  csv:'document',md:'document',json:'document',xml:'document'
+};
+
+const TYPE_NEON = {
+  image:{color:'#f472b6',glow:'rgba(244,114,182,0.3)',icon:'🖼',label:'Image',neonClass:'neon-pink'},
+  video:{color:'#a855f7',glow:'rgba(168,85,247,0.3)',icon:'🎬',label:'Video',neonClass:'neon-purple'},
+  audio:{color:'#22d3ee',glow:'rgba(34,211,238,0.3)',icon:'🎵',label:'Audio',neonClass:'neon-teal'},
+  archive:{color:'#f5a623',glow:'rgba(245,166,35,0.3)',icon:'🗜',label:'Archive',neonClass:'neon-amber'},
+  code:{color:'#2dd98f',glow:'rgba(45,217,143,0.3)',icon:'💻',label:'Code',neonClass:'neon-green'},
+  document:{color:'#5b7fff',glow:'rgba(91,127,255,0.3)',icon:'📄',label:'Document',neonClass:'neon-blue'},
+};
+
+const HLJS_LANG_MAP = {
+  py:'python',html:'html',css:'css',js:'javascript',ts:'typescript',
+  c:'cpp',cpp:'cpp',h:'cpp',java:'java',php:'php',rb:'ruby',go:'go',rs:'rust',sh:'bash',
+  json:'json',xml:'xml',md:'markdown',txt:'plaintext'
+};
+
+const CAT_COLORS = {general:'#5b7fff',code:'#2dd98f',docs:'#f5a623',debug:'#ff4f6d'};
+
+// ============================================================
+// SHA-256 UTILITY
+// ============================================================
+async function sha256(str){
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-async function getCorrectHash() {
-  const custom = localStorage.getItem('dv_pw_hash');
-  if (custom) return custom;
-  return await sha256('gangnam1567');
+// ============================================================
+// LOCK SCREEN
+// ============================================================
+async function initLock(){
+  let stored = localStorage.getItem('dv_pw_hash');
+  if(!stored){
+    // Set default password hash for 'donkar'
+    const h = await sha256('donkar');
+    localStorage.setItem('dv_pw_hash', h);
+  }
+  const session = sessionStorage.getItem('dv_session');
+  if(session === 'unlocked'){
+    showApp();
+    return;
+  }
+  document.getElementById('lockScreen').style.display = 'flex';
+  document.getElementById('lockPwInput').addEventListener('keydown', e => { if(e.key==='Enter') submitLock(); });
 }
 
-let lockAttempts = parseInt(sessionStorage.getItem('dv_attempts') || '0');
-let lockUntil   = parseInt(sessionStorage.getItem('dv_lock_until') || '0');
-
-function toggleEye(inputId, eyeEl) {
-  const target = typeof inputId === 'string' ? document.getElementById(inputId) : inputId;
-  if (!target) return;
-  const eye = typeof eyeEl === 'string' ? document.getElementById(eyeEl) : eyeEl;
-  target.type = target.type === 'password' ? 'text' : 'password';
-  if (eye) eye.textContent = target.type === 'password' ? '👁' : '🙈';
+function toggleLockEye(){
+  const inp = document.getElementById('lockPwInput');
+  const eye = document.getElementById('lockEye');
+  if(inp.type==='password'){inp.type='text';eye.textContent='🙈';}
+  else{inp.type='password';eye.textContent='👁';}
 }
 
-function toggleRecovery() {
-  const f = document.getElementById('recoveryForm');
-  f.classList.toggle('show');
-  if (f.classList.contains('show')) document.getElementById('recoveryInput').focus();
-}
-
-async function tryUnlock() {
+async function submitLock(){
   const now = Date.now();
-  if (lockUntil > now) { showLockTimer(); return; }
-  const val = document.getElementById('lockInput').value;
-  if (!val) { setLockMsg('lockMsg', 'Enter your password.', 'err'); return; }
-  const hash = await sha256(val);
-  const correct = await getCorrectHash();
-  if (hash === correct) {
-    sessionStorage.setItem('dv_auth', '1');
-    sessionStorage.removeItem('dv_attempts');
-    sessionStorage.removeItem('dv_lock_until');
+  if(now < lockUntil){return;}
+  const pw = document.getElementById('lockPwInput').value;
+  if(!pw){setLockErr('Enter your password.');return;}
+  const hash = await sha256(pw);
+  const stored = localStorage.getItem('dv_pw_hash');
+  if(hash === stored){
     lockAttempts = 0;
-    bootApp();
+    sessionStorage.setItem('dv_session','unlocked');
+    document.getElementById('lockScreen').style.display = 'none';
+    showApp();
   } else {
     lockAttempts++;
-    sessionStorage.setItem('dv_attempts', lockAttempts);
-    const inp = document.getElementById('lockInput');
-    inp.classList.add('err');
-    setTimeout(() => inp.classList.remove('err'), 400);
-    inp.value = '';
-    if (lockAttempts >= 5) {
+    if(lockAttempts >= 5){
       lockUntil = Date.now() + 30000;
-      sessionStorage.setItem('dv_lock_until', lockUntil);
-      showLockTimer();
+      startLockTimer();
+      setLockErr('Too many attempts. Locked for 30 seconds.');
+      document.getElementById('lockBtn').disabled = true;
     } else {
-      const left = 5 - lockAttempts;
-      setLockMsg('lockMsg', `Wrong password. ${left} attempt${left!==1?'s':''} left.`, 'err');
+      setLockErr(`Incorrect password. ${5-lockAttempts} attempt(s) remaining.`);
     }
+    document.getElementById('lockPwInput').value = '';
   }
 }
 
-function showLockTimer() {
-  const remaining = Math.ceil((lockUntil - Date.now()) / 1000);
-  if (remaining > 0) {
-    setLockMsg('lockMsg', `Too many attempts. Wait ${remaining}s`, 'warn');
-    document.getElementById('lockBtn').disabled = true;
-    setTimeout(showLockTimer, 1000);
-  } else {
-    lockAttempts = 0; lockUntil = 0;
-    sessionStorage.removeItem('dv_attempts');
-    sessionStorage.removeItem('dv_lock_until');
-    document.getElementById('lockBtn').disabled = false;
-    setLockMsg('lockMsg', '', '');
-  }
+function setLockErr(msg){document.getElementById('lockErr').textContent = msg;}
+
+function startLockTimer(){
+  if(lockTimerInterval) clearInterval(lockTimerInterval);
+  lockTimerInterval = setInterval(()=>{
+    const rem = Math.ceil((lockUntil - Date.now())/1000);
+    if(rem <= 0){
+      clearInterval(lockTimerInterval);
+      document.getElementById('lockTimer').textContent = '';
+      document.getElementById('lockBtn').disabled = false;
+      setLockErr('');
+      lockAttempts = 0;
+    } else {
+      document.getElementById('lockTimer').textContent = `Unlocks in ${rem}s`;
+    }
+  }, 500);
 }
 
-async function tryRecovery() {
-  const val = document.getElementById('recoveryInput').value.trim();
-  if (val === RECOVERY_CODE) {
-    setLockMsg('recoveryMsg', '✅ Recovery code accepted. Set your new password below.', 'ok');
-    const f = document.getElementById('newPwForm');
-    f.style.display = 'flex';
-    document.getElementById('newPw1').focus();
-  } else {
-    setLockMsg('recoveryMsg', 'Incorrect recovery code.', 'err');
-    const inp = document.getElementById('recoveryInput');
-    inp.classList.add('err');
-    setTimeout(() => inp.classList.remove('err'), 400);
-  }
+function showRecovery(){
+  document.getElementById('recoveryModal').style.display = 'flex';
+}
+function hideRecovery(){
+  document.getElementById('recoveryModal').style.display = 'none';
+  document.getElementById('recErr').textContent = '';
 }
 
-async function setNewPassword() {
-  const p1 = document.getElementById('newPw1').value;
-  const p2 = document.getElementById('newPw2').value;
-  if (!p1) { setLockMsg('newPwMsg', 'Enter a new password.', 'err'); return; }
-  if (p1 !== p2) { setLockMsg('newPwMsg', 'Passwords do not match.', 'err'); return; }
-  if (p1.length < 4) { setLockMsg('newPwMsg', 'Password too short (min 4 chars).', 'err'); return; }
-  const hash = await sha256(p1);
-  localStorage.setItem('dv_pw_hash', hash);
-  setLockMsg('newPwMsg', '✅ Password updated! Unlocking…', 'ok');
-  setTimeout(() => { sessionStorage.setItem('dv_auth', '1'); bootApp(); }, 1000);
+async function submitRecovery(){
+  const code = document.getElementById('recCode').value.trim();
+  const pw1 = document.getElementById('recPw1').value;
+  const pw2 = document.getElementById('recPw2').value;
+  if(code !== RECOVERY_CODE){document.getElementById('recErr').textContent='Invalid recovery code.';return;}
+  if(!pw1){document.getElementById('recErr').textContent='Enter a new password.';return;}
+  if(pw1 !== pw2){document.getElementById('recErr').textContent='Passwords do not match.';return;}
+  const h = await sha256(pw1);
+  localStorage.setItem('dv_pw_hash', h);
+  hideRecovery();
+  setLockErr('Password reset! Please log in.');
+  toast('Password reset successfully.','success');
 }
 
-function setLockMsg(id, msg, type) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = msg;
-  el.className = 'lock-msg' + (type ? ' ' + type : '');
-}
-
-function lockApp() {
-  sessionStorage.removeItem('dv_auth');
-  authUnlocked = false;
-  document.getElementById('appShell').style.display = 'none';
+function lockApp(){
+  sessionStorage.removeItem('dv_session');
+  document.getElementById('app').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
-  document.getElementById('lockInput').value = '';
-  setLockMsg('lockMsg', '', '');
-  document.getElementById('recoveryForm').classList.remove('show');
-  setTimeout(() => document.getElementById('lockInput').focus(), 100);
+  document.getElementById('lockPwInput').value = '';
+  setLockErr('');
 }
 
-function bootApp() {
-  authUnlocked = true;
-  document.getElementById('lockScreen').style.display = 'none';
-  document.getElementById('appShell').style.display = 'flex';
-  initGhStatus();
-  initGdriveStatus();
-  renderFileTree();
-  updateStatusBar();
-  if (GH.token && GH.owner && GH.repo) pullFromGitHub();
+function showApp(){
+  document.getElementById('app').style.display = 'flex';
+  loadRecords();
+  loadGhConfig();
+  renderRecordList();
+  updateRecordCount();
+  if(ghConfig()) pullFromGitHub(true);
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('dv_auth') === '1') bootApp();
-  else {
-    document.getElementById('lockScreen').style.display = 'flex';
-    document.getElementById('appShell').style.display = 'none';
-    setTimeout(() => document.getElementById('lockInput').focus(), 100);
-    if (lockUntil > Date.now()) showLockTimer();
-  }
-});
 </script>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// DATA MODEL
-// ═══════════════════════════════════════════════════════════
-let DOCS = JSON.parse(localStorage.getItem('dv_docs') || '[]');
-let GH   = JSON.parse(localStorage.getItem('dv_gh')   || '{}');
+// ============================================================
+// RECORDS DATA
+// ============================================================
+let records = [];
 
-let openTabs    = JSON.parse(sessionStorage.getItem('dv_tabs') || '[]');
-let activeDocId = sessionStorage.getItem('dv_active') || null;
-let ctxTargetId = null;
-let deleteTargetId = null;
-let docModalMode = 'new';
-let sidebarOpen  = true;
-
-const TYPE_INFO = {
-  md:   { icon:'📝', label:'Markdown',   hljs:'markdown',   ext:'.md'   },
-  js:   { icon:'⚡', label:'JavaScript', hljs:'javascript', ext:'.js'   },
-  ts:   { icon:'🔷', label:'TypeScript', hljs:'typescript', ext:'.ts'   },
-  py:   { icon:'🐍', label:'Python',     hljs:'python',     ext:'.py'   },
-  html: { icon:'🌐', label:'HTML',       hljs:'html',       ext:'.html' },
-  css:  { icon:'🎨', label:'CSS',        hljs:'css',        ext:'.css'  },
-  json: { icon:'📋', label:'JSON',       hljs:'json',       ext:'.json' },
-  sql:  { icon:'🗄️', label:'SQL',        hljs:'sql',        ext:'.sql'  },
-  bash: { icon:'🖥️', label:'Shell',      hljs:'bash',       ext:'.sh'   },
-  txt:  { icon:'📄', label:'Plain Text', hljs:'plaintext',  ext:'.txt'  },
-};
-function ti(type) { return TYPE_INFO[type] || TYPE_INFO.txt; }
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
-function now() { return Date.now(); }
-function fmtDate(ts) {
-  if (!ts) return '—';
-  return new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-    + ' ' + new Date(ts).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-}
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function loadRecords(){
+  try{
+    const raw = localStorage.getItem('dv_records');
+    records = raw ? JSON.parse(raw) : [];
+  } catch(e){ records = []; }
 }
 
-function persist() {
-  localStorage.setItem('dv_docs', JSON.stringify(DOCS));
-  sessionStorage.setItem('dv_tabs', JSON.stringify(openTabs));
-  if (activeDocId) sessionStorage.setItem('dv_active', activeDocId);
-  const el = document.getElementById('sbCount');
-  if (el) el.textContent = DOCS.length + ' file' + (DOCS.length!==1?'s':'');
+function saveRecords(){
+  localStorage.setItem('dv_records', JSON.stringify(records));
+  updateRecordCount();
+  scheduleGhPush();
 }
 
-function toast(msg, type='ok') {
-  const box = document.getElementById('toastBox');
-  const el  = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.textContent = msg;
-  box.appendChild(el);
-  setTimeout(() => { el.style.animation='tOut .25s forwards'; setTimeout(()=>el.remove(),250); }, 2500);
+function getRecord(id){ return records.find(r=>r.id===id); }
+
+function newId(){ return 'r_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
+
+function nowISO(){ return new Date().toISOString(); }
+
+function updateRecordCount(){
+  const chip = document.getElementById('recCountChip');
+  if(chip) chip.textContent = records.length + ' record' + (records.length!==1?'s':'');
 }
 
-// ═══════════════════════════════════════════════════════════
-// SIDEBAR / FILE TREE
-// ═══════════════════════════════════════════════════════════
-function toggleSidebar() {
-  sidebarOpen = !sidebarOpen;
-  document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
-}
-
-function setActivity(mode) {
-  if (mode === 'media') {
-    document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('actMedia')?.classList.add('active');
-    openMediaPanel();
-    return;
-  }
-  document.getElementById('mediaPanel').style.display = 'none';
-  document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
-  if (mode === 'files') {
-    document.getElementById('actFiles').classList.add('active');
-    if (!sidebarOpen) { sidebarOpen = true; document.getElementById('sidebar').classList.remove('collapsed'); }
-    document.getElementById('sidebarTitle').textContent = 'Explorer';
-    document.getElementById('sidebarSearchWrap').style.display = '';
-  } else if (mode === 'search') {
-    document.getElementById('actSearch').classList.add('active');
-    if (!sidebarOpen) { sidebarOpen = true; document.getElementById('sidebar').classList.remove('collapsed'); }
-    document.getElementById('sidebarTitle').textContent = 'Search';
-    document.getElementById('sidebarSearchWrap').style.display = '';
-    setTimeout(() => document.getElementById('sidebarSearch').focus(), 50);
-  }
-}
-
-function renderFileTree() {
-  const q = (document.getElementById('sidebarSearch')?.value || '').toLowerCase();
-  const tree = document.getElementById('fileTree');
-  if (!tree) return;
-  let filtered = DOCS.filter(d => !q || d.name.toLowerCase().includes(q) || (d.content||'').toLowerCase().includes(q));
-
-  if (!filtered.length) {
-    tree.innerHTML = `<div class="ft-empty">${q ? 'No results.' : 'No files yet.<br>Click + to create one.'}</div>`;
-    return;
-  }
-
-  const groups = {};
-  filtered.forEach(d => {
-    const g = d.type || 'txt';
-    if (!groups[g]) groups[g] = [];
-    groups[g].push(d);
+// ============================================================
+// RECORD LIST RENDERING
+// ============================================================
+function renderRecordList(){
+  const list = document.getElementById('recList');
+  if(!list) return;
+  let filtered = records.filter(r=>{
+    if(filterCat !== 'all' && r.category !== filterCat) return false;
+    if(searchQuery){
+      const q = searchQuery.toLowerCase();
+      return r.name.toLowerCase().includes(q) ||
+        (r.info||'').toLowerCase().includes(q) ||
+        (r.tags||[]).some(t=>t.toLowerCase().includes(q));
+    }
+    return true;
   });
-
-  tree.innerHTML = Object.entries(groups).map(([type, docs]) => {
-    const info = ti(type);
-    return `<div class="ft-section">
-      <div class="ft-section-head" onclick="toggleSection(this)">
-        <span class="ft-arrow open">▶</span> ${info.icon} ${info.label}
-      </div>
-      <div class="ft-items">
-        ${docs.map(d => `
-          <div class="ft-item${d.id===activeDocId?' active':''}"
-               onclick="openDoc('${d.id}')"
-               oncontextmenu="showCtx(event,'${d.id}')">
-            <span class="ft-item-icon">${info.icon}</span>
-            <span class="ft-item-name">${escHtml(d.name)}${info.ext}</span>
-            <div class="ft-item-actions">
-              <button class="ft-act" onclick="event.stopPropagation();openRenameModal('${d.id}')" title="Rename">✏️</button>
-              <button class="ft-act" onclick="event.stopPropagation();openDeleteModal('${d.id}')" title="Delete" style="color:#f44747">🗑</button>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function toggleSection(el) {
-  const arrow = el.querySelector('.ft-arrow');
-  const items = el.nextElementSibling;
-  arrow.classList.toggle('open');
-  items.style.display = items.style.display === 'none' ? '' : 'none';
-}
-</script>
-
-<script>
-// ═══════════════════════════════════════════════════════════
-// TABS & EDITOR
-// ═══════════════════════════════════════════════════════════
-function openDoc(id) {
-  const doc = DOCS.find(d => d.id === id);
-  if (!doc) return;
-  activeDocId = id;
-  if (!openTabs.includes(id)) openTabs.push(id);
-  persist();
-  renderTabs();
-  renderEditor(doc);
-  renderFileTree();
-  updateStatusBar(doc);
-}
-
-function closeTab(id, e) {
-  if (e) e.stopPropagation();
-  openTabs = openTabs.filter(t => t !== id);
-  if (activeDocId === id) {
-    activeDocId = openTabs[openTabs.length - 1] || null;
+  if(!filtered.length){
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--t3);font-size:12px">No records found</div>';
+    return;
   }
-  persist();
-  renderTabs();
-  if (activeDocId) {
-    renderEditor(DOCS.find(d => d.id === activeDocId));
-  } else {
-    showWelcome();
-  }
-  renderFileTree();
-}
-
-function renderTabs() {
-  const bar = document.getElementById('tabBar');
-  if (!bar) return;
-  bar.innerHTML = openTabs.map(id => {
-    const doc = DOCS.find(d => d.id === id);
-    if (!doc) return '';
-    const info = ti(doc.type);
-    return `<div class="editor-tab${id===activeDocId?' active':''}" onclick="openDoc('${id}')">
-      <span class="tab-icon">${info.icon}</span>
-      <span>${escHtml(doc.name)}${info.ext}</span>
-      <button class="tab-close" onclick="closeTab('${id}',event)">✕</button>
-    </div>`;
-  }).join('') + `<button class="tab-new" onclick="openNewDoc()" title="New file">+</button>`;
-}
-
-function showWelcome() {
-  const ec = document.getElementById('editorContent');
-  if (!ec) return;
-  ec.innerHTML = `<div class="welcome-screen">
-    <div style="font-size:48px;margin-bottom:8px">⬡</div>
-    <h1>DataVault</h1>
-    <p>A VS Code-style knowledge vault. Write markdown, code, URLs — everything synced to GitHub.</p>
-    <div class="welcome-shortcuts">
-      <div class="ws-item" onclick="openNewDoc()"><span class="ws-key">Ctrl+N</span><span class="ws-label">New document</span></div>
-      <div class="ws-item" onclick="setActivity('search')"><span class="ws-key">Ctrl+K</span><span class="ws-label">Search files</span></div>
-      <div class="ws-item" onclick="openGhModal()"><span class="ws-key">Ctrl+S</span><span class="ws-label">Sync to GitHub</span></div>
-      <div class="ws-item" onclick="openDownloadModal()"><span class="ws-key">Ctrl+E</span><span class="ws-label">Export data</span></div>
+  list.innerHTML = filtered.map((r,i)=>`
+    <div class="rec-card ${r.id===currentRecordId?'active':''}" onclick="selectRecord('${r.id}')">
+      <div class="rec-card-top">
+        <span class="rec-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="rec-dot cat-${r.category||'general'}"></span>
+        <span class="rec-name">${escHtml(r.name)}</span>
+      </div>
+      ${r.tags&&r.tags.length?`<div class="rec-tags">${r.tags.map(t=>`<span class="rec-tag">${escHtml(t)}</span>`).join('')}</div>`:''}
     </div>
-  </div>`;
+  `).join('');
 }
 
-function renderEditor(doc) {
-  if (!doc) { showWelcome(); return; }
-  const info = ti(doc.type);
-  const isMarkdown = doc.type === 'md';
-  const ec = document.getElementById('editorContent');
-  if (!ec) return;
+function filterRecords(){
+  searchQuery = document.getElementById('searchInput').value;
+  renderRecordList();
+}
 
-  ec.innerHTML = `
-    <div class="doc-editor" id="docEditor">
-      <div class="doc-toolbar">
-        ${isMarkdown ? `
-          <button class="tb-btn active" id="tbEdit" onclick="setEditorMode('edit')">✏️ Edit</button>
-          <button class="tb-btn" id="tbSplit" onclick="setEditorMode('split')">⬜ Split</button>
-          <button class="tb-btn" id="tbPreview" onclick="setEditorMode('preview')">👁 Preview</button>
-          <div class="tb-sep"></div>` : ''}
-        <select class="tb-select" id="langSelect" onchange="changeDocType(this.value)" title="Language">
-          ${Object.entries(TYPE_INFO).map(([k,v])=>`<option value="${k}"${k===doc.type?' selected':''}>${v.icon} ${v.label}</option>`).join('')}
-        </select>
-        <div class="tb-sep"></div>
-        <button class="tb-btn" onclick="saveCurrentDoc()" title="Save (Ctrl+S)">💾 Save</button>
-        <button class="tb-btn" onclick="copyDocContent()" title="Copy all">📋 Copy</button>
-        <div style="margin-left:auto;font-size:11px;color:#6b6b6b">${escHtml(doc.name)}${info.ext} · ${fmtDate(doc.updatedAt||doc.createdAt)}</div>
-      </div>
-      <div class="doc-body" id="docBody">
-        <div class="editor-pane" id="editorPane">
-          <div class="code-editor-wrap" id="codeEditorWrap">
-            <div class="line-numbers" id="lineNums"></div>
-            <textarea class="editor-textarea" id="mainEditor"
-              spellcheck="false"
-              placeholder="Start typing…"
-              oninput="onEditorInput()"
-              onscroll="syncScroll()"
-              onkeydown="handleEditorKey(event)"
-              onclick="updateCursorPos()"
-              onkeyup="updateCursorPos()"
-            >${escHtml(doc.content)}</textarea>
-          </div>
+function setFilter(cat, el){
+  filterCat = cat;
+  document.querySelectorAll('.ftag').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderRecordList();
+}
+
+// ============================================================
+// RECORD SELECTION & DETAIL
+// ============================================================
+function selectRecord(id){
+  currentRecordId = id;
+  currentTab = 'overview';
+  renderRecordList();
+  showRecordDetail();
+}
+
+function showRecordDetail(){
+  const r = getRecord(currentRecordId);
+  if(!r){ showWelcome(); return; }
+  document.getElementById('welcome').style.display = 'none';
+  const det = document.getElementById('recDetail');
+  det.style.display = 'flex';
+  // Header
+  const dot = document.getElementById('rdCatDot');
+  dot.style.background = CAT_COLORS[r.category||'general'];
+  document.getElementById('rdTitle').textContent = r.name;
+  // Meta
+  const meta = document.getElementById('rdMeta');
+  const tags = (r.tags||[]).map(t=>`<span class="rd-tag">${escHtml(t)}</span>`).join('');
+  meta.innerHTML = `
+    <span class="rd-meta-item">📁 ${r.category||'general'}</span>
+    <span class="rd-meta-item">🕐 ${fmtDate(r.updatedAt||r.createdAt)}</span>
+    ${tags}
+  `;
+  // Activate first tab
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.tab === currentTab);
+  });
+  renderTab(currentTab);
+}
+
+function showWelcome(){
+  document.getElementById('welcome').style.display = 'flex';
+  document.getElementById('recDetail').style.display = 'none';
+  currentRecordId = null;
+  renderRecordList();
+}
+
+function switchTab(tab, el){
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderTab(tab);
+}
+
+function renderTab(tab){
+  const r = getRecord(currentRecordId);
+  if(!r) return;
+  const content = document.getElementById('tabContent');
+  switch(tab){
+    case 'overview': content.innerHTML = renderOverview(r); break;
+    case 'links': content.innerHTML = renderLinks(r); break;
+    case 'code': content.innerHTML = renderCode(r); break;
+    case 'readme': content.innerHTML = renderReadme(r); break;
+    case 'debug': content.innerHTML = renderDebugTab(r); break;
+    case 'history': content.innerHTML = renderHistory(r); break;
+  }
+  // Highlight code if needed
+  if(tab==='code' && r.code && r.code.content){
+    document.querySelectorAll('pre code').forEach(el=>hljs.highlightElement(el));
+  }
+}
+
+function renderOverview(r){
+  return `
+    <div class="ov-section">
+      <div class="ov-label">Info / Notes</div>
+      <div class="ov-info">${escHtml(r.info||'No notes yet.')}</div>
+    </div>
+    <div class="ov-section">
+      <div class="ov-label">Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px">
+          <div style="font-size:11px;color:var(--t2);margin-bottom:4px">Category</div>
+          <div style="font-size:13px;color:var(--text);font-weight:500">${r.category||'general'}</div>
         </div>
-        ${isMarkdown ? `<div class="preview-pane hidden" id="previewPane"><div class="md-preview" id="mdPreview"></div></div>` : ''}
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px">
+          <div style="font-size:11px;color:var(--t2);margin-bottom:4px">Created</div>
+          <div style="font-size:13px;color:var(--text);font-family:var(--fm)">${fmtDate(r.createdAt)}</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px">
+          <div style="font-size:11px;color:var(--t2);margin-bottom:4px">Updated</div>
+          <div style="font-size:13px;color:var(--text);font-family:var(--fm)">${fmtDate(r.updatedAt)}</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px">
+          <div style="font-size:11px;color:var(--t2);margin-bottom:4px">Links</div>
+          <div style="font-size:13px;color:var(--text)">${(r.urls||[]).length} URL(s)</div>
+        </div>
       </div>
-    </div>`;
-
-  updateLineNumbers();
-  updateStatusBar(doc);
-  document.getElementById('sbLang').textContent = info.label;
-  if (isMarkdown) renderPreview(doc.content);
+    </div>
+  `;
 }
 
-let editorMode = 'edit';
-
-function setEditorMode(mode) {
-  editorMode = mode;
-  const ep = document.getElementById('editorPane');
-  const pp = document.getElementById('previewPane');
-  const tbEdit = document.getElementById('tbEdit');
-  const tbSplit = document.getElementById('tbSplit');
-  const tbPrev  = document.getElementById('tbPreview');
-  [tbEdit,tbSplit,tbPrev].forEach(b => b && b.classList.remove('active'));
-  if (mode === 'edit') {
-    tbEdit && tbEdit.classList.add('active');
-    if (ep) { ep.style.display=''; ep.classList.remove('full'); }
-    if (pp) pp.classList.add('hidden');
-  } else if (mode === 'split') {
-    tbSplit && tbSplit.classList.add('active');
-    if (ep) { ep.style.display=''; ep.classList.remove('full'); }
-    if (pp) pp.classList.remove('hidden');
-  } else {
-    tbPrev && tbPrev.classList.add('active');
-    if (ep) ep.style.display = 'none';
-    if (pp) pp.classList.remove('hidden');
-    const doc = DOCS.find(d => d.id === activeDocId);
-    if (doc) renderPreview(doc.content);
-  }
+function renderLinks(r){
+  const urls = r.urls||[];
+  if(!urls.length) return '<div style="color:var(--t2);font-size:13px;padding:20px 0">No links added yet.</div>';
+  return urls.map(u=>`
+    <div class="link-item">
+      <span class="link-label">${escHtml(u.label||'Link')}</span>
+      <a class="link-href" href="${escHtml(u.href)}" target="_blank" rel="noopener">${escHtml(u.href)}</a>
+      <span style="font-size:16px">↗</span>
+    </div>
+  `).join('');
 }
 
-function onEditorInput() {
-  const ta = document.getElementById('mainEditor');
-  if (!ta) return;
-  const doc = DOCS.find(d => d.id === activeDocId);
-  if (!doc) return;
-  doc.content = ta.value;
-  doc.updatedAt = now();
-  persist();
-  updateLineNumbers();
-  updateCursorPos();
-  if (doc.type === 'md' && editorMode !== 'edit') renderPreview(doc.content);
-  clearTimeout(window._autoPushTimer);
-  window._autoPushTimer = setTimeout(autoPush, 3000);
+function renderCode(r){
+  if(!r.code||!r.code.content) return '<div style="color:var(--t2);font-size:13px;padding:20px 0">No code added yet.</div>';
+  const lang = r.code.lang||'plaintext';
+  return `
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">${escHtml(lang)}</span>
+        <button class="code-copy-btn" onclick="copyCode()">Copy</button>
+      </div>
+      <pre class="hljs-pre"><code class="language-${escHtml(lang)}" id="codeBlock">${escHtml(r.code.content)}</code></pre>
+    </div>
+  `;
 }
 
-function handleEditorKey(e) {
-  if (e.key === 'Tab') {
-    e.preventDefault();
-    const ta = e.target;
-    const start = ta.selectionStart, end = ta.selectionEnd;
-    ta.value = ta.value.substring(0,start) + '  ' + ta.value.substring(end);
-    ta.selectionStart = ta.selectionEnd = start + 2;
-    onEditorInput();
-  }
+function renderReadme(r){
+  if(!r.readme) return '<div style="color:var(--t2);font-size:13px;padding:20px 0">No README added yet.</div>';
+  return `<div class="readme-body">${parseMarkdown(r.readme)}</div>`;
 }
 
-function updateLineNumbers() {
-  const ta = document.getElementById('mainEditor');
-  const ln = document.getElementById('lineNums');
-  if (!ta || !ln) return;
-  const lines = ta.value.split('\n').length;
-  ln.innerHTML = Array.from({length:lines},(_,i)=>`<span>${i+1}</span>`).join('');
+function renderDebugTab(r){
+  const entries = r.debug||[];
+  if(!entries.length) return '<div style="color:var(--t2);font-size:13px;padding:20px 0">No debug entries.</div>';
+  return entries.map(d=>`
+    <div class="debug-item">
+      <span class="debug-level ${d.level||'info'}">${(d.level||'info').toUpperCase()}</span>
+      <span class="debug-msg">${escHtml(d.msg||'')}</span>
+      <span class="debug-ts">${fmtDate(d.ts)}</span>
+    </div>
+  `).join('');
 }
 
-function syncScroll() {
-  const ta = document.getElementById('mainEditor');
-  const ln = document.getElementById('lineNums');
-  if (ta && ln) ln.scrollTop = ta.scrollTop;
+function renderHistory(r){
+  const hist = r.history||[];
+  if(!hist.length) return '<div style="color:var(--t2);font-size:13px;padding:20px 0">No history yet.</div>';
+  return [...hist].reverse().map(h=>`
+    <div class="hist-item">
+      <span class="hist-icon">${h.icon||'📝'}</span>
+      <div style="flex:1">
+        <div class="hist-detail">${escHtml(h.detail||'')}</div>
+        <div class="hist-action">${escHtml(h.action||'')}</div>
+      </div>
+      <span class="hist-ts">${fmtDate(h.ts)}</span>
+    </div>
+  `).join('');
 }
 
-function updateCursorPos() {
-  const ta = document.getElementById('mainEditor');
-  if (!ta) return;
-  const text = ta.value.substring(0, ta.selectionStart);
-  const lines = text.split('\n');
-  const ln = lines.length, col = lines[lines.length-1].length + 1;
-  const el = document.getElementById('sbLines');
-  if (el) el.textContent = `Ln ${ln}, Col ${col}`;
-}
-
-function updateStatusBar(doc) {
-  if (doc) {
-    const el = document.getElementById('sbLang');
-    if (el) el.textContent = ti(doc.type).label;
-  }
-  const cnt = document.getElementById('sbCount');
-  if (cnt) cnt.textContent = DOCS.length + ' file' + (DOCS.length!==1?'s':'');
-  if (GH.branch) {
-    const br = document.getElementById('sbBranch');
-    if (br) br.textContent = '⎇ ' + GH.branch;
+function copyCode(){
+  const r = getRecord(currentRecordId);
+  if(r&&r.code&&r.code.content){
+    navigator.clipboard.writeText(r.code.content).then(()=>toast('Code copied!','success'));
   }
 }
 </script>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// MARKDOWN PREVIEW
-// ═══════════════════════════════════════════════════════════
-function renderPreview(content) {
-  const el = document.getElementById('mdPreview');
-  if (!el) return;
-  el.innerHTML = parseMd(content);
-  el.querySelectorAll('pre code').forEach(block => {
-    if (window.hljs) hljs.highlightElement(block);
-  });
+// ============================================================
+// RECORD FORM (NEW / EDIT)
+// ============================================================
+function openNewRecord(){
+  document.getElementById('recordModalTitle').textContent = 'New Record';
+  document.getElementById('recFormId').value = '';
+  document.getElementById('recFormName').value = '';
+  document.getElementById('recFormCat').value = 'general';
+  document.getElementById('recFormTags').value = '';
+  document.getElementById('recFormInfo').value = '';
+  document.getElementById('recFormCodeLang').value = '';
+  document.getElementById('recFormCode').value = '';
+  document.getElementById('recFormReadme').value = '';
+  document.getElementById('urlList').innerHTML = '';
+  document.getElementById('debugList').innerHTML = '';
+  openModal('recordModal');
 }
 
-function parseMd(raw) {
-  let h = raw || '';
-  // Fenced code blocks — protect them first
-  const codeBlocks = [];
-  h = h.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
-    const idx = codeBlocks.length;
-    codeBlocks.push(`<pre><code class="language-${lang||'plaintext'}">${escHtml(code.trimEnd())}</code></pre>`);
-    return `\x00CODE${idx}\x00`;
+function editCurrentRecord(){
+  const r = getRecord(currentRecordId);
+  if(!r) return;
+  document.getElementById('recordModalTitle').textContent = 'Edit Record';
+  document.getElementById('recFormId').value = r.id;
+  document.getElementById('recFormName').value = r.name||'';
+  document.getElementById('recFormCat').value = r.category||'general';
+  document.getElementById('recFormTags').value = (r.tags||[]).join(', ');
+  document.getElementById('recFormInfo').value = r.info||'';
+  document.getElementById('recFormCodeLang').value = (r.code&&r.code.lang)||'';
+  document.getElementById('recFormCode').value = (r.code&&r.code.content)||'';
+  document.getElementById('recFormReadme').value = r.readme||'';
+  // URLs
+  const urlList = document.getElementById('urlList');
+  urlList.innerHTML = '';
+  (r.urls||[]).forEach(u=>addUrlRow(u.label, u.href));
+  // Debug
+  const debugList = document.getElementById('debugList');
+  debugList.innerHTML = '';
+  (r.debug||[]).forEach(d=>addDebugRow(d.level, d.msg));
+  openModal('recordModal');
+}
+
+function addUrlRow(label='', href=''){
+  const row = document.createElement('div');
+  row.className = 'url-row';
+  row.innerHTML = `
+    <input class="form-input url-label-in" type="text" placeholder="Label" value="${escHtml(label)}">
+    <input class="form-input" type="url" placeholder="https://…" value="${escHtml(href)}">
+    <button class="url-del-btn" onclick="this.parentElement.remove()">✕</button>
+  `;
+  document.getElementById('urlList').appendChild(row);
+}
+
+function addDebugRow(level='info', msg=''){
+  const row = document.createElement('div');
+  row.className = 'debug-row';
+  row.innerHTML = `
+    <select class="form-input form-select" style="width:90px;flex-shrink:0">
+      <option value="info" ${level==='info'?'selected':''}>info</option>
+      <option value="warn" ${level==='warn'?'selected':''}>warn</option>
+      <option value="error" ${level==='error'?'selected':''}>error</option>
+    </select>
+    <input class="form-input" type="text" placeholder="Debug message…" value="${escHtml(msg)}">
+    <button class="url-del-btn" onclick="this.parentElement.remove()">✕</button>
+  `;
+  document.getElementById('debugList').appendChild(row);
+}
+
+function saveRecord(){
+  const name = document.getElementById('recFormName').value.trim();
+  if(!name){ toast('Name is required.','error'); return; }
+  const id = document.getElementById('recFormId').value;
+  const isNew = !id;
+  const now = nowISO();
+  // Collect URLs
+  const urlRows = document.querySelectorAll('#urlList .url-row');
+  const urls = [];
+  urlRows.forEach(row=>{
+    const inputs = row.querySelectorAll('input');
+    const label = inputs[0].value.trim();
+    const href = inputs[1].value.trim();
+    if(href) urls.push({label:label||href, href});
+  });
+  // Collect debug
+  const debugRows = document.querySelectorAll('#debugList .debug-row');
+  const debugEntries = [];
+  debugRows.forEach(row=>{
+    const sel = row.querySelector('select');
+    const inp = row.querySelector('input');
+    const msg = inp.value.trim();
+    if(msg) debugEntries.push({id:'d_'+Date.now()+'_'+Math.random().toString(36).slice(2,5), level:sel.value, msg, ts:now});
+  });
+  const codeLang = document.getElementById('recFormCodeLang').value.trim();
+  const codeContent = document.getElementById('recFormCode').value;
+  const tags = document.getElementById('recFormTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+
+  if(isNew){
+    const rec = {
+      id: newId(), name,
+      category: document.getElementById('recFormCat').value,
+      tags, urls,
+      info: document.getElementById('recFormInfo').value,
+      code: {lang:codeLang, content:codeContent},
+      readme: document.getElementById('recFormReadme').value,
+      debug: debugEntries,
+      history: [{id:'h_'+Date.now(), action:'created', detail:`Record "${name}" created`, icon:'✨', ts:now}],
+      createdAt: now, updatedAt: now
+    };
+    records.unshift(rec);
+    currentRecordId = rec.id;
+    toast('Record created!','success');
+  } else {
+    const rec = getRecord(id);
+    if(!rec) return;
+    rec.name = name;
+    rec.category = document.getElementById('recFormCat').value;
+    rec.tags = tags;
+    rec.urls = urls;
+    rec.info = document.getElementById('recFormInfo').value;
+    rec.code = {lang:codeLang, content:codeContent};
+    rec.readme = document.getElementById('recFormReadme').value;
+    rec.debug = debugEntries;
+    rec.updatedAt = now;
+    rec.history = rec.history||[];
+    rec.history.push({id:'h_'+Date.now(), action:'updated', detail:`Record "${name}" updated`, icon:'✏️', ts:now});
+    toast('Record updated!','success');
+  }
+  saveRecords();
+  closeModal('recordModal');
+  renderRecordList();
+  showRecordDetail();
+}
+
+// ============================================================
+// DELETE RECORD
+// ============================================================
+let pendingDeleteId = null;
+function deleteCurrentRecord(){
+  const r = getRecord(currentRecordId);
+  if(!r) return;
+  pendingDeleteId = r.id;
+  document.getElementById('deleteRecName').textContent = r.name;
+  openModal('deleteModal');
+}
+function confirmDelete(){
+  if(!pendingDeleteId) return;
+  records = records.filter(r=>r.id!==pendingDeleteId);
+  saveRecords();
+  closeModal('deleteModal');
+  showWelcome();
+  toast('Record deleted.','info');
+  pendingDeleteId = null;
+}
+
+// ============================================================
+// PANEL TOGGLE
+// ============================================================
+function togglePanel(){
+  document.getElementById('leftPanel').classList.toggle('collapsed');
+}
+
+// ============================================================
+// MODAL HELPERS
+// ============================================================
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg, type='info'){
+  const container = document.getElementById('toast');
+  const icons = {success:'✅',error:'❌',info:'ℹ️'};
+  const el = document.createElement('div');
+  el.className = `toast-item ${type}`;
+  el.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${escHtml(msg)}</span>`;
+  container.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateY(10px)'; el.style.transition='all .3s'; setTimeout(()=>el.remove(),300); }, 3000);
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function escHtml(s){
+  if(s==null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function fmtDate(iso){
+  if(!iso) return '—';
+  try{
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) + ' ' +
+      d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  } catch(e){ return iso; }
+}
+
+function fmtSize(bytes){
+  if(bytes==null) return '—';
+  if(bytes < 1024) return bytes + ' B';
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/(1024*1024)).toFixed(2) + ' MB';
+}
+
+// ============================================================
+// MARKDOWN PARSER
+// ============================================================
+function parseMarkdown(md){
+  if(!md) return '';
+  let html = escHtml(md);
+  // Unescape for processing
+  html = md;
+  // Code blocks
+  html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (m,lang,code)=>{
+    const hl = lang && hljs.getLanguage(lang) ? hljs.highlight(code.trim(),{language:lang}).value : escHtml(code.trim());
+    return `<pre><code class="hljs">${hl}</code></pre>`;
   });
   // Inline code
-  h = h.replace(/`([^`\n]+)`/g, (_, c) => `<code>${escHtml(c)}</code>`);
-  // Escape HTML in non-code parts
-  h = h.replace(/&(?!amp;|lt;|gt;|quot;|#)/g,'&amp;');
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
   // Headings
-  h = h.replace(/^#{6} (.+)$/gm,'<h6>$1</h6>');
-  h = h.replace(/^#{5} (.+)$/gm,'<h5>$1</h5>');
-  h = h.replace(/^#{4} (.+)$/gm,'<h4>$1</h4>');
-  h = h.replace(/^### (.+)$/gm,'<h3>$1</h3>');
-  h = h.replace(/^## (.+)$/gm,'<h2>$1</h2>');
-  h = h.replace(/^# (.+)$/gm,'<h1>$1</h1>');
-  // Bold, italic, strikethrough
-  h = h.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
-  h = h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  h = h.replace(/\*(.+?)\*/g,'<em>$1</em>');
-  h = h.replace(/~~(.+?)~~/g,'<del>$1</del>');
+  html = html.replace(/^#### (.+)$/gm,'<h4>$1</h4>');
+  html = html.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+  html = html.replace(/^# (.+)$/gm,'<h1>$1</h1>');
   // HR
-  h = h.replace(/^---+$/gm,'<hr>');
+  html = html.replace(/^---+$/gm,'<hr>');
   // Blockquote
-  h = h.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
-  // Images before links
-  h = h.replace(/!\[([^\]]*)\]\((https?:\/\/[^\)]+)\)/g,
-    '<img src="$2" alt="$1">');
-  // Markdown links
-  h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
-    '<a class="url-link" href="$2" target="_blank" rel="noopener">$1</a>');
-  // Auto-detect bare URLs not already in href
-  h = h.replace(/(?<![="'>])(https?:\/\/[^\s<>"')\]]+)/g,
-    '<a class="url-link auto-link" href="$1" target="_blank" rel="noopener">$1</a>');
-  // Unordered lists
-  h = h.replace(/((?:^[-*] .+$\n?)+)/gm, m =>
-    '<ul>' + m.replace(/^[-*] (.+)$/gm,'<li>$1</li>') + '</ul>');
-  // Ordered lists
-  h = h.replace(/((?:^\d+\. .+$\n?)+)/gm, m =>
-    '<ol>' + m.replace(/^\d+\. (.+)$/gm,'<li>$1</li>') + '</ol>');
-  // Checkboxes
-  h = h.replace(/<li>\[ \] /g,'<li><input type="checkbox" disabled> ');
-  h = h.replace(/<li>\[x\] /gi,'<li><input type="checkbox" checked disabled> ');
+  html = html.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
+  // Bold & italic
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  html = html.replace(/\*(.+?)\*/g,'<em>$1</em>');
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Auto URLs
+  html = html.replace(/(^|[\s(])(https?:\/\/[^\s)]+)/g,'$1<a href="$2" target="_blank" rel="noopener">$2</a>');
   // Tables
-  h = h.replace(/^\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)+)/gm, (_, header, rows) => {
+  html = html.replace(/^\|(.+)\|\s*\n\|[-| :]+\|\s*\n((?:\|.+\|\s*\n?)*)/gm, (m,header,rows)=>{
     const ths = header.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
-    const trs = rows.trim().split('\n').map(row => {
+    const trs = rows.trim().split('\n').map(row=>{
       const tds = row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
       return `<tr>${tds}</tr>`;
     }).join('');
     return `<table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
   });
-  // Paragraphs
-  h = h.split('\n\n').map(chunk => {
-    chunk = chunk.trim();
-    if (!chunk) return '';
-    if (/^<(h[1-6]|ul|ol|pre|blockquote|hr|table|\x00CODE)/.test(chunk)) return chunk;
-    return `<p>${chunk.replace(/\n/g,' ')}</p>`;
-  }).join('\n');
-  // Restore code blocks
-  codeBlocks.forEach((block, idx) => {
-    h = h.replace(`\x00CODE${idx}\x00`, block);
+  // Lists
+  html = html.replace(/^(\s*[-*+] .+(\n|$))+/gm, block=>{
+    const items = block.trim().split('\n').map(l=>`<li>${l.replace(/^\s*[-*+] /,'')}</li>`).join('');
+    return `<ul>${items}</ul>`;
   });
-  return h;
+  html = html.replace(/^(\s*\d+\. .+(\n|$))+/gm, block=>{
+    const items = block.trim().split('\n').map(l=>`<li>${l.replace(/^\s*\d+\. /,'')}</li>`).join('');
+    return `<ol>${items}</ol>`;
+  });
+  // Paragraphs
+  html = html.replace(/\n{2,}/g,'</p><p>');
+  html = '<p>' + html + '</p>';
+  html = html.replace(/<p>\s*(<(?:h[1-6]|ul|ol|pre|blockquote|table|hr)[^>]*>)/g,'$1');
+  html = html.replace(/(<\/(?:h[1-6]|ul|ol|pre|blockquote|table|hr)>)\s*<\/p>/g,'$1');
+  return html;
 }
-
-// ═══════════════════════════════════════════════════════════
-// DOC CRUD
-// ═══════════════════════════════════════════════════════════
-function openNewDoc() {
-  docModalMode = 'new';
-  document.getElementById('docModalTitle').textContent = 'New Document';
-  document.getElementById('docName').value = '';
-  document.getElementById('docType').value = 'md';
-  document.getElementById('docModal').classList.add('on');
-  setTimeout(() => document.getElementById('docName').focus(), 150);
-}
-
-function openRenameModal(id) {
-  docModalMode = 'rename';
-  ctxTargetId = id;
-  const doc = DOCS.find(d => d.id === id);
-  if (!doc) return;
-  document.getElementById('docModalTitle').textContent = 'Rename Document';
-  document.getElementById('docName').value = doc.name;
-  document.getElementById('docType').value = doc.type;
-  document.getElementById('docModal').classList.add('on');
-  setTimeout(() => { const inp=document.getElementById('docName'); inp.focus(); inp.select(); }, 150);
-}
-
-function saveDocModal() {
-  const name = document.getElementById('docName').value.trim().replace(/[<>:"/\\|?*]/g,'');
-  const type = document.getElementById('docType').value;
-  if (!name) { toast('Name is required','err'); return; }
-
-  if (docModalMode === 'new') {
-    const doc = { id:uid(), name, type, content:'', createdAt:now(), updatedAt:null };
-    if (type === 'md') doc.content = `# ${name}\n\nStart writing here…\n`;
-    else if (type === 'json') doc.content = '{\n  \n}';
-    DOCS.unshift(doc);
-    persist();
-    closeModal('docModal');
-    renderFileTree();
-    openDoc(doc.id);
-    toast(`Created ${name}${ti(type).ext}`,'ok');
-  } else {
-    const doc = DOCS.find(d => d.id === ctxTargetId);
-    if (!doc) return;
-    doc.name = name;
-    doc.type = type;
-    doc.updatedAt = now();
-    persist();
-    closeModal('docModal');
-    renderFileTree();
-    renderTabs();
-    if (activeDocId === doc.id) renderEditor(doc);
-    toast('Renamed','ok');
-  }
-  autoPush();
-}
-
-function openDeleteModal(id) {
-  deleteTargetId = id;
-  const doc = DOCS.find(d => d.id === id);
-  if (!doc) return;
-  document.getElementById('delDocName').textContent = `"${doc.name}${ti(doc.type).ext}"`;
-  document.getElementById('delModal').classList.add('on');
-}
-
-function confirmDelete() {
-  if (!deleteTargetId) return;
-  DOCS = DOCS.filter(d => d.id !== deleteTargetId);
-  closeTab(deleteTargetId);
-  persist();
-  closeModal('delModal');
-  renderFileTree();
-  toast('Deleted','ok');
-  autoPush();
-  deleteTargetId = null;
-}
-
-function changeDocType(type) {
-  const doc = DOCS.find(d => d.id === activeDocId);
-  if (!doc) return;
-  doc.type = type;
-  doc.updatedAt = now();
-  persist();
-  renderEditor(doc);
-  renderFileTree();
-  renderTabs();
-}
-
-function saveCurrentDoc() {
-  const doc = DOCS.find(d => d.id === activeDocId);
-  if (!doc) return;
-  const ta = document.getElementById('mainEditor');
-  if (ta) { doc.content = ta.value; doc.updatedAt = now(); }
-  persist();
-  toast('Saved','ok');
-  autoPush();
-}
-
-function copyDocContent() {
-  const ta = document.getElementById('mainEditor');
-  if (!ta) return;
-  navigator.clipboard.writeText(ta.value).then(() => toast('Copied!','ok'));
-}
-
-// ═══════════════════════════════════════════════════════════
-// CONTEXT MENU
-// ═══════════════════════════════════════════════════════════
-function showCtx(e, id) {
-  e.preventDefault();
-  ctxTargetId = id;
-  const menu = document.getElementById('ctxMenu');
-  menu.style.left = e.clientX + 'px';
-  menu.style.top  = e.clientY + 'px';
-  menu.classList.add('show');
-}
-function ctxAction(action) {
-  document.getElementById('ctxMenu').classList.remove('show');
-  if (action === 'rename')    openRenameModal(ctxTargetId);
-  if (action === 'delete')    openDeleteModal(ctxTargetId);
-  if (action === 'duplicate') duplicateDoc(ctxTargetId);
-}
-function duplicateDoc(id) {
-  const doc = DOCS.find(d => d.id === id);
-  if (!doc) return;
-  const copy = { ...doc, id:uid(), name:doc.name+'-copy', createdAt:now(), updatedAt:null };
-  DOCS.splice(DOCS.indexOf(doc)+1, 0, copy);
-  persist(); renderFileTree(); openDoc(copy.id);
-  toast('Duplicated','ok');
-}
-document.addEventListener('click', () => document.getElementById('ctxMenu')?.classList.remove('show'));
 </script>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// GITHUB
-// ═══════════════════════════════════════════════════════════
-function initGhStatus() {
-  if (GH.token && GH.owner && GH.repo) {
-    setGhStatus('ok', GH.owner+'/'+GH.repo);
+// ============================================================
+// GITHUB INTEGRATION
+// ============================================================
+let _ghConfig = null;
+
+function ghConfig(){
+  if(!_ghConfig){
+    try{ _ghConfig = JSON.parse(localStorage.getItem('dv_gh_config')||'null'); } catch(e){ _ghConfig = null; }
+  }
+  return _ghConfig;
+}
+
+function loadGhConfig(){
+  _ghConfig = null;
+  const cfg = ghConfig();
+  if(cfg && cfg.token){
+    document.getElementById('ghToken').value = cfg.token||'';
+    document.getElementById('ghOwner').value = cfg.owner||'';
+    document.getElementById('ghRepo').value = cfg.repo||'';
+    document.getElementById('ghBranch').value = cfg.branch||'main';
+    setGhStatus('ok','Connected');
   } else {
-    setGhStatus('', 'Connect GitHub');
-  }
-  if (GH.branch) {
-    const br = document.getElementById('sbBranch');
-    if (br) br.textContent = '⎇ ' + GH.branch;
+    setGhStatus('','Not configured');
   }
 }
 
-function setGhStatus(state, text) {
+function saveGhConfig(){
+  const cfg = {
+    token: document.getElementById('ghToken').value.trim(),
+    owner: document.getElementById('ghOwner').value.trim(),
+    repo: document.getElementById('ghRepo').value.trim(),
+    branch: document.getElementById('ghBranch').value.trim()||'main'
+  };
+  if(!cfg.token||!cfg.owner||!cfg.repo){ toast('Fill all GitHub fields.','error'); return; }
+  localStorage.setItem('dv_gh_config', JSON.stringify(cfg));
+  _ghConfig = cfg;
+  closeModal('ghModal');
+  setGhStatus('ok','Connected');
+  toast('GitHub config saved!','success');
+}
+
+function openGhModal(){
+  loadGhConfig();
+  openModal('ghModal');
+}
+
+function setGhStatus(state, text){
   const dot = document.getElementById('ghDot');
-  const txt = document.getElementById('ghPillText');
-  if (dot) dot.className = 'gh-dot' + (state ? ' '+state : '');
-  if (txt) txt.textContent = text;
+  const pill = document.getElementById('ghPillText');
+  dot.className = 'gh-dot' + (state?' '+state:'');
+  if(pill) pill.textContent = text;
 }
 
-async function ghReq(method, path, body) {
-  if (!GH.token||!GH.owner||!GH.repo) throw new Error('GitHub not configured');
-  const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}${path}`, {
+async function ghRequest(method, path, body){
+  const cfg = ghConfig();
+  if(!cfg||!cfg.token) throw new Error('GitHub not configured');
+  const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`;
+  const opts = {
     method,
-    headers: {
-      'Authorization': 'token '+GH.token,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-      'User-Agent': 'DataVault-App'
-    },
-    body: body ? JSON.stringify(body) : undefined
-  });
-  if (!res.ok) { const e=await res.json().catch(()=>({})); throw new Error(e.message||'GitHub error '+res.status); }
-  return res.status===204 ? {} : res.json();
-}
-
-async function ghGetFile(path) {
-  try { return await ghReq('GET', `/contents/${path}`); }
-  catch(e) { if (e.message.includes('Not Found')||e.message.includes('404')) return null; throw e; }
-}
-
-async function ghPutFile(path, content, message, sha) {
-  const b64 = btoa(unescape(encodeURIComponent(content)));
-  const body = { message, content:b64, branch:GH.branch||'main' };
-  if (sha) body.sha = sha;
-  return ghReq('PUT', `/contents/${path}`, body);
-}
-
-async function pushToGitHub() {
-  if (!GH.token||!GH.owner||!GH.repo) { toast('Configure GitHub first','err'); return; }
-  setGhStatus('busy', 'Saving…');
-  try {
-    const payload = JSON.stringify({
-      meta:{savedAt:new Date().toISOString(),count:DOCS.length,version:'3.0'},
-      docs:DOCS
-    }, null, 2);
-    const existing = await ghGetFile('data/vault.json');
-    await ghPutFile('data/vault.json', payload,
-      `DataVault: save ${DOCS.length} docs — ${new Date().toISOString()}`,
-      existing?.sha||null);
-    setGhStatus('ok', GH.owner+'/'+GH.repo);
-    toast(`Saved ${DOCS.length} files to GitHub ✓`,'ok');
-  } catch(e) { setGhStatus('err','Sync failed'); toast('Push failed: '+e.message,'err'); }
-}
-
-async function pullFromGitHub() {
-  if (!GH.token||!GH.owner||!GH.repo) { toast('Configure GitHub first','err'); return; }
-  setGhStatus('busy','Loading…');
-  try {
-    const file = await ghGetFile('data/vault.json');
-    if (!file) { toast('No saved data in GitHub repo','warn'); setGhStatus('ok',GH.owner+'/'+GH.repo); return; }
-    const decoded = decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));
-    const parsed = JSON.parse(decoded);
-    DOCS = parsed.docs || parsed;
-    persist();
-    renderFileTree();
-    renderTabs();
-    setGhStatus('ok', GH.owner+'/'+GH.repo);
-    toast(`Loaded ${DOCS.length} files from GitHub ✓`,'ok');
-  } catch(e) { setGhStatus('err','Load failed'); toast('Pull failed: '+e.message,'err'); }
-}
-
-async function autoPush() {
-  if (!GH.token||!GH.owner||!GH.repo) return;
-  try {
-    const payload = JSON.stringify({
-      meta:{savedAt:new Date().toISOString(),count:DOCS.length,version:'3.0'},
-      docs:DOCS
-    }, null, 2);
-    const existing = await ghGetFile('data/vault.json');
-    await ghPutFile('data/vault.json', payload, `DataVault: auto-save`, existing?.sha||null);
-    setGhStatus('ok', GH.owner+'/'+GH.repo);
-  } catch(e) { setGhStatus('err','Sync failed'); }
-}
-
-function openGhModal() {
-  document.getElementById('ghToken').value  = GH.token||'';
-  document.getElementById('ghOwner').value  = GH.owner||'';
-  document.getElementById('ghRepo').value   = GH.repo||'';
-  document.getElementById('ghBranch').value = GH.branch||'main';
-  document.getElementById('ghTestResult').style.display = 'none';
-  const cid = localStorage.getItem('dv_gdrive_cid') || '';
-  document.getElementById('gdriveClientId').value = cid;
-  updateGdriveStatusInModal();
-  document.getElementById('ghOverlay').classList.add('on');
-}
-
-async function testGh() {
-  const token=document.getElementById('ghToken').value.trim();
-  const owner=document.getElementById('ghOwner').value.trim();
-  const repo =document.getElementById('ghRepo').value.trim();
-  const res  =document.getElementById('ghTestResult');
-  res.style.display='block';
-  res.style.background='#2d2d30'; res.style.color='#9d9d9d';
-  res.textContent='Testing…';
-  try {
-    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`,{
-      headers:{'Authorization':'token '+token,'User-Agent':'DataVault-App'}
-    });
-    const d = await r.json();
-    if (r.ok) {
-      res.style.background='rgba(78,201,176,0.1)'; res.style.color='#4ec9b0';
-      res.textContent=`✅ Connected: ${d.full_name} (${d.private?'private':'public'})`;
-    } else {
-      res.style.background='rgba(244,71,71,0.1)'; res.style.color='#f44747';
-      res.textContent='❌ '+d.message;
+    headers:{
+      'Authorization':'token '+cfg.token,
+      'Accept':'application/vnd.github.v3+json',
+      'Content-Type':'application/json'
     }
-  } catch(e) {
-    res.style.background='rgba(244,71,71,0.1)'; res.style.color='#f44747';
-    res.textContent='❌ '+e.message;
+  };
+  if(body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  if(!res.ok){
+    const err = await res.json().catch(()=>({}));
+    throw new Error(err.message||`GitHub API error ${res.status}`);
+  }
+  return res.status===204 ? null : res.json();
+}
+
+async function ghGetFile(filePath){
+  const cfg = ghConfig();
+  if(!cfg) return null;
+  try{
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${filePath}?ref=${cfg.branch||'main'}`;
+    const res = await fetch(url,{headers:{'Authorization':'token '+cfg.token,'Accept':'application/vnd.github.v3+json'}});
+    if(!res.ok) return null;
+    return res.json();
+  } catch(e){ return null; }
+}
+
+async function ghPutFile(filePath, content, message, sha){
+  const b64 = btoa(unescape(encodeURIComponent(content)));
+  const body = {message, content:b64, branch: ghConfig().branch||'main'};
+  if(sha) body.sha = sha;
+  return ghRequest('PUT', filePath, body);
+}
+
+async function ghPutBinaryFile(filePath, base64Content, message, sha){
+  const body = {message, content:base64Content, branch: ghConfig().branch||'main'};
+  if(sha) body.sha = sha;
+  return ghRequest('PUT', filePath, body);
+}
+
+async function ghDeleteFile(filePath, message, sha){
+  const body = {message, sha, branch: ghConfig().branch||'main'};
+  return ghRequest('DELETE', filePath, body);
+}
+
+async function testGhConnection(){
+  const cfg = {
+    token: document.getElementById('ghToken').value.trim(),
+    owner: document.getElementById('ghOwner').value.trim(),
+    repo: document.getElementById('ghRepo').value.trim(),
+    branch: document.getElementById('ghBranch').value.trim()||'main'
+  };
+  const res = document.getElementById('ghTestResult');
+  res.textContent = 'Testing…';
+  res.style.color = 'var(--amber)';
+  try{
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}`;
+    const r = await fetch(url,{headers:{'Authorization':'token '+cfg.token,'Accept':'application/vnd.github.v3+json'}});
+    if(r.ok){
+      const data = await r.json();
+      res.textContent = `✅ Connected to ${data.full_name}`;
+      res.style.color = 'var(--green)';
+    } else {
+      const err = await r.json().catch(()=>({}));
+      res.textContent = '❌ ' + (err.message||'Connection failed');
+      res.style.color = 'var(--red)';
+    }
+  } catch(e){
+    res.textContent = '❌ ' + e.message;
+    res.style.color = 'var(--red)';
   }
 }
 
-async function saveGh() {
-  const token =document.getElementById('ghToken').value.trim();
-  const owner =document.getElementById('ghOwner').value.trim();
-  const repo  =document.getElementById('ghRepo').value.trim();
-  const branch=document.getElementById('ghBranch').value.trim()||'main';
-  const cid   =document.getElementById('gdriveClientId').value.trim();
-  if (!token||!owner||!repo) { toast('Fill all GitHub fields','err'); return; }
-  GH = {token,owner,repo,branch};
-  localStorage.setItem('dv_gh', JSON.stringify(GH));
-  if (cid) localStorage.setItem('dv_gdrive_cid', cid);
-  closeModal('ghOverlay');
-  initGhStatus();
-  toast('GitHub saved — syncing…','ok');
-  await pushToGitHub();
+function scheduleGhPush(){
+  if(!ghConfig()) return;
+  if(ghPushTimer) clearTimeout(ghPushTimer);
+  setGhStatus('busy','Pending…');
+  ghPushTimer = setTimeout(()=>pushToGitHub(false, true), 3000);
 }
 
-// ═══════════════════════════════════════════════════════════
-// EXPORT / IMPORT
-// ═══════════════════════════════════════════════════════════
-function openDownloadModal() { document.getElementById('exportModal').classList.add('on'); }
+async function pushToGitHub(silent=false, auto=false){
+  const cfg = ghConfig();
+  if(!cfg){ if(!silent) toast('GitHub not configured.','error'); return; }
+  if(!silent) setGhStatus('busy','Pushing…');
+  try{
+    const content = JSON.stringify(records, null, 2);
+    const existing = await ghGetFile('data/records.json');
+    const sha = existing ? existing.sha : undefined;
+    await ghPutFile('data/records.json', content, auto?'DataVault: auto-sync':'DataVault: manual push', sha);
+    setGhStatus('ok','Synced');
+    if(!silent) toast('Pushed to GitHub!','success');
+  } catch(e){
+    setGhStatus('err','Error');
+    if(!silent) toast('Push failed: '+e.message,'error');
+  }
+}
 
-function exportJSON() {
-  const blob = new Blob([JSON.stringify({
-    meta:{exportedAt:new Date().toISOString(),count:DOCS.length},
-    docs:DOCS
-  },null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=`datavault-${new Date().toISOString().slice(0,10)}.json`;
+async function pullFromGitHub(silent=false){
+  const cfg = ghConfig();
+  if(!cfg){ if(!silent) toast('GitHub not configured.','error'); return; }
+  setGhStatus('busy','Pulling…');
+  try{
+    const file = await ghGetFile('data/records.json');
+    if(file && file.content){
+      const decoded = decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));
+      const pulled = JSON.parse(decoded);
+      records = pulled;
+      localStorage.setItem('dv_records', JSON.stringify(records));
+      renderRecordList();
+      updateRecordCount();
+      setGhStatus('ok','Synced');
+      if(!silent) toast('Pulled from GitHub!','success');
+    } else {
+      setGhStatus('ok','Connected');
+      if(!silent) toast('No records file found on GitHub.','info');
+    }
+  } catch(e){
+    setGhStatus('err','Error');
+    if(!silent) toast('Pull failed: '+e.message,'error');
+  }
+}
+
+// ============================================================
+// EXPORT / DOWNLOAD
+// ============================================================
+function openDownloadPanel(){ openModal('downloadModal'); }
+
+function downloadFile(content, filename, mime){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content],{type:mime}));
+  a.download = filename;
   a.click();
-  toast('JSON downloaded','ok');
+  URL.revokeObjectURL(a.href);
 }
 
-function exportCurrentFile() {
-  const doc = DOCS.find(d=>d.id===activeDocId);
-  if (!doc) { toast('Open a file first','warn'); return; }
-  const blob = new Blob([doc.content],{type:'text/plain'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=doc.name+ti(doc.type).ext;
-  a.click();
-  toast('Downloaded','ok');
+function exportJSON(){
+  downloadFile(JSON.stringify(records,null,2),'datavault-records.json','application/json');
+  toast('JSON downloaded!','success');
 }
 
-function importJSON(e) {
-  const file=e.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    try {
-      const parsed=JSON.parse(ev.target.result);
-      const docs=parsed.docs||parsed;
-      if(!Array.isArray(docs)) throw new Error('Invalid format');
-      const existing=new Set(DOCS.map(d=>d.id));
-      let added=0;
-      docs.forEach(d=>{ if(!existing.has(d.id)){DOCS.push(d);added++;} });
-      persist(); renderFileTree();
-      toast(`Imported ${added} files`,'ok');
-    } catch(err) { toast('Import failed: '+err.message,'err'); }
+function exportCSV(){
+  const cols = ['id','name','category','tags','info','createdAt','updatedAt'];
+  const rows = [cols.join(',')];
+  records.forEach(r=>{
+    rows.push(cols.map(c=>{
+      let v = c==='tags'?(r.tags||[]).join(';'):r[c]||'';
+      v = String(v).replace(/"/g,'""');
+      return `"${v}"`;
+    }).join(','));
+  });
+  downloadFile(rows.join('\n'),'datavault-records.csv','text/csv');
+  toast('CSV downloaded!','success');
+}
+
+function exportMarkdown(){
+  const lines = ['# DataVault Records\n'];
+  records.forEach((r,i)=>{
+    lines.push(`## ${i+1}. ${r.name}`);
+    lines.push(`**Category:** ${r.category||'general'}  `);
+    lines.push(`**Tags:** ${(r.tags||[]).join(', ')||'—'}  `);
+    lines.push(`**Created:** ${fmtDate(r.createdAt)}  `);
+    lines.push(`**Updated:** ${fmtDate(r.updatedAt)}\n`);
+    if(r.info) lines.push(`### Notes\n${r.info}\n`);
+    if(r.urls&&r.urls.length){
+      lines.push('### Links');
+      r.urls.forEach(u=>lines.push(`- [${u.label}](${u.href})`));
+      lines.push('');
+    }
+    if(r.code&&r.code.content){
+      lines.push(`### Code (${r.code.lang||''})\n\`\`\`${r.code.lang||''}\n${r.code.content}\n\`\`\`\n`);
+    }
+    if(r.readme) lines.push(`### README\n${r.readme}\n`);
+    lines.push('---\n');
+  });
+  downloadFile(lines.join('\n'),'datavault-records.md','text/markdown');
+  toast('Markdown downloaded!','success');
+}
+
+function importJSON(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const imported = JSON.parse(e.target.result);
+      if(!Array.isArray(imported)) throw new Error('Expected array');
+      records = imported;
+      saveRecords();
+      renderRecordList();
+      updateRecordCount();
+      toast(`Imported ${imported.length} records!`,'success');
+      closeModal('downloadModal');
+    } catch(err){
+      toast('Import failed: '+err.message,'error');
+    }
   };
   reader.readAsText(file);
-  e.target.value='';
-}
-
-// ═══════════════════════════════════════════════════════════
-// MODAL HELPERS
-// ═══════════════════════════════════════════════════════════
-function closeModal(id) { document.getElementById(id)?.classList.remove('on'); }
-function overlayClick(e,id) { if(e.target.id===id) closeModal(id); }
-
-// ═══════════════════════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════════════════════
-document.addEventListener('keydown', e => {
-  if (e.key==='Escape') {
-    ['ghOverlay','docModal','delModal','exportModal'].forEach(id => closeModal(id));
-    closeMediaViewer();
-  }
-  if (!authUnlocked) return;
-  if ((e.ctrlKey||e.metaKey) && e.key==='n') { e.preventDefault(); openNewDoc(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); saveCurrentDoc(); pushToGitHub(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); setActivity('search'); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='e') { e.preventDefault(); openDownloadModal(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='b') { e.preventDefault(); toggleSidebar(); }
-});
-</script>
-
-<script>
-// ═══════════════════════════════════════════════════════════
-// GOOGLE DRIVE INTEGRATION
-// ═══════════════════════════════════════════════════════════
-let gapiReady = false;
-let gdriveAuthed = false;
-let gdriveAccessToken = null;
-const GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
-const GDRIVE_DISCOVERY = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
-
-function initGdriveStatus() {
-  const cid = localStorage.getItem('dv_gdrive_cid');
-  if (cid && gdriveAuthed) {
-    setGdriveStatus('ok', 'Drive Connected');
-  } else {
-    setGdriveStatus('', 'Google Drive');
-  }
-}
-
-function setGdriveStatus(state, text) {
-  const dot = document.getElementById('gdriveDot');
-  const txt = document.getElementById('gdrivePillText');
-  if (dot) dot.className = 'gdrive-dot' + (state ? ' '+state : '');
-  if (txt) txt.textContent = text;
-}
-
-function updateGdriveStatusInModal() {
-  const el = document.getElementById('gdriveStatus');
-  if (!el) return;
-  if (gdriveAuthed) {
-    el.textContent = '✅ Connected';
-    el.style.color = '#4ec9b0';
-  } else {
-    el.textContent = 'Not connected';
-    el.style.color = '#6b6b6b';
-  }
-}
-
-function loadGapiIfNeeded() {
-  return new Promise((resolve, reject) => {
-    if (gapiReady) { resolve(); return; }
-    if (!window.gapi) {
-      // gapi script may not have loaded yet — try loading it
-      const s = document.createElement('script');
-      s.src = 'https://apis.google.com/js/api.js';
-      s.onload = () => initGapi(resolve, reject);
-      s.onerror = () => reject(new Error('Failed to load Google API script'));
-      document.head.appendChild(s);
-    } else {
-      initGapi(resolve, reject);
-    }
-  });
-}
-
-function initGapi(resolve, reject) {
-  gapi.load('client:auth2:picker', {
-    callback: () => {
-      gapiReady = true;
-      resolve();
-    },
-    onerror: () => reject(new Error('Failed to load gapi modules'))
-  });
-}
-
-async function connectGoogleDrive() {
-  const cid = document.getElementById('gdriveClientId').value.trim();
-  if (!cid) { toast('Enter your Google API Client ID first','err'); return; }
-  localStorage.setItem('dv_gdrive_cid', cid);
-  try {
-    await loadGapiIfNeeded();
-    await gapi.client.init({
-      clientId: cid,
-      scope: GDRIVE_SCOPE,
-      discoveryDocs: [GDRIVE_DISCOVERY]
-    });
-    const authInstance = gapi.auth2.getAuthInstance();
-    const user = await authInstance.signIn();
-    gdriveAccessToken = user.getAuthResponse().access_token;
-    gdriveAuthed = true;
-    setGdriveStatus('ok', 'Drive Connected');
-    updateGdriveStatusInModal();
-    toast('Google Drive connected ✓','ok');
-  } catch(e) {
-    toast('Google Drive auth failed: '+(e.error||e.message||e),'err');
-    setGdriveStatus('err', 'Drive Error');
-  }
-}
-
-async function ensureGdriveAuth() {
-  if (gdriveAuthed && gdriveAccessToken) return true;
-  const cid = localStorage.getItem('dv_gdrive_cid');
-  if (!cid) { toast('Connect Google Drive first (GitHub → Google Drive section)','warn'); return false; }
-  try {
-    await loadGapiIfNeeded();
-    await gapi.client.init({
-      clientId: cid,
-      scope: GDRIVE_SCOPE,
-      discoveryDocs: [GDRIVE_DISCOVERY]
-    });
-    const authInstance = gapi.auth2.getAuthInstance();
-    if (authInstance.isSignedIn.get()) {
-      gdriveAccessToken = authInstance.currentUser.get().getAuthResponse().access_token;
-      gdriveAuthed = true;
-      return true;
-    }
-    const user = await authInstance.signIn();
-    gdriveAccessToken = user.getAuthResponse().access_token;
-    gdriveAuthed = true;
-    setGdriveStatus('ok', 'Drive Connected');
-    return true;
-  } catch(e) {
-    toast('Google Drive auth failed: '+(e.error||e.message||e),'err');
-    return false;
-  }
-}
-
-async function gdriveUploadFile(name, content, mimeType) {
-  if (!await ensureGdriveAuth()) return;
-  const boundary = '-------314159265358979323846';
-  const delimiter = '\r\n--' + boundary + '\r\n';
-  const closeDelimiter = '\r\n--' + boundary + '--';
-  const metadata = JSON.stringify({ name, mimeType });
-  const body = delimiter +
-    'Content-Type: application/json\r\n\r\n' + metadata +
-    delimiter + 'Content-Type: ' + mimeType + '\r\n\r\n' +
-    content + closeDelimiter;
-  const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + gdriveAccessToken,
-      'Content-Type': 'multipart/related; boundary="' + boundary + '"'
-    },
-    body
-  });
-  if (!res.ok) throw new Error('Drive upload failed: ' + res.status);
-  return res.json();
-}
-
-async function gdriveUploadCurrent() {
-  const doc = DOCS.find(d => d.id === activeDocId);
-  if (!doc) { toast('Open a file first','warn'); return; }
-  try {
-    const info = ti(doc.type);
-    await gdriveUploadFile(doc.name + info.ext, doc.content, 'text/plain');
-    toast(`Uploaded "${doc.name}${info.ext}" to Google Drive ✓`,'ok');
-  } catch(e) { toast('Drive upload failed: '+e.message,'err'); }
-}
-
-async function gdriveUploadAll() {
-  if (!DOCS.length) { toast('No files to upload','warn'); return; }
-  try {
-    const json = JSON.stringify({meta:{exportedAt:new Date().toISOString()},docs:DOCS},null,2);
-    await gdriveUploadFile(`datavault-${new Date().toISOString().slice(0,10)}.json`, json, 'application/json');
-    toast(`Uploaded all ${DOCS.length} files to Google Drive ✓`,'ok');
-  } catch(e) { toast('Drive upload failed: '+e.message,'err'); }
-}
-
-async function gdriveImport() {
-  if (!await ensureGdriveAuth()) return;
-  try {
-    await loadGapiIfNeeded();
-    const cid = localStorage.getItem('dv_gdrive_cid');
-    const picker = new google.picker.PickerBuilder()
-      .addView(google.picker.ViewId.DOCS)
-      .setOAuthToken(gdriveAccessToken)
-      .setDeveloperKey('')
-      .setCallback(async (data) => {
-        if (data.action === google.picker.Action.PICKED) {
-          const fileId = data.docs[0].id;
-          const fileName = data.docs[0].name;
-          const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
-            headers: { 'Authorization': 'Bearer ' + gdriveAccessToken }
-          });
-          const text = await res.text();
-          try {
-            const parsed = JSON.parse(text);
-            const docs = parsed.docs || parsed;
-            if (Array.isArray(docs)) {
-              const existing = new Set(DOCS.map(d => d.id));
-              let added = 0;
-              docs.forEach(d => { if (!existing.has(d.id)) { DOCS.push(d); added++; } });
-              persist(); renderFileTree();
-              toast(`Imported ${added} files from Google Drive ✓`,'ok');
-            } else {
-              // Import as a new text doc
-              const doc = { id:uid(), name:fileName.replace(/\.[^.]+$/,''), type:'txt', content:text, createdAt:now(), updatedAt:null };
-              DOCS.unshift(doc); persist(); renderFileTree(); openDoc(doc.id);
-              toast(`Imported "${fileName}" from Google Drive ✓`,'ok');
-            }
-          } catch {
-            const doc = { id:uid(), name:fileName.replace(/\.[^.]+$/,''), type:'txt', content:text, createdAt:now(), updatedAt:null };
-            DOCS.unshift(doc); persist(); renderFileTree(); openDoc(doc.id);
-            toast(`Imported "${fileName}" from Google Drive ✓`,'ok');
-          }
-        }
-      })
-      .build();
-    picker.setVisible(true);
-  } catch(e) { toast('Drive picker failed: '+e.message,'err'); }
+  input.value = '';
 }
 </script>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// MEDIA & FILES ENGINE
-// ═══════════════════════════════════════════════════════════
-let MEDIA = JSON.parse(localStorage.getItem('dv_media') || '[]');
-let mediaCategory = 'all';
-let mediaView = 'grid';
-let mediaSearchQ = '';
+// ============================================================
+// FILE MANAGER
+// ============================================================
+let mediaFiles = [];
+let fmCategoryFilter = 'all';
 
-const MEDIA_CATS = {
-  all:    { icon:'🗂',  label:'All Files' },
-  image:  { icon:'🖼',  label:'Images' },
-  video:  { icon:'🎬',  label:'Videos' },
-  audio:  { icon:'🎵',  label:'Audio' },
-  archive:{ icon:'🗜',  label:'Archives' },
-  other:  { icon:'📄',  label:'Other' },
-};
+const FM_CATEGORIES = [
+  {id:'all', label:'🗂 All Files', types:null},
+  {id:'image', label:'🖼 Images', types:['image']},
+  {id:'video', label:'🎬 Videos', types:['video']},
+  {id:'audio', label:'🎵 Audio', types:['audio']},
+  {id:'archive', label:'🗜 Archives', types:['archive']},
+  {id:'code', label:'💻 Code', types:['code']},
+  {id:'document', label:'📄 Documents', types:['document']},
+  {id:'trash', label:'🗑 Trash', types:null},
+];
 
-const MIME_CAT = {
-  'image/':   'image',
-  'video/':   'video',
-  'audio/':   'audio',
-  'application/zip':    'archive',
-  'application/x-rar':  'archive',
-  'application/x-7z':   'archive',
-  'application/x-tar':  'archive',
-  'application/gzip':   'archive',
-};
+function loadMedia(){
+  try{ mediaFiles = JSON.parse(localStorage.getItem('dv_media')||'[]'); } catch(e){ mediaFiles=[]; }
+}
 
-function getMimeCategory(mime) {
-  for (const [prefix, cat] of Object.entries(MIME_CAT)) {
-    if (mime.startsWith(prefix)) return cat;
+function saveMedia(){
+  localStorage.setItem('dv_media', JSON.stringify(mediaFiles));
+}
+
+function getFileType(ext){
+  return FILE_TYPES[ext.toLowerCase()] || 'document';
+}
+
+function openFileManager(){
+  loadMedia();
+  fmCategoryFilter = 'all';
+  renderFmSidebar();
+  renderFileGrid();
+  document.getElementById('fileManager').style.display = 'flex';
+}
+
+function closeFileManager(){
+  document.getElementById('fileManager').style.display = 'none';
+}
+
+function renderFmSidebar(){
+  const sidebar = document.getElementById('fmSidebar');
+  const active = mediaFiles.filter(f=>!f.trashedAt);
+  const trashed = mediaFiles.filter(f=>f.trashedAt);
+  sidebar.innerHTML = FM_CATEGORIES.map(cat=>{
+    let count = 0;
+    if(cat.id==='all') count = active.length;
+    else if(cat.id==='trash') count = trashed.length;
+    else count = active.filter(f=>cat.types&&cat.types.includes(f.category)).length;
+    return `<button class="fm-cat-btn ${fmCategoryFilter===cat.id?'active':''}" onclick="setFmCategory('${cat.id}')">
+      <span>${cat.label}</span>
+      <span class="fm-cat-count">${count}</span>
+    </button>`;
+  }).join('');
+}
+
+function setFmCategory(cat){
+  fmCategoryFilter = cat;
+  renderFmSidebar();
+  renderFileGrid();
+  document.getElementById('emptyTrashBtn').style.display = cat==='trash'?'flex':'none';
+}
+
+function renderFileGrid(){
+  const grid = document.getElementById('fmGrid');
+  const search = (document.getElementById('fmSearch').value||'').toLowerCase();
+  let files;
+  if(fmCategoryFilter==='trash'){
+    files = mediaFiles.filter(f=>f.trashedAt);
+  } else if(fmCategoryFilter==='all'){
+    files = mediaFiles.filter(f=>!f.trashedAt);
+  } else {
+    files = mediaFiles.filter(f=>!f.trashedAt && f.category===fmCategoryFilter);
   }
-  return 'other';
-}
-
-function getFileIcon(cat, mime) {
-  if (cat === 'image') return '🖼';
-  if (cat === 'video') return '🎬';
-  if (cat === 'audio') return '🎵';
-  if (cat === 'archive') return '🗜';
-  if ((mime||'').includes('pdf')) return '📕';
-  if ((mime||'').includes('word') || (mime||'').includes('document')) return '📝';
-  if ((mime||'').includes('sheet') || (mime||'').includes('excel')) return '📊';
-  return '📄';
-}
-
-function fmtSize(bytes) {
-  if (!bytes) return '0 B';
-  if (bytes < 1024) return bytes + ' B';
-  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
-  if (bytes < 1024*1024*1024) return (bytes/1024/1024).toFixed(1) + ' MB';
-  return (bytes/1024/1024/1024).toFixed(2) + ' GB';
-}
-
-function persistMedia() {
-  localStorage.setItem('dv_media', JSON.stringify(MEDIA));
-}
-
-function openMediaPanel() {
-  const panel = document.getElementById('mediaPanel');
-  panel.style.display = 'flex';
-  renderMediaPanel();
-}
-
-function closeMediaPanel() {
-  document.getElementById('mediaPanel').style.display = 'none';
-  document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('actFiles')?.classList.add('active');
-}
-
-function renderMediaPanel() {
-  const panel = document.getElementById('mediaPanel');
-  const counts = {};
-  MEDIA.forEach(m => {
-    counts[m.category] = (counts[m.category]||0) + 1;
-    counts.all = (counts.all||0) + 1;
-  });
-
-  panel.innerHTML = `
-    <div class="media-titlebar">
-      <h2>🗂 Media & Files</h2>
-      <button class="tb-btn" onclick="toggleMediaView()" title="Toggle grid/list view">⊞ ${mediaView==='grid'?'List':'Grid'}</button>
-      <button class="tb-btn" onclick="closeMediaPanel()" style="margin-left:4px">✕ Close</button>
-    </div>
-    <div class="media-body">
-      <div class="media-sidebar">
-        ${Object.entries(MEDIA_CATS).map(([key,cat])=>`
-          <div class="media-cat${mediaCategory===key?' active':''}" onclick="setMediaCat('${key}')">
-            <span>${cat.icon}</span>
-            <span>${cat.label}</span>
-            <span class="media-cat-count">${counts[key]||0}</span>
-          </div>`).join('')}
-        <div style="flex:1"></div>
-        <div style="padding:12px 16px;border-top:1px solid #333;margin-top:8px">
-          <div style="font-size:10px;color:#6b6b6b;margin-bottom:6px">STORAGE INFO</div>
-          <div style="font-size:11px;color:#9d9d9d">GitHub: <span style="color:#4ec9b0">media/</span></div>
-          <div style="font-size:10px;color:#6b6b6b;margin-top:4px">Max per file: 24MB via API<br>Larger files: stored as data URL locally</div>
-        </div>
-      </div>
-      <div class="media-main">
-        <div class="media-toolbar">
-          <input class="media-search" type="text" placeholder="Search files…" value="${escHtml(mediaSearchQ)}" oninput="mediaSearchQ=this.value;renderMediaGrid()">
-          <label class="media-upload-btn">
-            ⬆ Upload Files
-            <input type="file" multiple accept="*/*" onchange="handleMediaUpload(event)" style="display:none">
-          </label>
-          <div style="font-size:11px;color:#6b6b6b;margin-left:4px">${MEDIA.length} file${MEDIA.length!==1?'s':''}</div>
-        </div>
-        <div id="mediaDropZone" class="media-drop-zone"
-          ondragover="event.preventDefault();this.classList.add('drag-over')"
-          ondragleave="this.classList.remove('drag-over')"
-          ondrop="handleMediaDrop(event)">
-          📂 Drag &amp; drop files here, or click Upload above<br>
-          <span style="font-size:11px;color:#6b6b6b">Images, Videos, Audio, ZIP, RAR, 7z, PDF and more</span>
-        </div>
-        <div class="media-grid${mediaView==='list'?' list-view':''}" id="mediaGrid"></div>
-      </div>
-    </div>`;
-
-  renderMediaGrid();
-}
-
-function renderMediaGrid() {
-  const grid = document.getElementById('mediaGrid');
-  if (!grid) return;
-  let items = MEDIA.filter(m => {
-    const catOk = mediaCategory === 'all' || m.category === mediaCategory;
-    const qOk   = !mediaSearchQ || m.name.toLowerCase().includes(mediaSearchQ.toLowerCase());
-    return catOk && qOk;
-  });
-
-  if (!items.length) {
-    grid.innerHTML = `<div class="media-empty">
-      <div class="media-empty-icon">${MEDIA_CATS[mediaCategory]?.icon||'📂'}</div>
-      <div style="font-size:14px;color:#9d9d9d">No files yet</div>
-      <div style="font-size:12px">Upload files using the button above or drag &amp; drop</div>
-    </div>`;
+  if(search) files = files.filter(f=>f.name.toLowerCase().includes(search));
+  document.getElementById('fmFileCount').textContent = files.length + ' file' + (files.length!==1?'s':'');
+  if(!files.length){
+    grid.innerHTML = `<div class="fm-empty" style="grid-column:1/-1"><div class="fm-empty-icon">📭</div><div>${fmCategoryFilter==='trash'?'Trash is empty':'No files here yet'}</div></div>`;
     return;
   }
-
-  grid.innerHTML = items.map(m => {
-    const isImg = m.category === 'image';
-    const isVid = m.category === 'video';
-    const thumb = isImg && m.dataUrl
-      ? `<img src="${m.dataUrl}" alt="${escHtml(m.name)}" loading="lazy">`
-      : isVid && m.dataUrl
-      ? `<video src="${m.dataUrl}" muted></video>`
-      : `<span>${getFileIcon(m.category, m.mimeType||'')}</span>`;
-
-    return `<div class="media-card${mediaView==='list'?' list-view':''}" onclick="openMediaViewer('${m.id}')">
-      <div class="media-thumb">${thumb}</div>
-      <div class="media-info">
-        <div class="media-name" title="${escHtml(m.name)}">${escHtml(m.name)}</div>
-        <div class="media-meta">
-          <span>${fmtSize(m.size||0)}</span>
-          <span>${m.category}</span>
-        </div>
-      </div>
-      <div class="media-card-actions">
-        <button class="mca-btn" onclick="event.stopPropagation();downloadMedia('${m.id}')" title="Download">⬇</button>
-        <button class="mca-btn del" onclick="event.stopPropagation();deleteMedia('${m.id}')" title="Delete">🗑</button>
-      </div>
+  grid.innerHTML = files.map(f=>{
+    const nt = TYPE_NEON[f.category]||TYPE_NEON.document;
+    const isTrash = !!f.trashedAt;
+    const actions = isTrash
+      ? `<button class="fm-act-btn" style="color:${nt.color};border-color:${nt.color};background:transparent" onclick="event.stopPropagation();restoreFile('${f.id}')">RESTORE</button>
+         <button class="fm-act-btn" style="color:#ff4f6d;border-color:#ff4f6d;background:transparent" onclick="event.stopPropagation();deleteFilePermanent('${f.id}')">DELETE</button>`
+      : `<button class="fm-act-btn" style="color:${nt.color};border-color:${nt.color};background:transparent" onclick="event.stopPropagation();openFileViewer('${f.id}')">OPEN</button>
+         <button class="fm-act-btn" style="color:var(--t2);border-color:var(--b2);background:transparent" onclick="event.stopPropagation();downloadMediaFile('${f.id}')">DL</button>
+         <button class="fm-act-btn" style="color:#ff4f6d;border-color:#ff4f6d;background:transparent" onclick="event.stopPropagation();trashFile('${f.id}')">DEL</button>`;
+    return `<div class="fm-card ${nt.neonClass}" onclick="openFileViewer('${f.id}')">
+      <div class="fm-card-icon" style="color:${nt.color}">${nt.icon}</div>
+      <div class="fm-card-name" title="${escHtml(f.name)}">${escHtml(f.name)}</div>
+      <div class="fm-card-meta">${fmtSize(f.size)}</div>
+      <div class="fm-card-meta">${fmtDate(f.uploadedAt).split(' ')[0]}</div>
+      <div class="fm-card-actions">${actions}</div>
     </div>`;
   }).join('');
 }
 
-function setMediaCat(cat) {
-  mediaCategory = cat;
-  renderMediaPanel();
+function trashFile(id){
+  const f = mediaFiles.find(m=>m.id===id);
+  if(!f) return;
+  f.trashedAt = nowISO();
+  saveMedia();
+  renderFmSidebar();
+  renderFileGrid();
+  toast('Moved to trash.','info');
 }
 
-function toggleMediaView() {
-  mediaView = mediaView === 'grid' ? 'list' : 'grid';
-  renderMediaPanel();
-}
-</script>
-
-<script>
-// ═══════════════════════════════════════════════════════════
-// MEDIA UPLOAD
-// ═══════════════════════════════════════════════════════════
-async function handleMediaDrop(e) {
-  e.preventDefault();
-  const dz = document.getElementById('mediaDropZone');
-  if (dz) dz.classList.remove('drag-over');
-  const files = Array.from(e.dataTransfer?.files || []);
-  if (files.length) await uploadMediaFiles(files);
+function restoreFile(id){
+  const f = mediaFiles.find(m=>m.id===id);
+  if(!f) return;
+  delete f.trashedAt;
+  saveMedia();
+  renderFmSidebar();
+  renderFileGrid();
+  toast('File restored.','success');
 }
 
-async function handleMediaUpload(e) {
-  const files = Array.from(e.target.files || []);
-  if (files.length) await uploadMediaFiles(files);
-  e.target.value = '';
-}
-
-async function uploadMediaFiles(files) {
-  const prog = document.getElementById('uploadProgress');
-  const bar  = document.getElementById('upBar');
-  const stat = document.getElementById('upStatus');
-  prog.style.display = 'block';
-
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    stat.textContent = `(${i+1}/${files.length}) ${file.name}`;
-    bar.style.width = Math.round((i / files.length) * 100) + '%';
-
-    const cat = getMimeCategory(file.type || '');
-    const id  = uid();
-    const MAX_GITHUB = 24 * 1024 * 1024;
-    const MAX_LOCAL  = 5  * 1024 * 1024;
-
-    let dataUrl = null;
-    let ghPath  = null;
-
-    // Read as base64 data URL
-    const b64 = await fileToBase64(file);
-
-    // Store dataUrl locally only if file is small enough
-    if (file.size <= MAX_LOCAL) {
-      dataUrl = b64;
-    }
-
-    // Push to GitHub if configured and within size limit
-    if (GH.token && GH.owner && GH.repo && file.size <= MAX_GITHUB) {
-      try {
-        stat.textContent = `Uploading to GitHub: ${file.name}`;
-        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        ghPath = `media/${cat}/${id}_${safeName}`;
-        const rawB64 = b64.split(',')[1];
-        await ghReqRaw('PUT', `/contents/${ghPath}`, {
-          message: `DataVault: upload ${file.name}`,
-          content: rawB64,
-          branch: GH.branch || 'main'
-        });
-      } catch(err) {
-        console.warn('GitHub upload failed:', err.message);
-        ghPath = null;
-        toast(`GitHub upload failed for ${file.name}: ${err.message}`, 'warn');
-      }
-    } else if (file.size > MAX_GITHUB) {
-      toast(`${file.name} (${fmtSize(file.size)}) exceeds 24MB GitHub limit. Stored locally only.`, 'warn');
-    }
-
-    const item = {
-      id, name: file.name,
-      type: file.type || 'application/octet-stream',
-      mimeType: file.type || 'application/octet-stream',
-      category: cat, size: file.size,
-      dataUrl,
-      ghPath,
-      createdAt: now()
-    };
-
-    MEDIA.unshift(item);
-    persistMedia();
-    bar.style.width = Math.round(((i+1) / files.length) * 100) + '%';
+function deleteFilePermanent(id){
+  const f = mediaFiles.find(m=>m.id===id);
+  if(!f) return;
+  if(!confirm(`Permanently delete "${f.name}"?`)) return;
+  // Try to delete from GitHub
+  if(f.ghPath && ghConfig()){
+    ghGetFile(f.ghPath).then(existing=>{
+      if(existing&&existing.sha) ghDeleteFile(f.ghPath,'DataVault: delete file',existing.sha).catch(()=>{});
+    });
   }
-
-  prog.style.display = 'none';
-  toast(`Uploaded ${files.length} file${files.length!==1?'s':''}`, 'ok');
-  renderMediaPanel();
+  mediaFiles = mediaFiles.filter(m=>m.id!==id);
+  saveMedia();
+  renderFmSidebar();
+  renderFileGrid();
+  toast('File permanently deleted.','info');
 }
 
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
+function emptyTrash(){
+  const trashed = mediaFiles.filter(f=>f.trashedAt);
+  if(!trashed.length){ toast('Trash is already empty.','info'); return; }
+  if(!confirm(`Permanently delete ${trashed.length} file(s)?`)) return;
+  trashed.forEach(f=>{
+    if(f.ghPath && ghConfig()){
+      ghGetFile(f.ghPath).then(existing=>{
+        if(existing&&existing.sha) ghDeleteFile(f.ghPath,'DataVault: empty trash',existing.sha).catch(()=>{});
+      });
+    }
+  });
+  mediaFiles = mediaFiles.filter(f=>!f.trashedAt);
+  saveMedia();
+  renderFmSidebar();
+  renderFileGrid();
+  toast('Trash emptied.','success');
+}
+
+function downloadMediaFile(id){
+  const f = mediaFiles.find(m=>m.id===id);
+  if(!f) return;
+  if(f.dataUrl){
+    const a = document.createElement('a');
+    a.href = f.dataUrl;
+    a.download = f.name;
+    a.click();
+  } else if(f.ghPath && ghConfig()){
+    const cfg = ghConfig();
+    const url = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch||'main'}/${f.ghPath}`;
+    window.open(url,'_blank');
+  } else {
+    toast('No download source available.','error');
+  }
+}
+
+// ============================================================
+// FILE UPLOAD
+// ============================================================
+function fmDragOver(e){ e.preventDefault(); document.getElementById('fmDropZone').classList.add('drag'); }
+function fmDragLeave(e){ document.getElementById('fmDropZone').classList.remove('drag'); }
+function fmDrop(e){
+  e.preventDefault();
+  document.getElementById('fmDropZone').classList.remove('drag');
+  handleFileUpload(e.dataTransfer.files);
+}
+
+async function handleFileUpload(fileList){
+  if(!fileList||!fileList.length) return;
+  const progress = document.getElementById('fmProgress');
+  const bar = document.getElementById('fmProgressBar');
+  progress.style.display = 'block';
+  bar.style.width = '0%';
+  const total = fileList.length;
+  for(let i=0;i<total;i++){
+    const file = fileList[i];
+    bar.style.width = Math.round(((i)/total)*100)+'%';
+    await uploadSingleFile(file);
+    bar.style.width = Math.round(((i+1)/total)*100)+'%';
+  }
+  setTimeout(()=>{ progress.style.display='none'; bar.style.width='0%'; },800);
+  saveMedia();
+  renderFmSidebar();
+  renderFileGrid();
+  toast(`Uploaded ${total} file(s)!`,'success');
+}
+
+async function uploadSingleFile(file){
+  const ext = file.name.split('.').pop().toLowerCase();
+  const category = getFileType(ext);
+  const id = 'f_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  const meta = {
+    id, name:file.name, ext, mimeType:file.type||'application/octet-stream',
+    category, size:file.size, ghPath:null, dataUrl:null,
+    uploadedAt:nowISO(), trashedAt:null
+  };
+  const MB24 = 24*1024*1024;
+  const MB5 = 5*1024*1024;
+  // Read as base64
+  const b64 = await fileToBase64(file);
+  const rawB64 = b64.split(',')[1]||b64;
+  // Store dataUrl for small files
+  if(file.size <= MB5){
+    meta.dataUrl = b64;
+  }
+  if(file.size > MB24){
+    toast(`"${file.name}" exceeds 24MB — stored locally only.`,'info');
+    if(file.size <= MB5) meta.dataUrl = b64;
+    mediaFiles.push(meta);
+    return;
+  }
+  // Push to GitHub
+  const cfg = ghConfig();
+  if(cfg){
+    const ghPath = `media/${category}/${id}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+    meta.ghPath = ghPath;
+    try{
+      await ghPutBinaryFile(ghPath, rawB64, `DataVault: upload ${file.name}`, undefined);
+    } catch(e){
+      toast(`GitHub upload failed for "${file.name}": ${e.message}`,'error');
+      meta.ghPath = null;
+    }
+  }
+  mediaFiles.push(meta);
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
     const reader = new FileReader();
-    reader.onload  = e => resolve(e.target.result);
+    reader.onload = e=>resolve(e.target.result);
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
 }
-
-async function ghReqRaw(method, path, body) {
-  if (!GH.token||!GH.owner||!GH.repo) throw new Error('GitHub not configured');
-  const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}${path}`, {
-    method,
-    headers: {
-      'Authorization': 'token '+GH.token,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-      'User-Agent': 'DataVault-App'
-    },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) { const e=await res.json().catch(()=>({})); throw new Error(e.message||'GitHub error '+res.status); }
-  return res.status===204 ? {} : res.json();
-}
-
-// ═══════════════════════════════════════════════════════════
-// MEDIA VIEWER
-// ═══════════════════════════════════════════════════════════
-function openMediaViewer(id) {
-  const m = MEDIA.find(x => x.id === id);
-  if (!m) return;
-  const viewer  = document.getElementById('mediaViewer');
-  const content = document.getElementById('mediaViewerContent');
-  const name    = document.getElementById('mediaViewerName');
-  const actions = document.getElementById('mediaViewerActions');
-
-  name.textContent = m.name + ' · ' + fmtSize(m.size||0);
-
-  if (m.category === 'image' && m.dataUrl) {
-    content.innerHTML = `<img src="${m.dataUrl}" alt="${escHtml(m.name)}">`;
-  } else if (m.category === 'video' && m.dataUrl) {
-    content.innerHTML = `<video src="${m.dataUrl}" controls autoplay style="max-width:90vw;max-height:75vh;border-radius:4px"></video>`;
-  } else if (m.category === 'audio' && m.dataUrl) {
-    content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">🎵</div><audio src="${m.dataUrl}" controls autoplay></audio>`;
-  } else if (m.ghPath) {
-    const rawUrl = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch||'main'}/${m.ghPath}`;
-    const ghUrl  = `https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}`;
-    // Try to show image from GitHub raw URL
-    if (m.category === 'image') {
-      content.innerHTML = `<img src="${rawUrl}" alt="${escHtml(m.name)}" onerror="this.style.display='none'">`;
-    } else {
-      content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
-        <div style="color:#9d9d9d;font-size:13px;margin-bottom:8px">File stored on GitHub</div>
-        <a href="${ghUrl}" target="_blank" style="color:#569cd6;font-size:12px;text-decoration:none">↗ View on GitHub</a>`;
-    }
-  } else {
-    content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
-      <div style="color:#9d9d9d;font-size:13px">Preview not available</div>`;
-  }
-
-  const ghUrl = m.ghPath ? `https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}` : '';
-  actions.innerHTML = `
-    <button class="tb-btn" onclick="downloadMedia('${id}')" style="background:#0e639c;border-color:#0e639c;color:#fff">⬇ Download</button>
-    ${ghUrl ? `<a href="${ghUrl}" target="_blank" class="tb-btn" style="text-decoration:none;display:flex;align-items:center;gap:4px">🐙 View on GitHub</a>` : ''}
-    <button class="tb-btn" onclick="deleteMedia('${id}');closeMediaViewer()" style="color:#f44747;border-color:#f44747">🗑 Delete</button>`;
-
-  viewer.style.display = 'flex';
-}
-
-function closeMediaViewer(e) {
-  if (e && e.target !== document.getElementById('mediaViewer')) return;
-  const viewer = document.getElementById('mediaViewer');
-  if (!viewer) return;
-  viewer.style.display = 'none';
-  const content = document.getElementById('mediaViewerContent');
-  if (content) {
-    content.querySelectorAll('video,audio').forEach(el => { el.pause(); el.src=''; });
-    content.innerHTML = '';
-  }
-}
-
-function downloadMedia(id) {
-  const m = MEDIA.find(x => x.id === id);
-  if (!m) return;
-  if (m.dataUrl) {
-    const a = document.createElement('a');
-    a.href = m.dataUrl;
-    a.download = m.name;
-    a.click();
-  } else if (m.ghPath) {
-    const rawUrl = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch||'main'}/${m.ghPath}`;
-    window.open(rawUrl, '_blank');
-  } else {
-    toast('File data not available', 'err');
-  }
-}
-
-async function deleteMedia(id) {
-  const m = MEDIA.find(x => x.id === id);
-  if (!m) return;
-  if (!confirm(`Delete "${m.name}"?`)) return;
-
-  if (m.ghPath && GH.token && GH.owner && GH.repo) {
-    try {
-      const file = await ghGetFile(m.ghPath);
-      if (file?.sha) {
-        await ghReqRaw('DELETE', `/contents/${m.ghPath}`, {
-          message: `DataVault: delete ${m.name}`,
-          sha: file.sha,
-          branch: GH.branch || 'main'
-        });
-      }
-    } catch(e) { console.warn('GitHub delete failed:', e.message); }
-  }
-
-  MEDIA = MEDIA.filter(x => x.id !== id);
-  persistMedia();
-  renderMediaPanel();
-  toast('Deleted', 'ok');
-}
 </script>
 
+<script>
+// ============================================================
+// FILE VIEWER
+// ============================================================
+let currentViewFile = null;
+
+function openFileViewer(id){
+  const f = mediaFiles.find(m=>m.id===id);
+  if(!f) return;
+  currentViewFile = f;
+  document.getElementById('fvTitle').textContent = f.name;
+  const body = document.getElementById('fvBody');
+  const footer = document.getElementById('fvFooter');
+  const nt = TYPE_NEON[f.category]||TYPE_NEON.document;
+  const cfg = ghConfig();
+  const ghRawUrl = (f.ghPath && cfg)
+    ? `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch||'main'}/${f.ghPath}`
+    : null;
+  const src = f.dataUrl || ghRawUrl;
+
+  let html = '';
+  if(f.category==='image'){
+    if(src){
+      html = `<div class="img-viewer"><img src="${src}" alt="${escHtml(f.name)}" style="max-width:100%;max-height:55vh;object-fit:contain"></div>`;
+    } else {
+      html = `<div style="color:var(--t2);padding:20px;text-align:center">No preview available. <a href="${ghRawUrl||'#'}" target="_blank">View on GitHub</a></div>`;
+    }
+  } else if(f.category==='video'){
+    if(src){
+      html = `<div class="vid-viewer"><video controls style="width:100%;max-height:55vh;border-radius:var(--r);border:1px solid var(--purple);box-shadow:0 0 20px rgba(168,85,247,0.3)"><source src="${src}" type="${f.mimeType}">Your browser does not support video.</video></div>`;
+    } else {
+      html = `<div style="color:var(--t2);padding:20px;text-align:center">No preview. <a href="${ghRawUrl||'#'}" target="_blank">View on GitHub</a></div>`;
+    }
+  } else if(f.category==='audio'){
+    html = buildAudioPlayer(f, src);
+  } else if(f.category==='code'){
+    html = buildCodeViewer(f, src, ghRawUrl);
+  } else {
+    // Documents and archives
+    html = `<div class="fv-info-card">
+      <div class="fv-info-item"><label>Filename</label><span>${escHtml(f.name)}</span></div>
+      <div class="fv-info-item"><label>Type</label><span>${escHtml(f.mimeType)}</span></div>
+      <div class="fv-info-item"><label>Size</label><span>${fmtSize(f.size)}</span></div>
+      <div class="fv-info-item"><label>Uploaded</label><span>${fmtDate(f.uploadedAt)}</span></div>
+      ${f.ghPath?`<div class="fv-info-item" style="grid-column:1/-1"><label>GitHub Path</label><span>${escHtml(f.ghPath)}</span></div>`:''}
+    </div>
+    ${ghRawUrl?`<div style="margin-top:12px"><a href="${ghRawUrl}" target="_blank" class="btn btn-ghost" style="display:inline-flex">🔗 View on GitHub</a></div>`:''}`;
+  }
+  body.innerHTML = html;
+  // Setup audio player if needed
+  if(f.category==='audio' && src){
+    setupAudioPlayer(src);
+  }
+  // Highlight code
+  if(f.category==='code'){
+    body.querySelectorAll('pre code').forEach(el=>hljs.highlightElement(el));
+  }
+  // Download button
+  const dlBtn = document.getElementById('fvDownloadBtn');
+  dlBtn.onclick = ()=>downloadMediaFile(id);
+  openModal('fileViewerModal');
+}
+
+function buildAudioPlayer(f, src){
+  if(!src) return `<div style="color:var(--t2);padding:20px;text-align:center">No audio source available.</div>`;
+  return `<div class="neon-audio-player">
+    <div class="nap-title">🎵 ${escHtml(f.name)}</div>
+    <audio id="napAudio" src="${src}" style="display:none"></audio>
+    <div class="nap-controls">
+      <button class="nap-play-btn" id="napPlayBtn" onclick="napToggle()">▶</button>
+      <div class="nap-progress-wrap" id="napProgressWrap" onclick="napSeek(event)">
+        <div class="nap-progress-fill" id="napProgressFill" style="width:0%"></div>
+      </div>
+      <span class="nap-time" id="napTime">0:00 / 0:00</span>
+    </div>
+    <div class="nap-vol">
+      <span class="nap-vol-label">Vol</span>
+      <input type="range" min="0" max="1" step="0.05" value="1" oninput="napVol(this.value)">
+    </div>
+  </div>`;
+}
+
+function setupAudioPlayer(src){
+  const audio = document.getElementById('napAudio');
+  if(!audio) return;
+  audio.addEventListener('timeupdate',()=>{
+    const fill = document.getElementById('napProgressFill');
+    const time = document.getElementById('napTime');
+    if(!audio.duration) return;
+    const pct = (audio.currentTime/audio.duration)*100;
+    if(fill) fill.style.width = pct+'%';
+    if(time) time.textContent = fmtAudioTime(audio.currentTime)+' / '+fmtAudioTime(audio.duration);
+  });
+  audio.addEventListener('ended',()=>{
+    const btn = document.getElementById('napPlayBtn');
+    if(btn) btn.textContent='▶';
+  });
+}
+
+function napToggle(){
+  const audio = document.getElementById('napAudio');
+  const btn = document.getElementById('napPlayBtn');
+  if(!audio) return;
+  if(audio.paused){ audio.play(); btn.textContent='⏸'; }
+  else { audio.pause(); btn.textContent='▶'; }
+}
+
+function napSeek(e){
+  const audio = document.getElementById('napAudio');
+  const wrap = document.getElementById('napProgressWrap');
+  if(!audio||!wrap||!audio.duration) return;
+  const rect = wrap.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = pct * audio.duration;
+}
+
+function napVol(v){
+  const audio = document.getElementById('napAudio');
+  if(audio) audio.volume = parseFloat(v);
+}
+
+function fmtAudioTime(s){
+  if(isNaN(s)) return '0:00';
+  const m = Math.floor(s/60);
+  const sec = Math.floor(s%60);
+  return m+':'+(sec<10?'0':'')+sec;
+}
+
+function buildCodeViewer(f, src, ghRawUrl){
+  const ext = f.ext||'txt';
+  const lang = HLJS_LANG_MAP[ext]||'plaintext';
+  if(f.dataUrl){
+    // Decode from dataUrl
+    let code = '';
+    try{
+      const b64 = f.dataUrl.split(',')[1];
+      code = decodeURIComponent(escape(atob(b64)));
+    } catch(e){ code = '(Could not decode file content)'; }
+    return `<div class="code-viewer-wrap">
+      <div class="code-viewer-header">
+        <span class="code-viewer-lang">${escHtml(lang)}</span>
+        <button class="code-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('fvCodeBlock').textContent).then(()=>toast('Copied!','success'))">Copy</button>
+      </div>
+      <pre class="code-viewer-pre hljs-pre"><code class="language-${escHtml(lang)}" id="fvCodeBlock">${escHtml(code)}</code></pre>
+    </div>`;
+  }
+  return `<div style="color:var(--t2);padding:20px;text-align:center">
+    <p>File stored on GitHub.</p>
+    ${ghRawUrl?`<a href="${ghRawUrl}" target="_blank" class="btn btn-ghost" style="display:inline-flex;margin-top:8px">🔗 View on GitHub</a>`:''}
+  </div>`;
+}
+
+// ============================================================
+// KEYBOARD SHORTCUTS
+// ============================================================
+document.addEventListener('keydown', e=>{
+  const tag = document.activeElement.tagName.toLowerCase();
+  const inInput = ['input','textarea','select'].includes(tag);
+  if(e.key==='Escape'){
+    // Close any open modal
+    document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+    // Close file manager
+    if(document.getElementById('fileManager').style.display==='flex') closeFileManager();
+    return;
+  }
+  if(e.ctrlKey||e.metaKey){
+    if(e.key==='n'||e.key==='N'){ e.preventDefault(); openNewRecord(); return; }
+    if(e.key==='s'||e.key==='S'){ e.preventDefault(); pushToGitHub(); return; }
+    if(e.key==='k'||e.key==='K'){ e.preventDefault(); document.getElementById('searchInput').focus(); return; }
+  }
+  if(!inInput && e.key==='b'){ togglePanel(); }
+});
+</script>
+
+<script>
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', ()=>{
+  initLock();
+});
+</script>
 </body>
 </html>
