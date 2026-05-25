@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://apis.google.com/js/api.js" async defer></script>
 <style>
-/* ── RESET & ROOT ─────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 :root{
@@ -60,7 +60,6 @@ input,textarea,select{font-family:var(--fb)}
 .lock-divider{width:100%;border:none;border-top:1px solid #454545;margin:20px 0}
 .lock-recovery-link{font-size:11px;color:#569cd6;cursor:pointer;text-decoration:none;background:none;border:none;padding:0}
 .lock-recovery-link:hover{text-decoration:underline}
-/* recovery form */
 .recovery-form{width:100%;display:none;flex-direction:column;gap:10px}
 .recovery-form.show{display:flex}
 .recovery-label{font-size:11px;color:#9d9d9d;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
@@ -121,7 +120,6 @@ input,textarea,select{font-family:var(--fb)}
 <style>
 /* ── EDITOR AREA ──────────────────────────────────────────── */
 .editor-area{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-/* Tab bar */
 .tab-bar{height:35px;background:#2d2d30;display:flex;align-items:flex-end;overflow-x:auto;flex-shrink:0;border-bottom:1px solid #1e1e1e}
 .tab-bar::-webkit-scrollbar{height:3px}
 .editor-tab{display:flex;align-items:center;gap:6px;padding:0 14px;height:35px;background:#2d2d30;color:#9d9d9d;font-size:12px;cursor:pointer;border-right:1px solid #1e1e1e;white-space:nowrap;transition:background .1s;flex-shrink:0;position:relative}
@@ -132,9 +130,7 @@ input,textarea,select{font-family:var(--fb)}
 .editor-tab .tab-close:hover{background:rgba(255,255,255,0.1);color:#d4d4d4}
 .tab-new{width:35px;height:35px;display:flex;align-items:center;justify-content:center;color:#6b6b6b;cursor:pointer;font-size:18px;transition:color .1s;flex-shrink:0;background:transparent;border:none}
 .tab-new:hover{color:#d4d4d4}
-/* Editor content */
 .editor-content{flex:1;display:flex;overflow:hidden}
-/* Welcome screen */
 .welcome-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b6b6b;padding:40px}
 .welcome-screen h1{font-family:var(--fh);font-size:28px;font-weight:800;color:#d4d4d4;margin-bottom:4px}
 .welcome-screen p{font-size:13px;color:#6b6b6b;max-width:400px;text-align:center;line-height:1.7}
@@ -143,7 +139,6 @@ input,textarea,select{font-family:var(--fb)}
 .ws-item:hover{border-color:#569cd6}
 .ws-key{font-family:var(--fm);font-size:10px;background:#3c3c3f;border:1px solid #555;border-radius:3px;padding:2px 6px;color:#d4d4d4;white-space:nowrap}
 .ws-label{font-size:12px;color:#9d9d9d}
-/* Document editor */
 .doc-editor{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .doc-toolbar{height:36px;background:#2d2d30;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;padding:0 10px;gap:4px;flex-shrink:0}
 .tb-btn{height:24px;padding:0 8px;background:transparent;border:1px solid transparent;border-radius:var(--r);color:#9d9d9d;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .1s;white-space:nowrap;font-family:var(--fb)}
@@ -152,19 +147,16 @@ input,textarea,select{font-family:var(--fb)}
 .tb-sep{width:1px;height:18px;background:#454545;margin:0 4px;flex-shrink:0}
 .tb-select{height:24px;background:#3c3c3f;border:1px solid #454545;border-radius:var(--r);color:#d4d4d4;font-size:11px;padding:0 6px;outline:none;cursor:pointer;font-family:var(--fm)}
 .tb-select option{background:#2d2d30}
-/* Split view: editor + preview */
 .doc-body{flex:1;display:flex;overflow:hidden}
 .editor-pane{flex:1;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid #1e1e1e;min-width:0}
 .preview-pane{flex:1;overflow-y:auto;padding:24px 28px;min-width:0;background:#1e1e1e}
 .preview-pane.hidden{display:none}
 .editor-pane.full{flex:2}
-/* Line numbers + textarea */
 .code-editor-wrap{flex:1;display:flex;overflow:hidden;position:relative}
-.line-numbers{padding:12px 0;background:#1e1e1e;color:#858585;font-family:var(--fm);font-size:13px;line-height:1.6;text-align:right;user-select:none;flex-shrink:0;min-width:44px;border-right:1px solid #333}
+.line-numbers{padding:12px 0;background:#1e1e1e;color:#858585;font-family:var(--fm);font-size:13px;line-height:1.6;text-align:right;user-select:none;flex-shrink:0;min-width:44px;border-right:1px solid #333;overflow:hidden}
 .line-numbers span{display:block;padding:0 10px 0 6px}
 .editor-textarea{flex:1;background:#1e1e1e;border:none;color:#d4d4d4;font-family:var(--fm);font-size:13px;line-height:1.6;padding:12px 16px;outline:none;resize:none;tab-size:2;white-space:pre;overflow-wrap:normal;overflow-x:auto}
 .editor-textarea::selection{background:rgba(86,156,214,0.3)}
-/* Status bar */
 .status-bar{height:22px;background:#007acc;display:flex;align-items:center;padding:0 12px;gap:12px;flex-shrink:0}
 .sb-item{font-size:11px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:4px;cursor:pointer;padding:0 4px;border-radius:2px;transition:background .1s;white-space:nowrap}
 .sb-item:hover{background:rgba(255,255,255,0.15)}
@@ -194,13 +186,13 @@ input,textarea,select{font-family:var(--fb)}
 .md-preview td{padding:7px 12px;border:1px solid #333;color:#cccccc}
 .md-preview tr:nth-child(even) td{background:rgba(255,255,255,0.02)}
 .md-preview img{max-width:100%;border-radius:var(--r);border:1px solid #454545}
-/* Clickable URLs in preview */
 .md-preview a.url-link{color:#569cd6;text-decoration:none;display:inline-flex;align-items:center;gap:3px}
 .md-preview a.url-link::after{content:'↗';font-size:10px;opacity:0.6}
 .md-preview a.url-link:hover{text-decoration:underline;color:#79b8ff}
-/* Inline URL detection */
 .auto-link{color:#569cd6;text-decoration:none;cursor:pointer}
 .auto-link:hover{text-decoration:underline}
+</style>
+<style>
 /* ── MODALS ───────────────────────────────────────────────── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
 .overlay.on{opacity:1;pointer-events:all}
@@ -225,6 +217,8 @@ input,textarea,select{font-family:var(--fb)}
 .btn-primary:hover{background:#1177bb}
 .btn-danger{background:#c72e2e;border:none;border-radius:var(--r);padding:7px 18px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s}
 .btn-danger:hover{opacity:.85}
+.btn-gdrive{background:#1a73e8;border:none;border-radius:var(--r);padding:7px 14px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:6px}
+.btn-gdrive:hover{background:#1557b0}
 /* ── TOAST ────────────────────────────────────────────────── */
 .toast-box{position:fixed;bottom:30px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:5px;pointer-events:none}
 .toast{background:#252526;border:1px solid #454545;border-radius:var(--r);padding:8px 14px;font-size:12px;color:#d4d4d4;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(0,0,0,.6);animation:tIn .25s ease;max-width:280px}
@@ -285,7 +279,6 @@ input,textarea,select{font-family:var(--fb)}
 .media-empty-icon{font-size:48px}
 .media-drop-zone{border:2px dashed #454545;border-radius:var(--rl);padding:40px;text-align:center;color:#6b6b6b;font-size:13px;transition:all .2s;cursor:pointer;margin:16px}
 .media-drop-zone.drag-over{border-color:#569cd6;background:rgba(86,156,214,0.08);color:#569cd6}
-/* Media viewer modal */
 .media-viewer{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
 .media-viewer-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .media-viewer-close:hover{background:rgba(255,255,255,0.2)}
@@ -294,16 +287,23 @@ input,textarea,select{font-family:var(--fb)}
 .media-viewer audio{width:400px;max-width:90vw}
 .media-viewer-name{color:#9d9d9d;font-size:12px;margin-top:12px;font-family:var(--fm)}
 .media-viewer-actions{display:flex;gap:8px;margin-top:12px}
-/* Upload progress */
 .upload-progress{position:fixed;bottom:60px;right:16px;z-index:3000;background:#252526;border:1px solid #454545;border-radius:var(--r);padding:12px 16px;min-width:260px;box-shadow:0 4px 16px rgba(0,0,0,.6);display:none}
 .up-title{font-size:12px;color:#d4d4d4;margin-bottom:8px;font-weight:600}
 .up-bar-wrap{background:#1e1e1e;border-radius:2px;height:4px;overflow:hidden;margin-bottom:6px}
 .up-bar{height:100%;background:#569cd6;border-radius:2px;transition:width .3s;width:0%}
 .up-status{font-size:11px;color:#9d9d9d}
+/* Google Drive pill */
+.gdrive-pill{display:flex;align-items:center;gap:5px;padding:2px 10px;border-radius:3px;font-size:11px;color:#9d9d9d;cursor:pointer;transition:background .1s;border:1px solid transparent}
+.gdrive-pill:hover{background:rgba(255,255,255,0.06);border-color:#454545}
+.gdrive-dot{width:6px;height:6px;border-radius:50%;background:#6b6b6b;flex-shrink:0}
+.gdrive-dot.ok{background:#4ec9b0}
+.gdrive-dot.err{background:#f44747}
+/* Settings section divider */
+.modal-section{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:#6b6b6b;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid #333}
 </style>
 
 <!-- ══ LOCK SCREEN ══════════════════════════════════════════ -->
-<div id="lockScreen">
+<div id="lockScreen" style="display:flex">
   <div class="lock-box">
     <div class="lock-icon">🔐</div>
     <div class="lock-title">DataVault</div>
@@ -316,7 +316,6 @@ input,textarea,select{font-family:var(--fb)}
     <div class="lock-msg" id="lockMsg"></div>
     <hr class="lock-divider">
     <button class="lock-recovery-link" onclick="toggleRecovery()">Forgot password? Use recovery code</button>
-    <!-- Recovery form -->
     <div class="recovery-form" id="recoveryForm">
       <div class="recovery-label">Recovery Code</div>
       <div class="lock-input-wrap">
@@ -325,8 +324,7 @@ input,textarea,select{font-family:var(--fb)}
       </div>
       <button class="lock-btn" onclick="tryRecovery()">Verify Recovery Code</button>
       <div class="lock-msg" id="recoveryMsg"></div>
-      <!-- Set new password (shown after recovery verified) -->
-      <div id="newPwForm" style="display:none;width:100%;margin-top:8px;display:none;flex-direction:column;gap:8px">
+      <div id="newPwForm" style="display:none;width:100%;margin-top:8px;flex-direction:column;gap:8px">
         <div class="recovery-label" style="margin-top:4px">Set New Password</div>
         <div class="lock-input-wrap">
           <input class="lock-input" id="newPw1" type="password" placeholder="New password…">
@@ -345,7 +343,6 @@ input,textarea,select{font-family:var(--fb)}
 
 <!-- ══ APP SHELL ════════════════════════════════════════════ -->
 <div id="appShell" style="display:none;flex-direction:column;height:100%">
-
   <!-- Titlebar -->
   <div class="titlebar">
     <div class="titlebar-logo">⬡ Data<span>Vault</span></div>
@@ -355,6 +352,10 @@ input,textarea,select{font-family:var(--fb)}
       <div class="tmenu-item" onclick="openDownloadModal()">Export</div>
     </div>
     <div class="titlebar-right">
+      <div class="gdrive-pill" id="gdrivePill" onclick="openGhModal()" title="Google Drive">
+        <span class="gdrive-dot" id="gdriveDot"></span>
+        <span id="gdrivePillText">Google Drive</span>
+      </div>
       <div class="gh-pill" id="ghPill" onclick="openGhModal()">
         <span class="gh-dot" id="ghDot"></span>
         <span id="ghPillText">Connect GitHub</span>
@@ -391,11 +392,9 @@ input,textarea,select{font-family:var(--fb)}
 
     <!-- Editor Area -->
     <div class="editor-area" id="editorArea">
-      <!-- Tab bar -->
       <div class="tab-bar" id="tabBar">
         <button class="tab-new" onclick="openNewDoc()" title="New file (Ctrl+N)">+</button>
       </div>
-      <!-- Editor content -->
       <div class="editor-content" id="editorContent">
         <div class="welcome-screen" id="welcomeScreen">
           <div style="font-size:48px;margin-bottom:8px">⬡</div>
@@ -409,7 +408,6 @@ input,textarea,select{font-family:var(--fb)}
           </div>
         </div>
       </div>
-      <!-- Status bar -->
       <div class="status-bar" id="statusBar">
         <span class="sb-item" id="sbBranch">⎇ main</span>
         <span class="sb-item" id="sbLang">Plain Text</span>
@@ -430,13 +428,13 @@ input,textarea,select{font-family:var(--fb)}
   <div class="ctx-item danger" onclick="ctxAction('delete')">🗑 Delete</div>
 </div>
 
-<!-- ══ MEDIA PANEL (full overlay inside app) ══════════════ -->
+<!-- Media Panel (full overlay) -->
 <div id="mediaPanel" style="display:none;position:fixed;inset:0;z-index:500;background:#1e1e1e;flex-direction:column"></div>
 
 <!-- GitHub Modal -->
 <div class="overlay" id="ghOverlay" onclick="overlayClick(event,'ghOverlay')">
   <div class="modal">
-    <div class="modal-hd"><h2>☁ GitHub Storage</h2><button class="modal-x" onclick="closeModal('ghOverlay')">✕</button></div>
+    <div class="modal-hd"><h2>☁ GitHub & Integrations</h2><button class="modal-x" onclick="closeModal('ghOverlay')">✕</button></div>
     <div class="gh-info">
       Data is saved as <strong style="color:#d4d4d4">data/vault.json</strong> in your repo.<br>
       Token needs <strong style="color:#d4d4d4">repo</strong> scope →
@@ -447,12 +445,23 @@ input,textarea,select{font-family:var(--fb)}
       <input class="fi" id="ghToken" type="password" placeholder="ghp_xxxxxxxxxxxx"></div>
     <div class="frow">
       <div class="fg"><label class="fl">Username *</label><input class="fi" id="ghOwner" placeholder="your-username"></div>
-      <div class="fg"><label class="fl">Repository *</label><input class="fi" id="ghRepo" placeholder="donkar"></div>
+      <div class="fg"><label class="fl">Repository *</label><input class="fi" id="ghRepo" placeholder="my-vault"></div>
     </div>
     <div class="fg"><label class="fl">Branch</label><input class="fi" id="ghBranch" value="main" placeholder="main"></div>
     <div class="gh-test-result" id="ghTestResult"></div>
+    <div class="modal-section">🔵 Google Drive</div>
+    <div class="gh-info">
+      Connect Google Drive to upload/import files. You need a Google API Client ID.<br>
+      <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Get Client ID</a> — enable Drive API + Picker API.
+    </div>
+    <div class="fg"><label class="fl">Google API Client ID</label>
+      <input class="fi" id="gdriveClientId" placeholder="xxxx.apps.googleusercontent.com"></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px">
+      <button class="btn-gdrive" onclick="connectGoogleDrive()">🔵 Connect Google Drive</button>
+      <span id="gdriveStatus" style="font-size:11px;color:#6b6b6b">Not connected</span>
+    </div>
     <div class="modal-ft">
-      <button class="btn-cancel" onclick="testGh()">🔌 Test</button>
+      <button class="btn-cancel" onclick="testGh()">🔌 Test GitHub</button>
       <button class="btn-cancel" onclick="closeModal('ghOverlay')">Cancel</button>
       <button class="btn-primary" onclick="saveGh()">💾 Save & Sync</button>
     </div>
@@ -505,9 +514,12 @@ input,textarea,select{font-family:var(--fb)}
     <div class="modal-hd"><h2>⬇ Export / Backup</h2><button class="modal-x" onclick="closeModal('exportModal')">✕</button></div>
     <div style="display:flex;flex-direction:column;gap:8px">
       <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="exportJSON()">📦 Download all as JSON (full backup)</button>
-      <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="exportZip()">🗜 Download current file as .txt</button>
+      <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="exportCurrentFile()">📄 Download current file (native ext)</button>
       <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="pushToGitHub()">⬆ Push all to GitHub now</button>
       <button class="btn-cancel" style="text-align:left;padding:10px 14px" onclick="pullFromGitHub()">⬇ Pull latest from GitHub</button>
+      <button class="btn-gdrive" style="text-align:left;padding:10px 14px;border-radius:var(--r);justify-content:flex-start" onclick="gdriveUploadCurrent()">🔵 Upload current file to Google Drive</button>
+      <button class="btn-gdrive" style="text-align:left;padding:10px 14px;border-radius:var(--r);justify-content:flex-start" onclick="gdriveUploadAll()">🔵 Upload all files to Google Drive</button>
+      <button class="btn-gdrive" style="text-align:left;padding:10px 14px;border-radius:var(--r);justify-content:flex-start" onclick="gdriveImport()">🔵 Import file from Google Drive</button>
       <label class="btn-cancel" style="text-align:left;padding:10px 14px;cursor:pointer">
         📂 Import JSON backup <input type="file" accept=".json" onchange="importJSON(event)" style="display:none">
       </label>
@@ -548,7 +560,6 @@ async function sha256(str) {
 }
 
 async function getCorrectHash() {
-  // Custom password stored in localStorage overrides default
   const custom = localStorage.getItem('dv_pw_hash');
   if (custom) return custom;
   return await sha256('gangnam1567');
@@ -558,12 +569,11 @@ let lockAttempts = parseInt(sessionStorage.getItem('dv_attempts') || '0');
 let lockUntil   = parseInt(sessionStorage.getItem('dv_lock_until') || '0');
 
 function toggleEye(inputId, eyeEl) {
-  const inp = document.getElementById(inputId) || (eyeEl.previousElementSibling);
   const target = typeof inputId === 'string' ? document.getElementById(inputId) : inputId;
   if (!target) return;
   const eye = typeof eyeEl === 'string' ? document.getElementById(eyeEl) : eyeEl;
   target.type = target.type === 'password' ? 'text' : 'password';
-  eye.textContent = target.type === 'password' ? '👁' : '🙈';
+  if (eye) eye.textContent = target.type === 'password' ? '👁' : '🙈';
 }
 
 function toggleRecovery() {
@@ -588,9 +598,10 @@ async function tryUnlock() {
   } else {
     lockAttempts++;
     sessionStorage.setItem('dv_attempts', lockAttempts);
-    document.getElementById('lockInput').classList.add('err');
-    setTimeout(() => document.getElementById('lockInput').classList.remove('err'), 400);
-    document.getElementById('lockInput').value = '';
+    const inp = document.getElementById('lockInput');
+    inp.classList.add('err');
+    setTimeout(() => inp.classList.remove('err'), 400);
+    inp.value = '';
     if (lockAttempts >= 5) {
       lockUntil = Date.now() + 30000;
       sessionStorage.setItem('dv_lock_until', lockUntil);
@@ -626,8 +637,9 @@ async function tryRecovery() {
     document.getElementById('newPw1').focus();
   } else {
     setLockMsg('recoveryMsg', 'Incorrect recovery code.', 'err');
-    document.getElementById('recoveryInput').classList.add('err');
-    setTimeout(() => document.getElementById('recoveryInput').classList.remove('err'), 400);
+    const inp = document.getElementById('recoveryInput');
+    inp.classList.add('err');
+    setTimeout(() => inp.classList.remove('err'), 400);
   }
 }
 
@@ -640,10 +652,7 @@ async function setNewPassword() {
   const hash = await sha256(p1);
   localStorage.setItem('dv_pw_hash', hash);
   setLockMsg('newPwMsg', '✅ Password updated! Unlocking…', 'ok');
-  setTimeout(() => {
-    sessionStorage.setItem('dv_auth', '1');
-    bootApp();
-  }, 1000);
+  setTimeout(() => { sessionStorage.setItem('dv_auth', '1'); bootApp(); }, 1000);
 }
 
 function setLockMsg(id, msg, type) {
@@ -669,12 +678,12 @@ function bootApp() {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('appShell').style.display = 'flex';
   initGhStatus();
+  initGdriveStatus();
   renderFileTree();
   updateStatusBar();
   if (GH.token && GH.owner && GH.repo) pullFromGitHub();
 }
 
-// On load
 window.addEventListener('DOMContentLoaded', () => {
   if (sessionStorage.getItem('dv_auth') === '1') bootApp();
   else {
@@ -690,31 +699,29 @@ window.addEventListener('DOMContentLoaded', () => {
 // ═══════════════════════════════════════════════════════════
 // DATA MODEL
 // ═══════════════════════════════════════════════════════════
-// Each doc: { id, name, type, content, createdAt, updatedAt }
 let DOCS = JSON.parse(localStorage.getItem('dv_docs') || '[]');
 let GH   = JSON.parse(localStorage.getItem('dv_gh')   || '{}');
 
-let openTabs   = JSON.parse(sessionStorage.getItem('dv_tabs') || '[]'); // array of doc ids
+let openTabs    = JSON.parse(sessionStorage.getItem('dv_tabs') || '[]');
 let activeDocId = sessionStorage.getItem('dv_active') || null;
 let ctxTargetId = null;
 let deleteTargetId = null;
-let docModalMode = 'new'; // 'new' | 'rename'
-let sidebarOpen = true;
+let docModalMode = 'new';
+let sidebarOpen  = true;
 
 const TYPE_INFO = {
-  md:   { icon:'📝', label:'Markdown',    hljs:'markdown',    ext:'.md'   },
-  js:   { icon:'⚡', label:'JavaScript',  hljs:'javascript',  ext:'.js'   },
-  ts:   { icon:'🔷', label:'TypeScript',  hljs:'typescript',  ext:'.ts'   },
-  py:   { icon:'🐍', label:'Python',      hljs:'python',      ext:'.py'   },
-  html: { icon:'🌐', label:'HTML',        hljs:'html',        ext:'.html' },
-  css:  { icon:'🎨', label:'CSS',         hljs:'css',         ext:'.css'  },
-  json: { icon:'📋', label:'JSON',        hljs:'json',        ext:'.json' },
-  sql:  { icon:'🗄️', label:'SQL',         hljs:'sql',         ext:'.sql'  },
-  bash: { icon:'🖥️', label:'Shell',       hljs:'bash',        ext:'.sh'   },
-  txt:  { icon:'📄', label:'Plain Text',  hljs:'plaintext',   ext:'.txt'  },
+  md:   { icon:'📝', label:'Markdown',   hljs:'markdown',   ext:'.md'   },
+  js:   { icon:'⚡', label:'JavaScript', hljs:'javascript', ext:'.js'   },
+  ts:   { icon:'🔷', label:'TypeScript', hljs:'typescript', ext:'.ts'   },
+  py:   { icon:'🐍', label:'Python',     hljs:'python',     ext:'.py'   },
+  html: { icon:'🌐', label:'HTML',       hljs:'html',       ext:'.html' },
+  css:  { icon:'🎨', label:'CSS',        hljs:'css',        ext:'.css'  },
+  json: { icon:'📋', label:'JSON',       hljs:'json',       ext:'.json' },
+  sql:  { icon:'🗄️', label:'SQL',        hljs:'sql',        ext:'.sql'  },
+  bash: { icon:'🖥️', label:'Shell',      hljs:'bash',       ext:'.sh'   },
+  txt:  { icon:'📄', label:'Plain Text', hljs:'plaintext',  ext:'.txt'  },
 };
 function ti(type) { return TYPE_INFO[type] || TYPE_INFO.txt; }
-
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
 function now() { return Date.now(); }
 function fmtDate(ts) {
@@ -722,13 +729,16 @@ function fmtDate(ts) {
   return new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
     + ' ' + new Date(ts).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
 }
-function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 function persist() {
   localStorage.setItem('dv_docs', JSON.stringify(DOCS));
   sessionStorage.setItem('dv_tabs', JSON.stringify(openTabs));
   if (activeDocId) sessionStorage.setItem('dv_active', activeDocId);
-  document.getElementById('sbCount').textContent = DOCS.length + ' file' + (DOCS.length!==1?'s':'');
+  const el = document.getElementById('sbCount');
+  if (el) el.textContent = DOCS.length + ' file' + (DOCS.length!==1?'s':'');
 }
 
 function toast(msg, type='ok') {
@@ -747,7 +757,15 @@ function toggleSidebar() {
   sidebarOpen = !sidebarOpen;
   document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
 }
+
 function setActivity(mode) {
+  if (mode === 'media') {
+    document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('actMedia')?.classList.add('active');
+    openMediaPanel();
+    return;
+  }
+  document.getElementById('mediaPanel').style.display = 'none';
   document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
   if (mode === 'files') {
     document.getElementById('actFiles').classList.add('active');
@@ -759,21 +777,21 @@ function setActivity(mode) {
     if (!sidebarOpen) { sidebarOpen = true; document.getElementById('sidebar').classList.remove('collapsed'); }
     document.getElementById('sidebarTitle').textContent = 'Search';
     document.getElementById('sidebarSearchWrap').style.display = '';
-    document.getElementById('sidebarSearch').focus();
+    setTimeout(() => document.getElementById('sidebarSearch').focus(), 50);
   }
 }
 
 function renderFileTree() {
   const q = (document.getElementById('sidebarSearch')?.value || '').toLowerCase();
   const tree = document.getElementById('fileTree');
-  let filtered = DOCS.filter(d => !q || d.name.toLowerCase().includes(q) || d.content.toLowerCase().includes(q));
+  if (!tree) return;
+  let filtered = DOCS.filter(d => !q || d.name.toLowerCase().includes(q) || (d.content||'').toLowerCase().includes(q));
 
   if (!filtered.length) {
     tree.innerHTML = `<div class="ft-empty">${q ? 'No results.' : 'No files yet.<br>Click + to create one.'}</div>`;
     return;
   }
 
-  // Group by type
   const groups = {};
   filtered.forEach(d => {
     const g = d.type || 'txt';
@@ -789,7 +807,7 @@ function renderFileTree() {
       </div>
       <div class="ft-items">
         ${docs.map(d => `
-          <div class="ft-item${d.id===activeDocId?' active':''}" 
+          <div class="ft-item${d.id===activeDocId?' active':''}"
                onclick="openDoc('${d.id}')"
                oncontextmenu="showCtx(event,'${d.id}')">
             <span class="ft-item-icon">${info.icon}</span>
@@ -846,6 +864,7 @@ function closeTab(id, e) {
 
 function renderTabs() {
   const bar = document.getElementById('tabBar');
+  if (!bar) return;
   bar.innerHTML = openTabs.map(id => {
     const doc = DOCS.find(d => d.id === id);
     if (!doc) return '';
@@ -859,7 +878,9 @@ function renderTabs() {
 }
 
 function showWelcome() {
-  document.getElementById('editorContent').innerHTML = `<div class="welcome-screen" id="welcomeScreen">
+  const ec = document.getElementById('editorContent');
+  if (!ec) return;
+  ec.innerHTML = `<div class="welcome-screen">
     <div style="font-size:48px;margin-bottom:8px">⬡</div>
     <h1>DataVault</h1>
     <p>A VS Code-style knowledge vault. Write markdown, code, URLs — everything synced to GitHub.</p>
@@ -876,8 +897,10 @@ function renderEditor(doc) {
   if (!doc) { showWelcome(); return; }
   const info = ti(doc.type);
   const isMarkdown = doc.type === 'md';
+  const ec = document.getElementById('editorContent');
+  if (!ec) return;
 
-  document.getElementById('editorContent').innerHTML = `
+  ec.innerHTML = `
     <div class="doc-editor" id="docEditor">
       <div class="doc-toolbar">
         ${isMarkdown ? `
@@ -897,12 +920,14 @@ function renderEditor(doc) {
         <div class="editor-pane" id="editorPane">
           <div class="code-editor-wrap" id="codeEditorWrap">
             <div class="line-numbers" id="lineNums"></div>
-            <textarea class="editor-textarea" id="mainEditor" 
+            <textarea class="editor-textarea" id="mainEditor"
               spellcheck="false"
               placeholder="Start typing…"
               oninput="onEditorInput()"
               onscroll="syncScroll()"
               onkeydown="handleEditorKey(event)"
+              onclick="updateCursorPos()"
+              onkeyup="updateCursorPos()"
             >${escHtml(doc.content)}</textarea>
           </div>
         </div>
@@ -916,7 +941,7 @@ function renderEditor(doc) {
   if (isMarkdown) renderPreview(doc.content);
 }
 
-let editorMode = 'edit'; // 'edit' | 'split' | 'preview'
+let editorMode = 'edit';
 
 function setEditorMode(mode) {
   editorMode = mode;
@@ -924,21 +949,21 @@ function setEditorMode(mode) {
   const pp = document.getElementById('previewPane');
   const tbEdit = document.getElementById('tbEdit');
   const tbSplit = document.getElementById('tbSplit');
-  const tbPrev = document.getElementById('tbPreview');
-  [tbEdit,tbSplit,tbPrev].forEach(b=>b&&b.classList.remove('active'));
-  if (mode==='edit') {
-    tbEdit&&tbEdit.classList.add('active');
-    ep.style.display=''; ep.classList.remove('full');
-    pp&&(pp.classList.add('hidden'));
-  } else if (mode==='split') {
-    tbSplit&&tbSplit.classList.add('active');
-    ep.style.display=''; ep.classList.remove('full');
-    pp&&pp.classList.remove('hidden');
+  const tbPrev  = document.getElementById('tbPreview');
+  [tbEdit,tbSplit,tbPrev].forEach(b => b && b.classList.remove('active'));
+  if (mode === 'edit') {
+    tbEdit && tbEdit.classList.add('active');
+    if (ep) { ep.style.display=''; ep.classList.remove('full'); }
+    if (pp) pp.classList.add('hidden');
+  } else if (mode === 'split') {
+    tbSplit && tbSplit.classList.add('active');
+    if (ep) { ep.style.display=''; ep.classList.remove('full'); }
+    if (pp) pp.classList.remove('hidden');
   } else {
-    tbPrev&&tbPrev.classList.add('active');
-    ep.style.display='none';
-    pp&&pp.classList.remove('hidden');
-    const doc = DOCS.find(d=>d.id===activeDocId);
+    tbPrev && tbPrev.classList.add('active');
+    if (ep) ep.style.display = 'none';
+    if (pp) pp.classList.remove('hidden');
+    const doc = DOCS.find(d => d.id === activeDocId);
     if (doc) renderPreview(doc.content);
   }
 }
@@ -954,7 +979,6 @@ function onEditorInput() {
   updateLineNumbers();
   updateCursorPos();
   if (doc.type === 'md' && editorMode !== 'edit') renderPreview(doc.content);
-  // Debounced auto-push
   clearTimeout(window._autoPushTimer);
   window._autoPushTimer = setTimeout(autoPush, 3000);
 }
@@ -990,44 +1014,50 @@ function updateCursorPos() {
   const text = ta.value.substring(0, ta.selectionStart);
   const lines = text.split('\n');
   const ln = lines.length, col = lines[lines.length-1].length + 1;
-  document.getElementById('sbLines').textContent = `Ln ${ln}, Col ${col}`;
+  const el = document.getElementById('sbLines');
+  if (el) el.textContent = `Ln ${ln}, Col ${col}`;
 }
 
 function updateStatusBar(doc) {
   if (doc) {
-    document.getElementById('sbLang').textContent = ti(doc.type).label;
+    const el = document.getElementById('sbLang');
+    if (el) el.textContent = ti(doc.type).label;
   }
-  document.getElementById('sbCount').textContent = DOCS.length + ' file' + (DOCS.length!==1?'s':'');
-  if (GH.branch) document.getElementById('sbBranch').textContent = '⎇ ' + GH.branch;
+  const cnt = document.getElementById('sbCount');
+  if (cnt) cnt.textContent = DOCS.length + ' file' + (DOCS.length!==1?'s':'');
+  if (GH.branch) {
+    const br = document.getElementById('sbBranch');
+    if (br) br.textContent = '⎇ ' + GH.branch;
+  }
 }
 </script>
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// MARKDOWN PREVIEW WITH CLICKABLE URLS
+// MARKDOWN PREVIEW
 // ═══════════════════════════════════════════════════════════
 function renderPreview(content) {
   const el = document.getElementById('mdPreview');
   if (!el) return;
   el.innerHTML = parseMd(content);
-  // Syntax highlight code blocks
   el.querySelectorAll('pre code').forEach(block => {
     if (window.hljs) hljs.highlightElement(block);
   });
 }
 
 function parseMd(raw) {
-  let h = raw;
-  // Fenced code blocks
-  h = h.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) =>
-    `<pre><code class="language-${lang||'plaintext'}">${escHtml(code.trimEnd())}</code></pre>`);
+  let h = raw || '';
+  // Fenced code blocks — protect them first
+  const codeBlocks = [];
+  h = h.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    const idx = codeBlocks.length;
+    codeBlocks.push(`<pre><code class="language-${lang||'plaintext'}">${escHtml(code.trimEnd())}</code></pre>`);
+    return `\x00CODE${idx}\x00`;
+  });
   // Inline code
   h = h.replace(/`([^`\n]+)`/g, (_, c) => `<code>${escHtml(c)}</code>`);
-  // Escape remaining HTML
-  h = h.split('\n').map(line => {
-    if (line.startsWith('<pre') || line.startsWith('</pre') || line.startsWith('<code') || line.startsWith('</code')) return line;
-    return line.replace(/&(?!amp;|lt;|gt;|quot;)/g,'&amp;').replace(/(?<!<[^>]*)(?<!code>)(?<!pre>)</g,'&lt;');
-  }).join('\n');
+  // Escape HTML in non-code parts
+  h = h.replace(/&(?!amp;|lt;|gt;|quot;|#)/g,'&amp;');
   // Headings
   h = h.replace(/^#{6} (.+)$/gm,'<h6>$1</h6>');
   h = h.replace(/^#{5} (.+)$/gm,'<h5>$1</h5>');
@@ -1035,7 +1065,7 @@ function parseMd(raw) {
   h = h.replace(/^### (.+)$/gm,'<h3>$1</h3>');
   h = h.replace(/^## (.+)$/gm,'<h2>$1</h2>');
   h = h.replace(/^# (.+)$/gm,'<h1>$1</h1>');
-  // Bold, italic
+  // Bold, italic, strikethrough
   h = h.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
   h = h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
   h = h.replace(/\*(.+?)\*/g,'<em>$1</em>');
@@ -1043,16 +1073,20 @@ function parseMd(raw) {
   // HR
   h = h.replace(/^---+$/gm,'<hr>');
   // Blockquote
-  h = h.replace(/^&gt; (.+)$/gm,'<blockquote>$1</blockquote>');
-  // Markdown links [text](url)
+  h = h.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
+  // Images before links
+  h = h.replace(/!\[([^\]]*)\]\((https?:\/\/[^\)]+)\)/g,
+    '<img src="$2" alt="$1">');
+  // Markdown links
   h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
     '<a class="url-link" href="$2" target="_blank" rel="noopener">$1</a>');
-  // Auto-detect bare URLs (not already in an <a> tag)
-  h = h.replace(/(?<!href="|">)(https?:\/\/[^\s<>"']+)/g,
+  // Auto-detect bare URLs not already in href
+  h = h.replace(/(?<![="'>])(https?:\/\/[^\s<>"')\]]+)/g,
     '<a class="url-link auto-link" href="$1" target="_blank" rel="noopener">$1</a>');
-  // Lists
-  h = h.replace(/((?:^- .+$\n?)+)/gm, m =>
-    '<ul>' + m.replace(/^- (.+)$/gm,'<li>$1</li>') + '</ul>');
+  // Unordered lists
+  h = h.replace(/((?:^[-*] .+$\n?)+)/gm, m =>
+    '<ul>' + m.replace(/^[-*] (.+)$/gm,'<li>$1</li>') + '</ul>');
+  // Ordered lists
   h = h.replace(/((?:^\d+\. .+$\n?)+)/gm, m =>
     '<ol>' + m.replace(/^\d+\. (.+)$/gm,'<li>$1</li>') + '</ol>');
   // Checkboxes
@@ -1071,9 +1105,13 @@ function parseMd(raw) {
   h = h.split('\n\n').map(chunk => {
     chunk = chunk.trim();
     if (!chunk) return '';
-    if (/^<(h[1-6]|ul|ol|pre|blockquote|hr|table)/.test(chunk)) return chunk;
+    if (/^<(h[1-6]|ul|ol|pre|blockquote|hr|table|\x00CODE)/.test(chunk)) return chunk;
     return `<p>${chunk.replace(/\n/g,' ')}</p>`;
   }).join('\n');
+  // Restore code blocks
+  codeBlocks.forEach((block, idx) => {
+    h = h.replace(`\x00CODE${idx}\x00`, block);
+  });
   return h;
 }
 
@@ -1108,7 +1146,6 @@ function saveDocModal() {
 
   if (docModalMode === 'new') {
     const doc = { id:uid(), name, type, content:'', createdAt:now(), updatedAt:null };
-    // Starter content
     if (type === 'md') doc.content = `# ${name}\n\nStart writing here…\n`;
     else if (type === 'json') doc.content = '{\n  \n}';
     DOCS.unshift(doc);
@@ -1205,7 +1242,7 @@ function duplicateDoc(id) {
   persist(); renderFileTree(); openDoc(copy.id);
   toast('Duplicated','ok');
 }
-document.addEventListener('click', () => document.getElementById('ctxMenu').classList.remove('show'));
+document.addEventListener('click', () => document.getElementById('ctxMenu')?.classList.remove('show'));
 </script>
 
 <script>
@@ -1218,13 +1255,17 @@ function initGhStatus() {
   } else {
     setGhStatus('', 'Connect GitHub');
   }
-  if (GH.branch) document.getElementById('sbBranch').textContent = '⎇ ' + GH.branch;
+  if (GH.branch) {
+    const br = document.getElementById('sbBranch');
+    if (br) br.textContent = '⎇ ' + GH.branch;
+  }
 }
+
 function setGhStatus(state, text) {
   const dot = document.getElementById('ghDot');
   const txt = document.getElementById('ghPillText');
-  dot.className = 'gh-dot' + (state ? ' '+state : '');
-  txt.textContent = text;
+  if (dot) dot.className = 'gh-dot' + (state ? ' '+state : '');
+  if (txt) txt.textContent = text;
 }
 
 async function ghReq(method, path, body) {
@@ -1259,9 +1300,14 @@ async function pushToGitHub() {
   if (!GH.token||!GH.owner||!GH.repo) { toast('Configure GitHub first','err'); return; }
   setGhStatus('busy', 'Saving…');
   try {
-    const payload = JSON.stringify({ meta:{savedAt:new Date().toISOString(),count:DOCS.length,version:'3.0'}, docs:DOCS }, null, 2);
+    const payload = JSON.stringify({
+      meta:{savedAt:new Date().toISOString(),count:DOCS.length,version:'3.0'},
+      docs:DOCS
+    }, null, 2);
     const existing = await ghGetFile('data/vault.json');
-    await ghPutFile('data/vault.json', payload, `DataVault: save ${DOCS.length} docs — ${new Date().toISOString()}`, existing?.sha||null);
+    await ghPutFile('data/vault.json', payload,
+      `DataVault: save ${DOCS.length} docs — ${new Date().toISOString()}`,
+      existing?.sha||null);
     setGhStatus('ok', GH.owner+'/'+GH.repo);
     toast(`Saved ${DOCS.length} files to GitHub ✓`,'ok');
   } catch(e) { setGhStatus('err','Sync failed'); toast('Push failed: '+e.message,'err'); }
@@ -1287,7 +1333,10 @@ async function pullFromGitHub() {
 async function autoPush() {
   if (!GH.token||!GH.owner||!GH.repo) return;
   try {
-    const payload = JSON.stringify({ meta:{savedAt:new Date().toISOString(),count:DOCS.length,version:'3.0'}, docs:DOCS }, null, 2);
+    const payload = JSON.stringify({
+      meta:{savedAt:new Date().toISOString(),count:DOCS.length,version:'3.0'},
+      docs:DOCS
+    }, null, 2);
     const existing = await ghGetFile('data/vault.json');
     await ghPutFile('data/vault.json', payload, `DataVault: auto-save`, existing?.sha||null);
     setGhStatus('ok', GH.owner+'/'+GH.repo);
@@ -1295,11 +1344,14 @@ async function autoPush() {
 }
 
 function openGhModal() {
-  document.getElementById('ghToken').value = GH.token||'';
-  document.getElementById('ghOwner').value = GH.owner||'';
-  document.getElementById('ghRepo').value  = GH.repo||'donkar';
-  document.getElementById('ghBranch').value= GH.branch||'main';
-  document.getElementById('ghTestResult').style.display='none';
+  document.getElementById('ghToken').value  = GH.token||'';
+  document.getElementById('ghOwner').value  = GH.owner||'';
+  document.getElementById('ghRepo').value   = GH.repo||'';
+  document.getElementById('ghBranch').value = GH.branch||'main';
+  document.getElementById('ghTestResult').style.display = 'none';
+  const cid = localStorage.getItem('dv_gdrive_cid') || '';
+  document.getElementById('gdriveClientId').value = cid;
+  updateGdriveStatusInModal();
   document.getElementById('ghOverlay').classList.add('on');
 }
 
@@ -1312,21 +1364,33 @@ async function testGh() {
   res.style.background='#2d2d30'; res.style.color='#9d9d9d';
   res.textContent='Testing…';
   try {
-    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`,{headers:{'Authorization':'token '+token,'User-Agent':'DataVault-App'}});
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`,{
+      headers:{'Authorization':'token '+token,'User-Agent':'DataVault-App'}
+    });
     const d = await r.json();
-    if (r.ok) { res.style.background='rgba(78,201,176,0.1)'; res.style.color='#4ec9b0'; res.textContent=`✅ Connected: ${d.full_name} (${d.private?'private':'public'})`; }
-    else { res.style.background='rgba(244,71,71,0.1)'; res.style.color='#f44747'; res.textContent='❌ '+d.message; }
-  } catch(e) { res.style.background='rgba(244,71,71,0.1)'; res.style.color='#f44747'; res.textContent='❌ '+e.message; }
+    if (r.ok) {
+      res.style.background='rgba(78,201,176,0.1)'; res.style.color='#4ec9b0';
+      res.textContent=`✅ Connected: ${d.full_name} (${d.private?'private':'public'})`;
+    } else {
+      res.style.background='rgba(244,71,71,0.1)'; res.style.color='#f44747';
+      res.textContent='❌ '+d.message;
+    }
+  } catch(e) {
+    res.style.background='rgba(244,71,71,0.1)'; res.style.color='#f44747';
+    res.textContent='❌ '+e.message;
+  }
 }
 
 async function saveGh() {
-  const token=document.getElementById('ghToken').value.trim();
-  const owner=document.getElementById('ghOwner').value.trim();
-  const repo =document.getElementById('ghRepo').value.trim();
+  const token =document.getElementById('ghToken').value.trim();
+  const owner =document.getElementById('ghOwner').value.trim();
+  const repo  =document.getElementById('ghRepo').value.trim();
   const branch=document.getElementById('ghBranch').value.trim()||'main';
-  if (!token||!owner||!repo) { toast('Fill all fields','err'); return; }
+  const cid   =document.getElementById('gdriveClientId').value.trim();
+  if (!token||!owner||!repo) { toast('Fill all GitHub fields','err'); return; }
   GH = {token,owner,repo,branch};
   localStorage.setItem('dv_gh', JSON.stringify(GH));
+  if (cid) localStorage.setItem('dv_gdrive_cid', cid);
   closeModal('ghOverlay');
   initGhStatus();
   toast('GitHub saved — syncing…','ok');
@@ -1339,18 +1403,25 @@ async function saveGh() {
 function openDownloadModal() { document.getElementById('exportModal').classList.add('on'); }
 
 function exportJSON() {
-  const blob = new Blob([JSON.stringify({meta:{exportedAt:new Date().toISOString(),count:DOCS.length},docs:DOCS},null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`datavault-${new Date().toISOString().slice(0,10)}.json`; a.click();
+  const blob = new Blob([JSON.stringify({
+    meta:{exportedAt:new Date().toISOString(),count:DOCS.length},
+    docs:DOCS
+  },null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`datavault-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
   toast('JSON downloaded','ok');
 }
 
-function exportZip() {
+function exportCurrentFile() {
   const doc = DOCS.find(d=>d.id===activeDocId);
   if (!doc) { toast('Open a file first','warn'); return; }
   const blob = new Blob([doc.content],{type:'text/plain'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=doc.name+ti(doc.type).ext; a.click();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=doc.name+ti(doc.type).ext;
+  a.click();
   toast('Downloaded','ok');
 }
 
@@ -1376,7 +1447,7 @@ function importJSON(e) {
 // ═══════════════════════════════════════════════════════════
 // MODAL HELPERS
 // ═══════════════════════════════════════════════════════════
-function closeModal(id) { document.getElementById(id).classList.remove('on'); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('on'); }
 function overlayClick(e,id) { if(e.target.id===id) closeModal(id); }
 
 // ═══════════════════════════════════════════════════════════
@@ -1384,9 +1455,7 @@ function overlayClick(e,id) { if(e.target.id===id) closeModal(id); }
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('keydown', e => {
   if (e.key==='Escape') {
-    ['ghOverlay','docModal','delModal','exportModal'].forEach(id=>{
-      document.getElementById(id)?.classList.remove('on');
-    });
+    ['ghOverlay','docModal','delModal','exportModal'].forEach(id => closeModal(id));
     closeMediaViewer();
   }
   if (!authUnlocked) return;
@@ -1397,19 +1466,216 @@ document.addEventListener('keydown', e => {
   if ((e.ctrlKey||e.metaKey) && e.key==='b') { e.preventDefault(); toggleSidebar(); }
 });
 </script>
-</body>
-</html>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// GOOGLE DRIVE INTEGRATION
+// ═══════════════════════════════════════════════════════════
+let gapiReady = false;
+let gdriveAuthed = false;
+let gdriveAccessToken = null;
+const GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+const GDRIVE_DISCOVERY = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+
+function initGdriveStatus() {
+  const cid = localStorage.getItem('dv_gdrive_cid');
+  if (cid && gdriveAuthed) {
+    setGdriveStatus('ok', 'Drive Connected');
+  } else {
+    setGdriveStatus('', 'Google Drive');
+  }
+}
+
+function setGdriveStatus(state, text) {
+  const dot = document.getElementById('gdriveDot');
+  const txt = document.getElementById('gdrivePillText');
+  if (dot) dot.className = 'gdrive-dot' + (state ? ' '+state : '');
+  if (txt) txt.textContent = text;
+}
+
+function updateGdriveStatusInModal() {
+  const el = document.getElementById('gdriveStatus');
+  if (!el) return;
+  if (gdriveAuthed) {
+    el.textContent = '✅ Connected';
+    el.style.color = '#4ec9b0';
+  } else {
+    el.textContent = 'Not connected';
+    el.style.color = '#6b6b6b';
+  }
+}
+
+function loadGapiIfNeeded() {
+  return new Promise((resolve, reject) => {
+    if (gapiReady) { resolve(); return; }
+    if (!window.gapi) {
+      // gapi script may not have loaded yet — try loading it
+      const s = document.createElement('script');
+      s.src = 'https://apis.google.com/js/api.js';
+      s.onload = () => initGapi(resolve, reject);
+      s.onerror = () => reject(new Error('Failed to load Google API script'));
+      document.head.appendChild(s);
+    } else {
+      initGapi(resolve, reject);
+    }
+  });
+}
+
+function initGapi(resolve, reject) {
+  gapi.load('client:auth2:picker', {
+    callback: () => {
+      gapiReady = true;
+      resolve();
+    },
+    onerror: () => reject(new Error('Failed to load gapi modules'))
+  });
+}
+
+async function connectGoogleDrive() {
+  const cid = document.getElementById('gdriveClientId').value.trim();
+  if (!cid) { toast('Enter your Google API Client ID first','err'); return; }
+  localStorage.setItem('dv_gdrive_cid', cid);
+  try {
+    await loadGapiIfNeeded();
+    await gapi.client.init({
+      clientId: cid,
+      scope: GDRIVE_SCOPE,
+      discoveryDocs: [GDRIVE_DISCOVERY]
+    });
+    const authInstance = gapi.auth2.getAuthInstance();
+    const user = await authInstance.signIn();
+    gdriveAccessToken = user.getAuthResponse().access_token;
+    gdriveAuthed = true;
+    setGdriveStatus('ok', 'Drive Connected');
+    updateGdriveStatusInModal();
+    toast('Google Drive connected ✓','ok');
+  } catch(e) {
+    toast('Google Drive auth failed: '+(e.error||e.message||e),'err');
+    setGdriveStatus('err', 'Drive Error');
+  }
+}
+
+async function ensureGdriveAuth() {
+  if (gdriveAuthed && gdriveAccessToken) return true;
+  const cid = localStorage.getItem('dv_gdrive_cid');
+  if (!cid) { toast('Connect Google Drive first (GitHub → Google Drive section)','warn'); return false; }
+  try {
+    await loadGapiIfNeeded();
+    await gapi.client.init({
+      clientId: cid,
+      scope: GDRIVE_SCOPE,
+      discoveryDocs: [GDRIVE_DISCOVERY]
+    });
+    const authInstance = gapi.auth2.getAuthInstance();
+    if (authInstance.isSignedIn.get()) {
+      gdriveAccessToken = authInstance.currentUser.get().getAuthResponse().access_token;
+      gdriveAuthed = true;
+      return true;
+    }
+    const user = await authInstance.signIn();
+    gdriveAccessToken = user.getAuthResponse().access_token;
+    gdriveAuthed = true;
+    setGdriveStatus('ok', 'Drive Connected');
+    return true;
+  } catch(e) {
+    toast('Google Drive auth failed: '+(e.error||e.message||e),'err');
+    return false;
+  }
+}
+
+async function gdriveUploadFile(name, content, mimeType) {
+  if (!await ensureGdriveAuth()) return;
+  const boundary = '-------314159265358979323846';
+  const delimiter = '\r\n--' + boundary + '\r\n';
+  const closeDelimiter = '\r\n--' + boundary + '--';
+  const metadata = JSON.stringify({ name, mimeType });
+  const body = delimiter +
+    'Content-Type: application/json\r\n\r\n' + metadata +
+    delimiter + 'Content-Type: ' + mimeType + '\r\n\r\n' +
+    content + closeDelimiter;
+  const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + gdriveAccessToken,
+      'Content-Type': 'multipart/related; boundary="' + boundary + '"'
+    },
+    body
+  });
+  if (!res.ok) throw new Error('Drive upload failed: ' + res.status);
+  return res.json();
+}
+
+async function gdriveUploadCurrent() {
+  const doc = DOCS.find(d => d.id === activeDocId);
+  if (!doc) { toast('Open a file first','warn'); return; }
+  try {
+    const info = ti(doc.type);
+    await gdriveUploadFile(doc.name + info.ext, doc.content, 'text/plain');
+    toast(`Uploaded "${doc.name}${info.ext}" to Google Drive ✓`,'ok');
+  } catch(e) { toast('Drive upload failed: '+e.message,'err'); }
+}
+
+async function gdriveUploadAll() {
+  if (!DOCS.length) { toast('No files to upload','warn'); return; }
+  try {
+    const json = JSON.stringify({meta:{exportedAt:new Date().toISOString()},docs:DOCS},null,2);
+    await gdriveUploadFile(`datavault-${new Date().toISOString().slice(0,10)}.json`, json, 'application/json');
+    toast(`Uploaded all ${DOCS.length} files to Google Drive ✓`,'ok');
+  } catch(e) { toast('Drive upload failed: '+e.message,'err'); }
+}
+
+async function gdriveImport() {
+  if (!await ensureGdriveAuth()) return;
+  try {
+    await loadGapiIfNeeded();
+    const cid = localStorage.getItem('dv_gdrive_cid');
+    const picker = new google.picker.PickerBuilder()
+      .addView(google.picker.ViewId.DOCS)
+      .setOAuthToken(gdriveAccessToken)
+      .setDeveloperKey('')
+      .setCallback(async (data) => {
+        if (data.action === google.picker.Action.PICKED) {
+          const fileId = data.docs[0].id;
+          const fileName = data.docs[0].name;
+          const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+            headers: { 'Authorization': 'Bearer ' + gdriveAccessToken }
+          });
+          const text = await res.text();
+          try {
+            const parsed = JSON.parse(text);
+            const docs = parsed.docs || parsed;
+            if (Array.isArray(docs)) {
+              const existing = new Set(DOCS.map(d => d.id));
+              let added = 0;
+              docs.forEach(d => { if (!existing.has(d.id)) { DOCS.push(d); added++; } });
+              persist(); renderFileTree();
+              toast(`Imported ${added} files from Google Drive ✓`,'ok');
+            } else {
+              // Import as a new text doc
+              const doc = { id:uid(), name:fileName.replace(/\.[^.]+$/,''), type:'txt', content:text, createdAt:now(), updatedAt:null };
+              DOCS.unshift(doc); persist(); renderFileTree(); openDoc(doc.id);
+              toast(`Imported "${fileName}" from Google Drive ✓`,'ok');
+            }
+          } catch {
+            const doc = { id:uid(), name:fileName.replace(/\.[^.]+$/,''), type:'txt', content:text, createdAt:now(), updatedAt:null };
+            DOCS.unshift(doc); persist(); renderFileTree(); openDoc(doc.id);
+            toast(`Imported "${fileName}" from Google Drive ✓`,'ok');
+          }
+        }
+      })
+      .build();
+    picker.setVisible(true);
+  } catch(e) { toast('Drive picker failed: '+e.message,'err'); }
+}
+</script>
 
 <script>
 // ═══════════════════════════════════════════════════════════
 // MEDIA & FILES ENGINE
 // ═══════════════════════════════════════════════════════════
-// Media items stored in localStorage as metadata; actual files in GitHub repo under media/
-// { id, name, type, category, size, mimeType, ghPath, dataUrl(for small), createdAt }
-
 let MEDIA = JSON.parse(localStorage.getItem('dv_media') || '[]');
 let mediaCategory = 'all';
-let mediaView = 'grid'; // 'grid' | 'list'
+let mediaView = 'grid';
 let mediaSearchQ = '';
 
 const MEDIA_CATS = {
@@ -1444,13 +1710,14 @@ function getFileIcon(cat, mime) {
   if (cat === 'video') return '🎬';
   if (cat === 'audio') return '🎵';
   if (cat === 'archive') return '🗜';
-  if (mime.includes('pdf')) return '📕';
-  if (mime.includes('word') || mime.includes('document')) return '📝';
-  if (mime.includes('sheet') || mime.includes('excel')) return '📊';
+  if ((mime||'').includes('pdf')) return '📕';
+  if ((mime||'').includes('word') || (mime||'').includes('document')) return '📝';
+  if ((mime||'').includes('sheet') || (mime||'').includes('excel')) return '📊';
   return '📄';
 }
 
 function fmtSize(bytes) {
+  if (!bytes) return '0 B';
   if (bytes < 1024) return bytes + ' B';
   if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
   if (bytes < 1024*1024*1024) return (bytes/1024/1024).toFixed(1) + ' MB';
@@ -1461,7 +1728,6 @@ function persistMedia() {
   localStorage.setItem('dv_media', JSON.stringify(MEDIA));
 }
 
-// ── OPEN MEDIA PANEL ──────────────────────────────────────
 function openMediaPanel() {
   const panel = document.getElementById('mediaPanel');
   panel.style.display = 'flex';
@@ -1470,6 +1736,8 @@ function openMediaPanel() {
 
 function closeMediaPanel() {
   document.getElementById('mediaPanel').style.display = 'none';
+  document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('actFiles')?.classList.add('active');
 }
 
 function renderMediaPanel() {
@@ -1483,7 +1751,7 @@ function renderMediaPanel() {
   panel.innerHTML = `
     <div class="media-titlebar">
       <h2>🗂 Media & Files</h2>
-      <button class="tb-btn" onclick="toggleMediaView()" title="Toggle view">⊞</button>
+      <button class="tb-btn" onclick="toggleMediaView()" title="Toggle grid/list view">⊞ ${mediaView==='grid'?'List':'Grid'}</button>
       <button class="tb-btn" onclick="closeMediaPanel()" style="margin-left:4px">✕ Close</button>
     </div>
     <div class="media-body">
@@ -1498,7 +1766,7 @@ function renderMediaPanel() {
         <div style="padding:12px 16px;border-top:1px solid #333;margin-top:8px">
           <div style="font-size:10px;color:#6b6b6b;margin-bottom:6px">STORAGE INFO</div>
           <div style="font-size:11px;color:#9d9d9d">GitHub: <span style="color:#4ec9b0">media/</span></div>
-          <div style="font-size:10px;color:#6b6b6b;margin-top:4px">Max per file: 25MB via API<br>Larger files: stored as data URL locally</div>
+          <div style="font-size:10px;color:#6b6b6b;margin-top:4px">Max per file: 24MB via API<br>Larger files: stored as data URL locally</div>
         </div>
       </div>
       <div class="media-main">
@@ -1513,9 +1781,8 @@ function renderMediaPanel() {
         <div id="mediaDropZone" class="media-drop-zone"
           ondragover="event.preventDefault();this.classList.add('drag-over')"
           ondragleave="this.classList.remove('drag-over')"
-          ondrop="handleMediaDrop(event)"
-          onclick="this.nextElementSibling.querySelector('input[type=file]').click()">
-          📂 Drag & drop files here, or click to upload<br>
+          ondrop="handleMediaDrop(event)">
+          📂 Drag &amp; drop files here, or click Upload above<br>
           <span style="font-size:11px;color:#6b6b6b">Images, Videos, Audio, ZIP, RAR, 7z, PDF and more</span>
         </div>
         <div class="media-grid${mediaView==='list'?' list-view':''}" id="mediaGrid"></div>
@@ -1523,7 +1790,6 @@ function renderMediaPanel() {
     </div>`;
 
   renderMediaGrid();
-  setupMediaDrop();
 }
 
 function renderMediaGrid() {
@@ -1539,7 +1805,7 @@ function renderMediaGrid() {
     grid.innerHTML = `<div class="media-empty">
       <div class="media-empty-icon">${MEDIA_CATS[mediaCategory]?.icon||'📂'}</div>
       <div style="font-size:14px;color:#9d9d9d">No files yet</div>
-      <div style="font-size:12px">Upload files using the button above or drag & drop</div>
+      <div style="font-size:12px">Upload files using the button above or drag &amp; drop</div>
     </div>`;
     return;
   }
@@ -1547,7 +1813,6 @@ function renderMediaGrid() {
   grid.innerHTML = items.map(m => {
     const isImg = m.category === 'image';
     const isVid = m.category === 'video';
-    const isAud = m.category === 'audio';
     const thumb = isImg && m.dataUrl
       ? `<img src="${m.dataUrl}" alt="${escHtml(m.name)}" loading="lazy">`
       : isVid && m.dataUrl
@@ -1578,18 +1843,14 @@ function setMediaCat(cat) {
 
 function toggleMediaView() {
   mediaView = mediaView === 'grid' ? 'list' : 'grid';
-  renderMediaGrid();
-}
-
-function setupMediaDrop() {
-  const dz = document.getElementById('mediaDropZone');
-  if (!dz) return;
-  dz.addEventListener('drop', handleMediaDrop);
+  renderMediaPanel();
 }
 </script>
 
 <script>
-// ── UPLOAD HANDLER ────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// MEDIA UPLOAD
+// ═══════════════════════════════════════════════════════════
 async function handleMediaDrop(e) {
   e.preventDefault();
   const dz = document.getElementById('mediaDropZone');
@@ -1613,26 +1874,31 @@ async function uploadMediaFiles(files) {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     stat.textContent = `(${i+1}/${files.length}) ${file.name}`;
-    bar.style.width = Math.round(((i) / files.length) * 100) + '%';
+    bar.style.width = Math.round((i / files.length) * 100) + '%';
 
     const cat = getMimeCategory(file.type || '');
     const id  = uid();
-    const MAX_GITHUB = 24 * 1024 * 1024; // 24MB safe limit
+    const MAX_GITHUB = 24 * 1024 * 1024;
+    const MAX_LOCAL  = 5  * 1024 * 1024;
 
     let dataUrl = null;
     let ghPath  = null;
 
-    // Read file as base64
+    // Read as base64 data URL
     const b64 = await fileToBase64(file);
-    dataUrl = b64; // always store locally for preview
 
-    // Try to push to GitHub if configured and file is small enough
+    // Store dataUrl locally only if file is small enough
+    if (file.size <= MAX_LOCAL) {
+      dataUrl = b64;
+    }
+
+    // Push to GitHub if configured and within size limit
     if (GH.token && GH.owner && GH.repo && file.size <= MAX_GITHUB) {
       try {
         stat.textContent = `Uploading to GitHub: ${file.name}`;
         const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
         ghPath = `media/${cat}/${id}_${safeName}`;
-        const rawB64 = b64.split(',')[1]; // strip data:...;base64,
+        const rawB64 = b64.split(',')[1];
         await ghReqRaw('PUT', `/contents/${ghPath}`, {
           message: `DataVault: upload ${file.name}`,
           content: rawB64,
@@ -1644,23 +1910,18 @@ async function uploadMediaFiles(files) {
         toast(`GitHub upload failed for ${file.name}: ${err.message}`, 'warn');
       }
     } else if (file.size > MAX_GITHUB) {
-      toast(`${file.name} (${fmtSize(file.size)}) is too large for GitHub API. Stored locally only.`, 'warn');
+      toast(`${file.name} (${fmtSize(file.size)}) exceeds 24MB GitHub limit. Stored locally only.`, 'warn');
     }
 
     const item = {
-      id, name: file.name, type: file.type || 'application/octet-stream',
+      id, name: file.name,
+      type: file.type || 'application/octet-stream',
       mimeType: file.type || 'application/octet-stream',
       category: cat, size: file.size,
-      dataUrl: dataUrl, // stored locally always
-      ghPath, createdAt: now()
+      dataUrl,
+      ghPath,
+      createdAt: now()
     };
-
-    // For large files, don't store dataUrl in localStorage (too big) — just keep reference
-    if (file.size > 5 * 1024 * 1024) {
-      item.dataUrl = null; // too large for localStorage
-      item.localOnly = !ghPath;
-      toast(`${file.name} stored in GitHub. Preview not available locally.`, 'ok');
-    }
 
     MEDIA.unshift(item);
     persistMedia();
@@ -1681,7 +1942,6 @@ function fileToBase64(file) {
   });
 }
 
-// Raw GitHub request (for binary uploads — content already base64)
 async function ghReqRaw(method, path, body) {
   if (!GH.token||!GH.owner||!GH.repo) throw new Error('GitHub not configured');
   const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}${path}`, {
@@ -1698,7 +1958,9 @@ async function ghReqRaw(method, path, body) {
   return res.status===204 ? {} : res.json();
 }
 
-// ── MEDIA VIEWER ──────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// MEDIA VIEWER
+// ═══════════════════════════════════════════════════════════
 function openMediaViewer(id) {
   const m = MEDIA.find(x => x.id === id);
   if (!m) return;
@@ -1716,20 +1978,25 @@ function openMediaViewer(id) {
   } else if (m.category === 'audio' && m.dataUrl) {
     content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">🎵</div><audio src="${m.dataUrl}" controls autoplay></audio>`;
   } else if (m.ghPath) {
-    // File is on GitHub — show link
-    const ghUrl = `https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}`;
     const rawUrl = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch||'main'}/${m.ghPath}`;
-    content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
-      <div style="color:#9d9d9d;font-size:13px;margin-bottom:8px">File stored on GitHub</div>
-      <a href="${rawUrl}" target="_blank" style="color:#569cd6;font-size:12px;text-decoration:none">↗ Open raw file</a>`;
+    const ghUrl  = `https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}`;
+    // Try to show image from GitHub raw URL
+    if (m.category === 'image') {
+      content.innerHTML = `<img src="${rawUrl}" alt="${escHtml(m.name)}" onerror="this.style.display='none'">`;
+    } else {
+      content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
+        <div style="color:#9d9d9d;font-size:13px;margin-bottom:8px">File stored on GitHub</div>
+        <a href="${ghUrl}" target="_blank" style="color:#569cd6;font-size:12px;text-decoration:none">↗ View on GitHub</a>`;
+    }
   } else {
     content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
       <div style="color:#9d9d9d;font-size:13px">Preview not available</div>`;
   }
 
+  const ghUrl = m.ghPath ? `https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}` : '';
   actions.innerHTML = `
     <button class="tb-btn" onclick="downloadMedia('${id}')" style="background:#0e639c;border-color:#0e639c;color:#fff">⬇ Download</button>
-    ${m.ghPath ? `<a href="https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}" target="_blank" class="tb-btn" style="text-decoration:none;display:flex;align-items:center;gap:4px">🐙 View on GitHub</a>` : ''}
+    ${ghUrl ? `<a href="${ghUrl}" target="_blank" class="tb-btn" style="text-decoration:none;display:flex;align-items:center;gap:4px">🐙 View on GitHub</a>` : ''}
     <button class="tb-btn" onclick="deleteMedia('${id}');closeMediaViewer()" style="color:#f44747;border-color:#f44747">🗑 Delete</button>`;
 
   viewer.style.display = 'flex';
@@ -1737,14 +2004,16 @@ function openMediaViewer(id) {
 
 function closeMediaViewer(e) {
   if (e && e.target !== document.getElementById('mediaViewer')) return;
-  document.getElementById('mediaViewer').style.display = 'none';
+  const viewer = document.getElementById('mediaViewer');
+  if (!viewer) return;
+  viewer.style.display = 'none';
   const content = document.getElementById('mediaViewerContent');
-  // Stop video/audio
-  content.querySelectorAll('video,audio').forEach(el => { el.pause(); el.src=''; });
-  content.innerHTML = '';
+  if (content) {
+    content.querySelectorAll('video,audio').forEach(el => { el.pause(); el.src=''; });
+    content.innerHTML = '';
+  }
 }
 
-// ── DOWNLOAD ──────────────────────────────────────────────
 function downloadMedia(id) {
   const m = MEDIA.find(x => x.id === id);
   if (!m) return;
@@ -1761,13 +2030,11 @@ function downloadMedia(id) {
   }
 }
 
-// ── DELETE ────────────────────────────────────────────────
 async function deleteMedia(id) {
   const m = MEDIA.find(x => x.id === id);
   if (!m) return;
   if (!confirm(`Delete "${m.name}"?`)) return;
 
-  // Try to delete from GitHub too
   if (m.ghPath && GH.token && GH.owner && GH.repo) {
     try {
       const file = await ghGetFile(m.ghPath);
@@ -1786,20 +2053,7 @@ async function deleteMedia(id) {
   renderMediaPanel();
   toast('Deleted', 'ok');
 }
-
-// ── HOOK INTO setActivity ─────────────────────────────────
-const _origSetActivity = setActivity;
-setActivity = function(mode) {
-  if (mode === 'media') {
-    document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('actMedia')?.classList.add('active');
-    openMediaPanel();
-    return;
-  }
-  // Close media panel if switching away
-  document.getElementById('mediaPanel').style.display = 'none';
-  _origSetActivity(mode);
-};
 </script>
+
 </body>
 </html>
