@@ -246,6 +246,60 @@ input,textarea,select{font-family:var(--fb)}
 .gh-info a{color:#569cd6;text-decoration:none}
 .gh-info a:hover{text-decoration:underline}
 .gh-test-result{padding:8px 12px;border-radius:var(--r);font-size:12px;margin-bottom:12px;display:none}
+/* ── MEDIA PANEL ──────────────────────────────────────────── */
+.media-titlebar{height:36px;background:#252526;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
+.media-titlebar h2{font-family:var(--fh);font-size:14px;font-weight:700;color:#d4d4d4;flex:1}
+.media-body{flex:1;display:flex;overflow:hidden}
+.media-sidebar{width:200px;background:#252526;border-right:1px solid #1e1e1e;display:flex;flex-direction:column;flex-shrink:0;padding:8px 0}
+.media-cat{padding:6px 16px;font-size:12px;color:#9d9d9d;cursor:pointer;border-left:2px solid transparent;transition:all .1s;display:flex;align-items:center;gap:8px}
+.media-cat:hover{background:rgba(255,255,255,0.05);color:#d4d4d4}
+.media-cat.active{background:rgba(86,156,214,0.1);border-left-color:#569cd6;color:#d4d4d4}
+.media-cat-count{margin-left:auto;font-size:10px;background:#3c3c3f;border-radius:10px;padding:1px 6px;color:#9d9d9d}
+.media-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.media-toolbar{height:44px;background:#2d2d30;border-bottom:1px solid #1e1e1e;display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0}
+.media-search{flex:1;max-width:300px;background:#1e1e1e;border:1px solid #454545;border-radius:var(--r);color:#d4d4d4;font-size:12px;padding:5px 10px;outline:none;font-family:var(--fb)}
+.media-search:focus{border-color:#569cd6}
+.media-search::placeholder{color:#6b6b6b}
+.media-upload-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:#0e639c;border:none;border-radius:var(--r);color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
+.media-upload-btn:hover{background:#1177bb}
+.media-grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;align-content:start}
+.media-grid.list-view{grid-template-columns:1fr;gap:4px}
+.media-card{background:#252526;border:1px solid #333;border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative}
+.media-card:hover{border-color:#569cd6;transform:translateY(-1px)}
+.media-card.list-view{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:var(--r)}
+.media-thumb{width:100%;aspect-ratio:16/10;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;flex-shrink:0}
+.media-thumb img{width:100%;height:100%;object-fit:cover}
+.media-thumb video{width:100%;height:100%;object-fit:cover}
+.media-card.list-view .media-thumb{width:40px;height:40px;aspect-ratio:1;border-radius:var(--r);font-size:20px}
+.media-info{padding:8px 10px}
+.media-card.list-view .media-info{flex:1;padding:0}
+.media-name{font-size:12px;color:#d4d4d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.media-meta{font-size:10px;color:#6b6b6b;display:flex;gap:6px;align-items:center}
+.media-card-actions{position:absolute;top:6px;right:6px;display:none;gap:4px}
+.media-card:hover .media-card-actions{display:flex}
+.media-card.list-view .media-card-actions{position:static;display:flex;flex-shrink:0}
+.mca-btn{width:24px;height:24px;background:rgba(30,30,30,0.9);border:1px solid #454545;border-radius:3px;color:#d4d4d4;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.mca-btn:hover{background:#569cd6;border-color:#569cd6}
+.mca-btn.del:hover{background:#f44747;border-color:#f44747}
+.media-empty{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#6b6b6b;text-align:center;gap:10px}
+.media-empty-icon{font-size:48px}
+.media-drop-zone{border:2px dashed #454545;border-radius:var(--rl);padding:40px;text-align:center;color:#6b6b6b;font-size:13px;transition:all .2s;cursor:pointer;margin:16px}
+.media-drop-zone.drag-over{border-color:#569cd6;background:rgba(86,156,214,0.08);color:#569cd6}
+/* Media viewer modal */
+.media-viewer{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.media-viewer-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.media-viewer-close:hover{background:rgba(255,255,255,0.2)}
+.media-viewer img{max-width:90vw;max-height:80vh;border-radius:var(--r);box-shadow:0 8px 40px rgba(0,0,0,.8)}
+.media-viewer video{max-width:90vw;max-height:80vh;border-radius:var(--r)}
+.media-viewer audio{width:400px;max-width:90vw}
+.media-viewer-name{color:#9d9d9d;font-size:12px;margin-top:12px;font-family:var(--fm)}
+.media-viewer-actions{display:flex;gap:8px;margin-top:12px}
+/* Upload progress */
+.upload-progress{position:fixed;bottom:60px;right:16px;z-index:3000;background:#252526;border:1px solid #454545;border-radius:var(--r);padding:12px 16px;min-width:260px;box-shadow:0 4px 16px rgba(0,0,0,.6);display:none}
+.up-title{font-size:12px;color:#d4d4d4;margin-bottom:8px;font-weight:600}
+.up-bar-wrap{background:#1e1e1e;border-radius:2px;height:4px;overflow:hidden;margin-bottom:6px}
+.up-bar{height:100%;background:#569cd6;border-radius:2px;transition:width .3s;width:0%}
+.up-status{font-size:11px;color:#9d9d9d}
 </style>
 
 <!-- ══ LOCK SCREEN ══════════════════════════════════════════ -->
@@ -314,6 +368,7 @@ input,textarea,select{font-family:var(--fb)}
       <button class="act-btn active" id="actFiles" onclick="setActivity('files')" title="Explorer">📁</button>
       <button class="act-btn" id="actSearch" onclick="setActivity('search')" title="Search">🔍</button>
       <button class="act-btn" id="actGh" onclick="openGhModal()" title="GitHub Sync">☁</button>
+      <button class="act-btn" id="actMedia" onclick="setActivity('media')" title="Media & Files">🗂</button>
       <div style="flex:1"></div>
       <button class="act-btn" onclick="openDownloadModal()" title="Export / Download">⬇</button>
       <button class="act-btn" onclick="lockApp()" title="Lock Vault" style="margin-bottom:4px">🔒</button>
@@ -374,6 +429,9 @@ input,textarea,select{font-family:var(--fb)}
   <div class="ctx-sep"></div>
   <div class="ctx-item danger" onclick="ctxAction('delete')">🗑 Delete</div>
 </div>
+
+<!-- ══ MEDIA PANEL (full overlay inside app) ══════════════ -->
+<div id="mediaPanel" style="display:none;position:fixed;inset:0;z-index:500;background:#1e1e1e;flex-direction:column"></div>
 
 <!-- GitHub Modal -->
 <div class="overlay" id="ghOverlay" onclick="overlayClick(event,'ghOverlay')">
@@ -461,6 +519,21 @@ input,textarea,select{font-family:var(--fb)}
 </div>
 
 <div class="toast-box" id="toastBox"></div>
+
+<!-- Upload Progress -->
+<div class="upload-progress" id="uploadProgress">
+  <div class="up-title">⬆ Uploading…</div>
+  <div class="up-bar-wrap"><div class="up-bar" id="upBar"></div></div>
+  <div class="up-status" id="upStatus">Preparing…</div>
+</div>
+
+<!-- Media Viewer -->
+<div class="media-viewer" id="mediaViewer" style="display:none" onclick="closeMediaViewer(event)">
+  <button class="media-viewer-close" onclick="closeMediaViewer()">✕</button>
+  <div id="mediaViewerContent"></div>
+  <div class="media-viewer-name" id="mediaViewerName"></div>
+  <div class="media-viewer-actions" id="mediaViewerActions"></div>
+</div>
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -1314,6 +1387,7 @@ document.addEventListener('keydown', e => {
     ['ghOverlay','docModal','delModal','exportModal'].forEach(id=>{
       document.getElementById(id)?.classList.remove('on');
     });
+    closeMediaViewer();
   }
   if (!authUnlocked) return;
   if ((e.ctrlKey||e.metaKey) && e.key==='n') { e.preventDefault(); openNewDoc(); }
@@ -1326,3 +1400,406 @@ document.addEventListener('keydown', e => {
 </body>
 </html>
 
+<script>
+// ═══════════════════════════════════════════════════════════
+// MEDIA & FILES ENGINE
+// ═══════════════════════════════════════════════════════════
+// Media items stored in localStorage as metadata; actual files in GitHub repo under media/
+// { id, name, type, category, size, mimeType, ghPath, dataUrl(for small), createdAt }
+
+let MEDIA = JSON.parse(localStorage.getItem('dv_media') || '[]');
+let mediaCategory = 'all';
+let mediaView = 'grid'; // 'grid' | 'list'
+let mediaSearchQ = '';
+
+const MEDIA_CATS = {
+  all:    { icon:'🗂',  label:'All Files' },
+  image:  { icon:'🖼',  label:'Images' },
+  video:  { icon:'🎬',  label:'Videos' },
+  audio:  { icon:'🎵',  label:'Audio' },
+  archive:{ icon:'🗜',  label:'Archives' },
+  other:  { icon:'📄',  label:'Other' },
+};
+
+const MIME_CAT = {
+  'image/':   'image',
+  'video/':   'video',
+  'audio/':   'audio',
+  'application/zip':    'archive',
+  'application/x-rar':  'archive',
+  'application/x-7z':   'archive',
+  'application/x-tar':  'archive',
+  'application/gzip':   'archive',
+};
+
+function getMimeCategory(mime) {
+  for (const [prefix, cat] of Object.entries(MIME_CAT)) {
+    if (mime.startsWith(prefix)) return cat;
+  }
+  return 'other';
+}
+
+function getFileIcon(cat, mime) {
+  if (cat === 'image') return '🖼';
+  if (cat === 'video') return '🎬';
+  if (cat === 'audio') return '🎵';
+  if (cat === 'archive') return '🗜';
+  if (mime.includes('pdf')) return '📕';
+  if (mime.includes('word') || mime.includes('document')) return '📝';
+  if (mime.includes('sheet') || mime.includes('excel')) return '📊';
+  return '📄';
+}
+
+function fmtSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  if (bytes < 1024*1024*1024) return (bytes/1024/1024).toFixed(1) + ' MB';
+  return (bytes/1024/1024/1024).toFixed(2) + ' GB';
+}
+
+function persistMedia() {
+  localStorage.setItem('dv_media', JSON.stringify(MEDIA));
+}
+
+// ── OPEN MEDIA PANEL ──────────────────────────────────────
+function openMediaPanel() {
+  const panel = document.getElementById('mediaPanel');
+  panel.style.display = 'flex';
+  renderMediaPanel();
+}
+
+function closeMediaPanel() {
+  document.getElementById('mediaPanel').style.display = 'none';
+}
+
+function renderMediaPanel() {
+  const panel = document.getElementById('mediaPanel');
+  const counts = {};
+  MEDIA.forEach(m => {
+    counts[m.category] = (counts[m.category]||0) + 1;
+    counts.all = (counts.all||0) + 1;
+  });
+
+  panel.innerHTML = `
+    <div class="media-titlebar">
+      <h2>🗂 Media & Files</h2>
+      <button class="tb-btn" onclick="toggleMediaView()" title="Toggle view">⊞</button>
+      <button class="tb-btn" onclick="closeMediaPanel()" style="margin-left:4px">✕ Close</button>
+    </div>
+    <div class="media-body">
+      <div class="media-sidebar">
+        ${Object.entries(MEDIA_CATS).map(([key,cat])=>`
+          <div class="media-cat${mediaCategory===key?' active':''}" onclick="setMediaCat('${key}')">
+            <span>${cat.icon}</span>
+            <span>${cat.label}</span>
+            <span class="media-cat-count">${counts[key]||0}</span>
+          </div>`).join('')}
+        <div style="flex:1"></div>
+        <div style="padding:12px 16px;border-top:1px solid #333;margin-top:8px">
+          <div style="font-size:10px;color:#6b6b6b;margin-bottom:6px">STORAGE INFO</div>
+          <div style="font-size:11px;color:#9d9d9d">GitHub: <span style="color:#4ec9b0">media/</span></div>
+          <div style="font-size:10px;color:#6b6b6b;margin-top:4px">Max per file: 25MB via API<br>Larger files: stored as data URL locally</div>
+        </div>
+      </div>
+      <div class="media-main">
+        <div class="media-toolbar">
+          <input class="media-search" type="text" placeholder="Search files…" value="${escHtml(mediaSearchQ)}" oninput="mediaSearchQ=this.value;renderMediaGrid()">
+          <label class="media-upload-btn">
+            ⬆ Upload Files
+            <input type="file" multiple accept="*/*" onchange="handleMediaUpload(event)" style="display:none">
+          </label>
+          <div style="font-size:11px;color:#6b6b6b;margin-left:4px">${MEDIA.length} file${MEDIA.length!==1?'s':''}</div>
+        </div>
+        <div id="mediaDropZone" class="media-drop-zone"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="handleMediaDrop(event)"
+          onclick="this.nextElementSibling.querySelector('input[type=file]').click()">
+          📂 Drag & drop files here, or click to upload<br>
+          <span style="font-size:11px;color:#6b6b6b">Images, Videos, Audio, ZIP, RAR, 7z, PDF and more</span>
+        </div>
+        <div class="media-grid${mediaView==='list'?' list-view':''}" id="mediaGrid"></div>
+      </div>
+    </div>`;
+
+  renderMediaGrid();
+  setupMediaDrop();
+}
+
+function renderMediaGrid() {
+  const grid = document.getElementById('mediaGrid');
+  if (!grid) return;
+  let items = MEDIA.filter(m => {
+    const catOk = mediaCategory === 'all' || m.category === mediaCategory;
+    const qOk   = !mediaSearchQ || m.name.toLowerCase().includes(mediaSearchQ.toLowerCase());
+    return catOk && qOk;
+  });
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="media-empty">
+      <div class="media-empty-icon">${MEDIA_CATS[mediaCategory]?.icon||'📂'}</div>
+      <div style="font-size:14px;color:#9d9d9d">No files yet</div>
+      <div style="font-size:12px">Upload files using the button above or drag & drop</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map(m => {
+    const isImg = m.category === 'image';
+    const isVid = m.category === 'video';
+    const isAud = m.category === 'audio';
+    const thumb = isImg && m.dataUrl
+      ? `<img src="${m.dataUrl}" alt="${escHtml(m.name)}" loading="lazy">`
+      : isVid && m.dataUrl
+      ? `<video src="${m.dataUrl}" muted></video>`
+      : `<span>${getFileIcon(m.category, m.mimeType||'')}</span>`;
+
+    return `<div class="media-card${mediaView==='list'?' list-view':''}" onclick="openMediaViewer('${m.id}')">
+      <div class="media-thumb">${thumb}</div>
+      <div class="media-info">
+        <div class="media-name" title="${escHtml(m.name)}">${escHtml(m.name)}</div>
+        <div class="media-meta">
+          <span>${fmtSize(m.size||0)}</span>
+          <span>${m.category}</span>
+        </div>
+      </div>
+      <div class="media-card-actions">
+        <button class="mca-btn" onclick="event.stopPropagation();downloadMedia('${m.id}')" title="Download">⬇</button>
+        <button class="mca-btn del" onclick="event.stopPropagation();deleteMedia('${m.id}')" title="Delete">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setMediaCat(cat) {
+  mediaCategory = cat;
+  renderMediaPanel();
+}
+
+function toggleMediaView() {
+  mediaView = mediaView === 'grid' ? 'list' : 'grid';
+  renderMediaGrid();
+}
+
+function setupMediaDrop() {
+  const dz = document.getElementById('mediaDropZone');
+  if (!dz) return;
+  dz.addEventListener('drop', handleMediaDrop);
+}
+</script>
+
+<script>
+// ── UPLOAD HANDLER ────────────────────────────────────────
+async function handleMediaDrop(e) {
+  e.preventDefault();
+  const dz = document.getElementById('mediaDropZone');
+  if (dz) dz.classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer?.files || []);
+  if (files.length) await uploadMediaFiles(files);
+}
+
+async function handleMediaUpload(e) {
+  const files = Array.from(e.target.files || []);
+  if (files.length) await uploadMediaFiles(files);
+  e.target.value = '';
+}
+
+async function uploadMediaFiles(files) {
+  const prog = document.getElementById('uploadProgress');
+  const bar  = document.getElementById('upBar');
+  const stat = document.getElementById('upStatus');
+  prog.style.display = 'block';
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    stat.textContent = `(${i+1}/${files.length}) ${file.name}`;
+    bar.style.width = Math.round(((i) / files.length) * 100) + '%';
+
+    const cat = getMimeCategory(file.type || '');
+    const id  = uid();
+    const MAX_GITHUB = 24 * 1024 * 1024; // 24MB safe limit
+
+    let dataUrl = null;
+    let ghPath  = null;
+
+    // Read file as base64
+    const b64 = await fileToBase64(file);
+    dataUrl = b64; // always store locally for preview
+
+    // Try to push to GitHub if configured and file is small enough
+    if (GH.token && GH.owner && GH.repo && file.size <= MAX_GITHUB) {
+      try {
+        stat.textContent = `Uploading to GitHub: ${file.name}`;
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        ghPath = `media/${cat}/${id}_${safeName}`;
+        const rawB64 = b64.split(',')[1]; // strip data:...;base64,
+        await ghReqRaw('PUT', `/contents/${ghPath}`, {
+          message: `DataVault: upload ${file.name}`,
+          content: rawB64,
+          branch: GH.branch || 'main'
+        });
+      } catch(err) {
+        console.warn('GitHub upload failed:', err.message);
+        ghPath = null;
+        toast(`GitHub upload failed for ${file.name}: ${err.message}`, 'warn');
+      }
+    } else if (file.size > MAX_GITHUB) {
+      toast(`${file.name} (${fmtSize(file.size)}) is too large for GitHub API. Stored locally only.`, 'warn');
+    }
+
+    const item = {
+      id, name: file.name, type: file.type || 'application/octet-stream',
+      mimeType: file.type || 'application/octet-stream',
+      category: cat, size: file.size,
+      dataUrl: dataUrl, // stored locally always
+      ghPath, createdAt: now()
+    };
+
+    // For large files, don't store dataUrl in localStorage (too big) — just keep reference
+    if (file.size > 5 * 1024 * 1024) {
+      item.dataUrl = null; // too large for localStorage
+      item.localOnly = !ghPath;
+      toast(`${file.name} stored in GitHub. Preview not available locally.`, 'ok');
+    }
+
+    MEDIA.unshift(item);
+    persistMedia();
+    bar.style.width = Math.round(((i+1) / files.length) * 100) + '%';
+  }
+
+  prog.style.display = 'none';
+  toast(`Uploaded ${files.length} file${files.length!==1?'s':''}`, 'ok');
+  renderMediaPanel();
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// Raw GitHub request (for binary uploads — content already base64)
+async function ghReqRaw(method, path, body) {
+  if (!GH.token||!GH.owner||!GH.repo) throw new Error('GitHub not configured');
+  const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}${path}`, {
+    method,
+    headers: {
+      'Authorization': 'token '+GH.token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+      'User-Agent': 'DataVault-App'
+    },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) { const e=await res.json().catch(()=>({})); throw new Error(e.message||'GitHub error '+res.status); }
+  return res.status===204 ? {} : res.json();
+}
+
+// ── MEDIA VIEWER ──────────────────────────────────────────
+function openMediaViewer(id) {
+  const m = MEDIA.find(x => x.id === id);
+  if (!m) return;
+  const viewer  = document.getElementById('mediaViewer');
+  const content = document.getElementById('mediaViewerContent');
+  const name    = document.getElementById('mediaViewerName');
+  const actions = document.getElementById('mediaViewerActions');
+
+  name.textContent = m.name + ' · ' + fmtSize(m.size||0);
+
+  if (m.category === 'image' && m.dataUrl) {
+    content.innerHTML = `<img src="${m.dataUrl}" alt="${escHtml(m.name)}">`;
+  } else if (m.category === 'video' && m.dataUrl) {
+    content.innerHTML = `<video src="${m.dataUrl}" controls autoplay style="max-width:90vw;max-height:75vh;border-radius:4px"></video>`;
+  } else if (m.category === 'audio' && m.dataUrl) {
+    content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">🎵</div><audio src="${m.dataUrl}" controls autoplay></audio>`;
+  } else if (m.ghPath) {
+    // File is on GitHub — show link
+    const ghUrl = `https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}`;
+    const rawUrl = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch||'main'}/${m.ghPath}`;
+    content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
+      <div style="color:#9d9d9d;font-size:13px;margin-bottom:8px">File stored on GitHub</div>
+      <a href="${rawUrl}" target="_blank" style="color:#569cd6;font-size:12px;text-decoration:none">↗ Open raw file</a>`;
+  } else {
+    content.innerHTML = `<div style="font-size:64px;margin-bottom:16px">${getFileIcon(m.category,m.mimeType)}</div>
+      <div style="color:#9d9d9d;font-size:13px">Preview not available</div>`;
+  }
+
+  actions.innerHTML = `
+    <button class="tb-btn" onclick="downloadMedia('${id}')" style="background:#0e639c;border-color:#0e639c;color:#fff">⬇ Download</button>
+    ${m.ghPath ? `<a href="https://github.com/${GH.owner}/${GH.repo}/blob/${GH.branch||'main'}/${m.ghPath}" target="_blank" class="tb-btn" style="text-decoration:none;display:flex;align-items:center;gap:4px">🐙 View on GitHub</a>` : ''}
+    <button class="tb-btn" onclick="deleteMedia('${id}');closeMediaViewer()" style="color:#f44747;border-color:#f44747">🗑 Delete</button>`;
+
+  viewer.style.display = 'flex';
+}
+
+function closeMediaViewer(e) {
+  if (e && e.target !== document.getElementById('mediaViewer')) return;
+  document.getElementById('mediaViewer').style.display = 'none';
+  const content = document.getElementById('mediaViewerContent');
+  // Stop video/audio
+  content.querySelectorAll('video,audio').forEach(el => { el.pause(); el.src=''; });
+  content.innerHTML = '';
+}
+
+// ── DOWNLOAD ──────────────────────────────────────────────
+function downloadMedia(id) {
+  const m = MEDIA.find(x => x.id === id);
+  if (!m) return;
+  if (m.dataUrl) {
+    const a = document.createElement('a');
+    a.href = m.dataUrl;
+    a.download = m.name;
+    a.click();
+  } else if (m.ghPath) {
+    const rawUrl = `https://raw.githubusercontent.com/${GH.owner}/${GH.repo}/${GH.branch||'main'}/${m.ghPath}`;
+    window.open(rawUrl, '_blank');
+  } else {
+    toast('File data not available', 'err');
+  }
+}
+
+// ── DELETE ────────────────────────────────────────────────
+async function deleteMedia(id) {
+  const m = MEDIA.find(x => x.id === id);
+  if (!m) return;
+  if (!confirm(`Delete "${m.name}"?`)) return;
+
+  // Try to delete from GitHub too
+  if (m.ghPath && GH.token && GH.owner && GH.repo) {
+    try {
+      const file = await ghGetFile(m.ghPath);
+      if (file?.sha) {
+        await ghReqRaw('DELETE', `/contents/${m.ghPath}`, {
+          message: `DataVault: delete ${m.name}`,
+          sha: file.sha,
+          branch: GH.branch || 'main'
+        });
+      }
+    } catch(e) { console.warn('GitHub delete failed:', e.message); }
+  }
+
+  MEDIA = MEDIA.filter(x => x.id !== id);
+  persistMedia();
+  renderMediaPanel();
+  toast('Deleted', 'ok');
+}
+
+// ── HOOK INTO setActivity ─────────────────────────────────
+const _origSetActivity = setActivity;
+setActivity = function(mode) {
+  if (mode === 'media') {
+    document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('actMedia')?.classList.add('active');
+    openMediaPanel();
+    return;
+  }
+  // Close media panel if switching away
+  document.getElementById('mediaPanel').style.display = 'none';
+  _origSetActivity(mode);
+};
+</script>
+</body>
+</html>
