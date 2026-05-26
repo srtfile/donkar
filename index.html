@@ -481,10 +481,10 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <div class="modal" style="max-width:680px" id="recordModalInner">
   <div class="modal-head">
     <span class="modal-title" id="recordModalTitle">NEW RECORD</span>
-    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('recordModal','min')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('recordModal','max')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('recordModal','full')" style="width:16px;height:16px"></button>
+    <div style="display:flex;align-items:center;gap:4px;margin-left:auto">
+      <button class="pwc-btn pwc-min" onclick="toggleModalWindow('recordModal','min')">─ MIN</button>
+      <button class="pwc-btn pwc-max" onclick="toggleModalWindow('recordModal','max')">□ MAX</button>
+      <button class="pwc-btn pwc-full" onclick="toggleModalWindow('recordModal','full')">⛶ FULL</button>
       <button class="modal-close" onclick="closeModal('recordModal')">✕</button>
     </div>
   </div>
@@ -513,9 +513,9 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
         <div class="wc-section-bar">
           <span class="wc-section-title">📋 INFO / NOTES</span>
           <div class="wc-btns">
-            <button type="button" class="wc-btn wc-min" title="Minimize" onclick="wcToggle('wcs-info','min')">─</button>
-            <button type="button" class="wc-btn wc-max" title="Expand" onclick="wcToggle('wcs-info','max')">□</button>
-            <button type="button" class="wc-btn wc-full" title="Fullscreen" onclick="wcToggle('wcs-info','full')">⛶</button>
+            <button type="button" class="wc-btn wc-min" onclick="wcToggle('wcs-info','min')">─ MIN</button>
+            <button type="button" class="wc-btn wc-max" onclick="wcToggle('wcs-info','max')">□ EXPAND</button>
+            <button type="button" class="wc-btn wc-full" onclick="wcToggle('wcs-info','full')">⛶ FULL</button>
           </div>
         </div>
         <div class="wc-section-body">
@@ -540,9 +540,9 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
         <div class="wc-section-bar">
           <span class="wc-section-title">💻 CODE CONTENT</span>
           <div class="wc-btns">
-            <button type="button" class="wc-btn wc-min" title="Minimize" onclick="wcToggle('wcs-code','min')">─</button>
-            <button type="button" class="wc-btn wc-max" title="Expand" onclick="wcToggle('wcs-code','max')">□</button>
-            <button type="button" class="wc-btn wc-full" title="Fullscreen" onclick="wcToggle('wcs-code','full')">⛶</button>
+            <button type="button" class="wc-btn wc-min" onclick="wcToggle('wcs-code','min')">─ MIN</button>
+            <button type="button" class="wc-btn wc-max" onclick="wcToggle('wcs-code','max')">□ EXPAND</button>
+            <button type="button" class="wc-btn wc-full" onclick="wcToggle('wcs-code','full')">⛶ FULL</button>
           </div>
         </div>
         <div class="wc-section-body" style="padding:0">
@@ -585,9 +585,9 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
         <div class="wc-section-bar">
           <span class="wc-section-title">📖 README (MARKDOWN)</span>
           <div class="wc-btns">
-            <button type="button" class="wc-btn wc-min" title="Minimize" onclick="wcToggle('wcs-readme','min')">─</button>
-            <button type="button" class="wc-btn wc-max" title="Expand" onclick="wcToggle('wcs-readme','max')">□</button>
-            <button type="button" class="wc-btn wc-full" title="Fullscreen" onclick="wcToggle('wcs-readme','full')">⛶</button>
+            <button type="button" class="wc-btn wc-min" onclick="wcToggle('wcs-readme','min')">─ MIN</button>
+            <button type="button" class="wc-btn wc-max" onclick="wcToggle('wcs-readme','max')">□ EXPAND</button>
+            <button type="button" class="wc-btn wc-full" onclick="wcToggle('wcs-readme','full')">⛶ FULL</button>
           </div>
         </div>
         <div class="wc-section-body" id="wcs-readme-body">
@@ -608,10 +608,10 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <div class="modal" style="max-width:480px">
   <div class="modal-head">
     <span class="modal-title">GITHUB SETTINGS</span>
-    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('ghModal','min')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('ghModal','max')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('ghModal','full')" style="width:16px;height:16px"></button>
+    <div style="display:flex;align-items:center;gap:4px;margin-left:auto">
+      <button class="pwc-btn pwc-min" onclick="toggleModalWindow('ghModal','min')">─ MIN</button>
+      <button class="pwc-btn pwc-max" onclick="toggleModalWindow('ghModal','max')">□ MAX</button>
+      <button class="pwc-btn pwc-full" onclick="toggleModalWindow('ghModal','full')">⛶ FULL</button>
       <button class="modal-close" onclick="closeModal('ghModal')">✕</button>
     </div>
   </div>
@@ -635,10 +635,10 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <div class="modal" style="max-width:440px">
   <div class="modal-head">
     <span class="modal-title">EXPORT & SYNC</span>
-    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('downloadModal','min')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('downloadModal','max')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('downloadModal','full')" style="width:16px;height:16px"></button>
+    <div style="display:flex;align-items:center;gap:4px;margin-left:auto">
+      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('downloadModal','min')">─ MIN</button>
+      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('downloadModal','max')">□ MAX</button>
+      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('downloadModal','full')">⛶ FULL</button>
       <button class="modal-close" onclick="closeModal('downloadModal')">✕</button>
     </div>
   </div>
@@ -664,8 +664,8 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <div class="modal" style="max-width:380px">
   <div class="modal-head">
     <span class="modal-title">DELETE RECORD</span>
-    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('deleteModal','min')" style="width:16px;height:16px"></button>
+    <div style="display:flex;align-items:center;gap:4px;margin-left:auto">
+      <button class="pwc-btn pwc-min" onclick="toggleModalWindow('deleteModal','min')">─ MIN</button>
       <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
     </div>
   </div>
@@ -765,9 +765,9 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
     ⬆ UPLOAD
     <input type="file" id="fmFileInput" multiple style="display:none" onchange="handleFileUpload(this.files)">
   </label>
-  <button class="btn btn-ghost" title="Minimize File Manager" onclick="toggleFmWindow('min')" style="font-size:14px;width:32px;height:32px;padding:0;background:rgba(255,189,46,0.1);border-color:rgba(255,189,46,0.3);color:#ffbd2e">─</button>
-  <button class="btn btn-ghost" title="Maximize File Manager" onclick="toggleFmWindow('max')" style="font-size:14px;width:32px;height:32px;padding:0;background:rgba(39,201,63,0.1);border-color:rgba(39,201,63,0.3);color:#27c93f">□</button>
-  <button class="btn btn-ghost" title="Fullscreen File Manager" onclick="toggleFmWindow('full')" style="font-size:14px;width:32px;height:32px;padding:0;background:rgba(77,159,255,0.1);border-color:rgba(77,159,255,0.3);color:#4d9fff">⛶</button>
+  <button class="btn btn-ghost" title="Minimize File Manager" onclick="toggleFmWindow('min')" style="font-size:10px;height:28px;padding:0 8px;background:rgba(255,189,46,0.1);border-color:rgba(255,189,46,0.3);color:#ffbd2e">─ MIN</button>
+  <button class="btn btn-ghost" title="Maximize File Manager" onclick="toggleFmWindow('max')" style="font-size:10px;height:28px;padding:0 8px;background:rgba(39,201,63,0.1);border-color:rgba(39,201,63,0.3);color:#27c93f">□ MAX</button>
+  <button class="btn btn-ghost" title="Fullscreen File Manager" onclick="toggleFmWindow('full')" style="font-size:10px;height:28px;padding:0 8px;background:rgba(77,159,255,0.1);border-color:rgba(77,159,255,0.3);color:#4d9fff">⛶ FULL</button>
   <button class="btn btn-ghost" onclick="closeFileManager()" style="font-size:11px;background:rgba(255,51,102,0.1);border-color:rgba(255,51,102,0.3);color:var(--red)">✕ CLOSE</button>
 </div>
 <div class="fm-layout">
@@ -797,10 +797,10 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <div class="modal" style="max-width:900px;max-height:95vh" id="fileViewerModalInner">
   <div class="modal-head">
     <span class="modal-title" id="fvTitle">FILE VIEWER</span>
-    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleFvWindow('min')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleFvWindow('max')" style="width:16px;height:16px"></button>
-      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFvWindow('full')" style="width:16px;height:16px"></button>
+    <div style="display:flex;align-items:center;gap:4px;margin-left:auto">
+      <button class="pwc-btn pwc-min" onclick="toggleFvWindow('min')">─ MIN</button>
+      <button class="pwc-btn pwc-max" onclick="toggleFvWindow('max')">□ MAX</button>
+      <button class="pwc-btn pwc-full" onclick="toggleFvWindow('full')">⛶ FULL</button>
       <button class="modal-close" onclick="closeModal('fileViewerModal')">✕</button>
     </div>
   </div>
@@ -814,23 +814,29 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 
 <style>
 /* PANEL WINDOW CONTROLS */
-.panel-wc{display:flex;align-items:center;gap:5px;margin-left:auto}
-.pwc-btn{width:13px;height:13px;border-radius:50%;border:none;cursor:pointer;transition:all .15s;flex-shrink:0;position:relative}
-.pwc-btn:hover{transform:scale(1.2);filter:brightness(1.3)}
-.pwc-btn.pwc-min{background:#ffbd2e;box-shadow:0 0 6px rgba(255,189,46,0.6)}
-.pwc-btn.pwc-max{background:#27c93f;box-shadow:0 0 6px rgba(39,201,63,0.6)}
-.pwc-btn.pwc-full{background:#4d9fff;box-shadow:0 0 6px rgba(77,159,255,0.6)}
-.pwc-btn.pwc-close{background:#ff5f56;box-shadow:0 0 6px rgba(255,95,86,0.5)}
+.panel-wc{display:flex;align-items:center;gap:4px;margin-left:auto}
+.pwc-btn{height:22px;padding:0 8px;border-radius:4px;border:1px solid;cursor:pointer;font-size:10px;font-family:var(--fh);font-weight:700;letter-spacing:.5px;transition:all .15s;flex-shrink:0;display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.pwc-btn:hover{transform:translateY(-1px)}
+.pwc-btn.pwc-min{background:rgba(255,189,46,0.1);color:#ffbd2e;border-color:rgba(255,189,46,0.35);box-shadow:0 0 6px rgba(255,189,46,0.2)}
+.pwc-btn.pwc-min:hover{background:rgba(255,189,46,0.2);box-shadow:0 0 12px rgba(255,189,46,0.4)}
+.pwc-btn.pwc-max{background:rgba(39,201,63,0.1);color:#27c93f;border-color:rgba(39,201,63,0.35);box-shadow:0 0 6px rgba(39,201,63,0.2)}
+.pwc-btn.pwc-max:hover{background:rgba(39,201,63,0.2);box-shadow:0 0 12px rgba(39,201,63,0.4)}
+.pwc-btn.pwc-full{background:rgba(77,159,255,0.1);color:#4d9fff;border-color:rgba(77,159,255,0.35);box-shadow:0 0 6px rgba(77,159,255,0.2)}
+.pwc-btn.pwc-full:hover{background:rgba(77,159,255,0.2);box-shadow:0 0 12px rgba(77,159,255,0.4)}
+.pwc-btn.pwc-close{background:rgba(255,95,86,0.1);color:#ff5f56;border-color:rgba(255,95,86,0.35)}
 /* WINDOW CONTROL SECTION BARS (for form fields) */
 .wc-section-wrap{border:1px solid rgba(77,159,255,0.18);border-radius:var(--r);overflow:hidden;transition:all .2s;background:rgba(7,10,21,0.4)}
 .wc-section-bar{display:flex;align-items:center;padding:6px 12px;background:rgba(77,159,255,0.07);border-bottom:1px solid rgba(77,159,255,0.12);gap:8px;user-select:none;flex-shrink:0}
 .wc-section-title{font-family:var(--fh);font-size:9px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;flex:1}
-.wc-btns{display:flex;align-items:center;gap:5px}
-.wc-btn{width:14px;height:14px;border-radius:50%;border:none;cursor:pointer;font-size:0;transition:all .15s;flex-shrink:0;position:relative;line-height:1}
-.wc-btn:hover{transform:scale(1.25);font-size:8px;color:#000;font-weight:900;display:flex;align-items:center;justify-content:center}
-.wc-btn.wc-min{background:#ffbd2e;box-shadow:0 0 8px rgba(255,189,46,0.7)}
-.wc-btn.wc-max{background:#27c93f;box-shadow:0 0 8px rgba(39,201,63,0.7)}
-.wc-btn.wc-full{background:#4d9fff;box-shadow:0 0 8px rgba(77,159,255,0.7)}
+.wc-btns{display:flex;align-items:center;gap:4px}
+.wc-btn{height:20px;padding:0 7px;border-radius:4px;border:1px solid;cursor:pointer;font-size:9px;font-family:var(--fh);font-weight:700;letter-spacing:.5px;transition:all .15s;flex-shrink:0;display:inline-flex;align-items:center;gap:2px;white-space:nowrap;background:transparent}
+.wc-btn:hover{transform:translateY(-1px)}
+.wc-btn.wc-min{color:#ffbd2e;border-color:rgba(255,189,46,0.4);background:rgba(255,189,46,0.08);box-shadow:0 0 6px rgba(255,189,46,0.15)}
+.wc-btn.wc-min:hover{background:rgba(255,189,46,0.18);box-shadow:0 0 10px rgba(255,189,46,0.4)}
+.wc-btn.wc-max{color:#27c93f;border-color:rgba(39,201,63,0.4);background:rgba(39,201,63,0.08);box-shadow:0 0 6px rgba(39,201,63,0.15)}
+.wc-btn.wc-max:hover{background:rgba(39,201,63,0.18);box-shadow:0 0 10px rgba(39,201,63,0.4)}
+.wc-btn.wc-full{color:#4d9fff;border-color:rgba(77,159,255,0.4);background:rgba(77,159,255,0.08);box-shadow:0 0 6px rgba(77,159,255,0.15)}
+.wc-btn.wc-full:hover{background:rgba(77,159,255,0.18);box-shadow:0 0 10px rgba(77,159,255,0.4)}
 .wc-section-body{transition:all .2s}
 .wc-section-body textarea,.wc-section-body .form-input{border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top:none}
 .wc-section-wrap.wc-minimized .wc-section-body{display:none}
@@ -839,14 +845,6 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 .wc-section-wrap.wc-fullscreen{position:fixed;inset:8px;z-index:9997;border-radius:var(--rx);border-color:rgba(77,159,255,0.4);box-shadow:0 0 80px rgba(77,159,255,0.3),0 0 160px rgba(77,159,255,0.1);background:rgba(4,5,13,0.98);display:flex;flex-direction:column}
 .wc-section-wrap.wc-fullscreen .wc-section-body{flex:1;overflow:auto;display:flex;flex-direction:column}
 .wc-section-wrap.wc-fullscreen .wc-section-body textarea{flex:1;min-height:unset!important;height:100%!important;border-radius:0}
-/* Tooltip labels on wc buttons */
-.wc-btn{position:relative}
-.wc-btn::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:rgba(4,5,13,0.95);color:var(--text);font-size:9px;font-family:var(--fh);letter-spacing:1px;padding:3px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;border:1px solid rgba(77,159,255,0.2);z-index:100}
-.wc-btn:hover::after{opacity:1}
-/* Neon glow on wc-section-bar hover */
-.wc-section-bar:hover .wc-btn.wc-min{box-shadow:0 0 12px rgba(255,189,46,0.9)}
-.wc-section-bar:hover .wc-btn.wc-max{box-shadow:0 0 12px rgba(39,201,63,0.9)}
-.wc-section-bar:hover .wc-btn.wc-full{box-shadow:0 0 12px rgba(77,159,255,0.9)}
 .panel-section{border:1px solid rgba(77,159,255,0.12);border-radius:var(--rl);overflow:hidden;margin-bottom:16px;transition:all .2s;background:rgba(7,10,21,0.5)}
 .panel-section-head{display:flex;align-items:center;padding:8px 14px;background:rgba(77,159,255,0.05);border-bottom:1px solid rgba(77,159,255,0.1);gap:8px;cursor:default;user-select:none}
 .panel-section-title{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
@@ -1259,9 +1257,9 @@ function renderOverview(r){
     <div class="panel-section-head">
       <span class="panel-section-title">📋 Info / Notes</span>
       <div class="panel-wc">
-        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-info','min')"></button>
-        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-info','max')"></button>
-        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-info','full')"></button>
+        <button class="pwc-btn pwc-min" onclick="togglePanelSection('ps-info','min')">─ MIN</button>
+        <button class="pwc-btn pwc-max" onclick="togglePanelSection('ps-info','max')">□ MAX</button>
+        <button class="pwc-btn pwc-full" onclick="togglePanelSection('ps-info','full')">⛶ FULL</button>
       </div>
     </div>
     <div class="panel-section-body">
@@ -1272,9 +1270,9 @@ function renderOverview(r){
     <div class="panel-section-head">
       <span class="panel-section-title">📊 Details</span>
       <div class="panel-wc">
-        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-details','min')"></button>
-        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-details','max')"></button>
-        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-details','full')"></button>
+        <button class="pwc-btn pwc-min" onclick="togglePanelSection('ps-details','min')">─ MIN</button>
+        <button class="pwc-btn pwc-max" onclick="togglePanelSection('ps-details','max')">□ MAX</button>
+        <button class="pwc-btn pwc-full" onclick="togglePanelSection('ps-details','full')">⛶ FULL</button>
       </div>
     </div>
     <div class="panel-section-body">
@@ -1301,9 +1299,9 @@ function renderCode(r){
     <div class="panel-section-head">
       <span class="panel-section-title">💻 Code · ${escHtml(lang)}</span>
       <div class="panel-wc">
-        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-code','min')"></button>
-        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-code','max')"></button>
-        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-code','full')"></button>
+        <button class="pwc-btn pwc-min" onclick="togglePanelSection('ps-code','min')">─ MIN</button>
+        <button class="pwc-btn pwc-max" onclick="togglePanelSection('ps-code','max')">□ MAX</button>
+        <button class="pwc-btn pwc-full" onclick="togglePanelSection('ps-code','full')">⛶ FULL</button>
       </div>
     </div>
     <div class="panel-section-body code-section-body">
@@ -1324,9 +1322,9 @@ function renderReadme(r){
     <div class="panel-section-head">
       <span class="panel-section-title">📖 README</span>
       <div class="panel-wc">
-        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-readme','min')"></button>
-        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-readme','max')"></button>
-        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-readme','full')"></button>
+        <button class="pwc-btn pwc-min" onclick="togglePanelSection('ps-readme','min')">─ MIN</button>
+        <button class="pwc-btn pwc-max" onclick="togglePanelSection('ps-readme','max')">□ MAX</button>
+        <button class="pwc-btn pwc-full" onclick="togglePanelSection('ps-readme','full')">⛶ FULL</button>
       </div>
     </div>
     <div class="panel-section-body readme-section-body">
@@ -1920,10 +1918,10 @@ function buildCodeFileViewer(f,src,ghUrl,ext){
   return`<div class="fv-code-editor" style="border-color:${nt.color}22;box-shadow:0 0 20px ${nt.color}11">
       <div class="fv-code-header" style="border-bottom-color:${nt.color}22">
         <span class="fv-code-lang" style="color:${nt.color}">${ext.toUpperCase()} · ${escHtml(f.name)}</span>
-        <div style="display:flex;gap:6px;align-items:center">
-          <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleFvCodeSection('min')" style="width:13px;height:13px"></button>
-          <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleFvCodeSection('max')" style="width:13px;height:13px"></button>
-          <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFvCodeSection('full')" style="width:13px;height:13px"></button>
+        <div style="display:flex;gap:4px;align-items:center">
+          <button class="pwc-btn pwc-min" onclick="toggleFvCodeSection('min')">─ MIN</button>
+          <button class="pwc-btn pwc-max" onclick="toggleFvCodeSection('max')">□ MAX</button>
+          <button class="pwc-btn pwc-full" onclick="toggleFvCodeSection('full')">⛶ FULL</button>
           <button class="fv-code-edit-btn" style="color:${nt.color};border-color:${nt.color}33;background:${nt.color}11" onclick="toggleFvEdit()">✏ EDIT</button>
           <button class="fv-code-edit-btn" style="color:var(--t2);border-color:rgba(100,150,255,0.15)" onclick="copyFvCode()">📋 COPY</button>
         </div>
