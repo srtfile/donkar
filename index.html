@@ -440,6 +440,8 @@ mark.ds-mark{background:rgba(0,245,160,0.3);color:var(--green);border-radius:2px
   .hist-detail{flex:1;font-size:13px;color:var(--text);font-family:var(--fb)}
   .hist-action{font-size:10px;color:var(--t2);font-family:var(--fm);letter-spacing:1px}
   .hist-ts{font-size:10px;color:var(--t3);font-family:var(--fm);white-space:nowrap}
+  /* DATE VALUE — mild hard yellow across entire app */
+  .date-val{color:#e8c84a;font-weight:600;font-family:var(--fm);text-shadow:0 0 6px rgba(232,200,74,0.35)}
   </style>
   <div id="welcome" style="display:flex">
     <div class="welcome-gem">💎</div>
@@ -2040,7 +2042,7 @@ function toast(msg,type='info'){
 // UTILITIES
 // ============================================================
 function escHtml(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function fmtDate(iso){if(!iso)return'—';try{const d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});}catch(e){return iso;}}
+function fmtDate(iso){if(!iso)return'<span class="date-val">—</span>';try{const d=new Date(iso);const s=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});return`<span class="date-val">${s}</span>`;}catch(e){return`<span class="date-val">${iso}</span>`;}}
 function fmtSize(bytes){if(bytes==null)return'—';if(bytes<1024)return bytes+' B';if(bytes<1048576)return(bytes/1024).toFixed(1)+' KB';return(bytes/1048576).toFixed(2)+' MB';}
 
 // ============================================================
