@@ -277,6 +277,7 @@ mark.ds-mark{background:rgba(0,245,160,0.3);color:var(--green);border-radius:2px
   </div>
   <button class="tb-btn tb-btn-ghost" onclick="openDownloadPanel()">⬇ EXPORT</button>
   <button class="tb-btn tb-btn-ghost" onclick="openFileManager()">📁 FILES</button>
+  <button class="tb-btn tb-btn-ghost" onclick="goHome()">🏠 HOME</button>
   <button class="tb-btn tb-btn-ghost" onclick="lockApp()">🔒</button>
   <button class="tb-btn tb-btn-primary" onclick="openNewRecord()">＋ NEW</button>
 </div>
@@ -1129,6 +1130,25 @@ function lockApp(){
   document.getElementById('app').style.display='none';
   document.getElementById('lockScreen').style.display='flex';
   document.getElementById('lockPwInput').value='';setLockErr('');
+}
+
+function goHome(){
+  // Close file manager if open
+  const fm=document.getElementById('fileManager');
+  if(fm&&fm.style.display==='flex') closeFileManager();
+  // Close any open modals
+  document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+  // Clear search
+  const si=document.getElementById('searchInput');
+  if(si){si.value='';searchQuery='';}
+  hideSearchPanel();
+  // Deselect record — show welcome screen
+  currentRecordId=null;
+  filterCat='all';
+  document.querySelectorAll('.ftag').forEach(t=>t.classList.toggle('active',t.dataset.cat==='all'));
+  renderRecordList();
+  showWelcome();
+  toast('Welcome home!','info');
 }
 function showApp(){
   document.getElementById('app').style.display='flex';
