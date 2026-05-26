@@ -230,6 +230,29 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
 .sr-snippet mark{background:rgba(0,245,160,0.25);color:var(--green);border-radius:2px;padding:0 2px;font-style:normal}
 .sr-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(77,159,255,0.06);transition:background .15s;display:flex;align-items:flex-start;gap:8px}
 .sr-item:hover{background:rgba(77,159,255,0.08)}
+/* DEEP SCAN styles */
+.search-results-panel.ds-mode{max-height:600px;border-color:rgba(0,229,255,0.3);box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 30px rgba(0,229,255,0.1)}
+.ds-header{display:flex;align-items:center;gap:8px;padding:8px 14px;background:linear-gradient(90deg,rgba(0,229,255,0.08),rgba(77,159,255,0.05));border-bottom:1px solid rgba(0,229,255,0.2);flex-shrink:0}
+.ds-icon{font-size:14px}
+.ds-title{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--teal);letter-spacing:1px;flex:1}
+.ds-title em{color:var(--green);font-style:normal;text-shadow:0 0 8px rgba(0,245,160,0.5)}
+.ds-count{font-size:10px;font-family:var(--fm);color:var(--t2);background:rgba(0,229,255,0.1);padding:2px 8px;border-radius:10px;border:1px solid rgba(0,229,255,0.2);white-space:nowrap}
+.ds-record-block{border-bottom:1px solid rgba(77,159,255,0.1)}
+.ds-record-head{display:flex;align-items:center;gap:8px;padding:8px 14px 6px;cursor:pointer;transition:background .15s;background:rgba(77,159,255,0.03)}
+.ds-record-head:hover{background:rgba(77,159,255,0.08)}
+.ds-rec-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ds-rec-name{font-size:13px;font-weight:600;color:var(--text);flex:1;font-family:var(--fb);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ds-rec-cat{font-size:9px;font-family:var(--fh);color:var(--t3);letter-spacing:1px}
+.ds-rec-hits{font-size:9px;font-family:var(--fm);background:rgba(0,229,255,0.12);color:var(--teal);padding:1px 7px;border-radius:10px;border:1px solid rgba(0,229,255,0.2);white-space:nowrap}
+.ds-field-block{padding:0 14px 6px 28px}
+.ds-field-label{font-size:10px;font-family:var(--fh);color:var(--accent);letter-spacing:1px;padding:4px 0 3px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.ds-field-label:hover{color:var(--teal)}
+.ds-field-hits{font-size:9px;background:rgba(77,159,255,0.1);padding:1px 5px;border-radius:8px;color:var(--t2)}
+.ds-snippet-row{display:flex;align-items:baseline;gap:8px;padding:3px 0;cursor:pointer;border-radius:4px;transition:background .1s}
+.ds-snippet-row:hover{background:rgba(77,159,255,0.06);padding-left:4px}
+.ds-line-num{font-size:9px;font-family:var(--fm);color:var(--t3);min-width:28px;flex-shrink:0;text-align:right}
+.ds-snip-text{font-size:11px;font-family:var(--fm);color:var(--t2);line-height:1.6;word-break:break-all}
+mark.ds-mark{background:rgba(0,245,160,0.3);color:var(--green);border-radius:2px;padding:0 2px;font-style:normal;font-weight:700;box-shadow:0 0 6px rgba(0,245,160,0.3)}
 .cat-general{background:#4d9fff}.cat-code{background:#00f5a0}.cat-docs{background:#ffaa00}.cat-debug{background:#ff3366}
 </style>
 <div id="topbar">
@@ -243,7 +266,7 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
     <div class="tb-search-wrap">
       <button class="tb-search-mode" id="searchModeBtn" onclick="cycleSearchMode()" title="Search mode: SMART / EXACT / FUZZY">SMART</button>
       <span class="tb-search-icon">⌕</span>
-      <input id="searchInput" type="text" placeholder="Search records…" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)" onfocus="showSearchPanel()" autocomplete="off">
+      <input id="searchInput" type="text" placeholder="Search… or [[ word ]] for deep scan" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)" onfocus="showSearchPanel()" autocomplete="off">
     </div>
     <div class="search-results-panel" id="searchResultsPanel"></div>
   </div>
@@ -1236,23 +1259,145 @@ function highlightText(text,q,matchType){
 }
 
 function onSearchInput(){
-  searchQuery=document.getElementById('searchInput').value;
+  const raw=document.getElementById('searchInput').value;
+  searchQuery=raw;
+  // For [[ ]] deep scan, don't filter the left panel list
+  const dsQuery=parseDeepScan(raw.trim());
+  if(dsQuery){
+    // Keep list as-is, just show deep scan panel
+    showSearchPanel();
+    return;
+  }
   renderRecordList();
-  if(searchQuery) showSearchPanel();
+  if(raw) showSearchPanel();
   else hideSearchPanel();
 }
 
-function showSearchPanel(){
-  const q=document.getElementById('searchInput').value.trim();
+// ============================================================
+// [[ DEEP SCAN ]] — format: [[ word ]] searches every field
+// ============================================================
+function parseDeepScan(raw){
+  const m=raw.match(/^\[\[\s*(.+?)\s*\]\]$/);
+  return m?m[1].trim():null;
+}
+
+function deepScanAll(q){
+  // Returns array of {record, field, label, allSnippets:[]}
+  const ql=q.toLowerCase();
+  const results=[];
+  const FIELDS=[
+    {key:'name',   label:'📛 Name'},
+    {key:'info',   label:'📋 Info / Notes'},
+    {key:'code',   label:'💻 Code'},
+    {key:'readme', label:'📖 README'},
+    {key:'tags',   label:'🏷 Tags'},
+    {key:'urls',   label:'🔗 Links'},
+  ];
+  records.forEach(r=>{
+    const vals={
+      name:   r.name||'',
+      info:   r.info||'',
+      code:   (r.code&&r.code.content)||'',
+      readme: r.readme||'',
+      tags:   (r.tags||[]).join(', '),
+      urls:   (r.urls||[]).map(u=>(u.label?u.label+': ':'')+u.href).join('\n'),
+    };
+    FIELDS.forEach(f=>{
+      const text=vals[f.key];
+      if(!text.toLowerCase().includes(ql)) return;
+      // Collect ALL occurrences in this field
+      const snippets=[];
+      let searchFrom=0;
+      const tl=text.toLowerCase();
+      while(true){
+        const idx=tl.indexOf(ql,searchFrom);
+        if(idx===-1) break;
+        const start=Math.max(0,idx-35);
+        const end=Math.min(text.length,idx+q.length+55);
+        let snip=(start>0?'…':'')+escHtml(text.slice(start,end))+(end<text.length?'…':'');
+        const escQ=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+        try{snip=snip.replace(new RegExp(`(${escHtml(escQ)})`,'gi'),'<mark class="ds-mark">$1</mark>');}catch(e){}
+        snippets.push({snip, lineNum: text.slice(0,idx).split('\n').length});
+        searchFrom=idx+q.length;
+        if(snippets.length>=8) break; // cap per field
+      }
+      if(snippets.length) results.push({record:r, field:f.key, label:f.label, snippets});
+    });
+  });
+  return results;
+}
+
+function showDeepScanPanel(q){
   const panel=document.getElementById('searchResultsPanel');
-  if(!q){panel.classList.remove('open');return;}
+  const results=deepScanAll(q);
+  const totalHits=results.reduce((s,r)=>s+r.snippets.length,0);
+  const totalRecs=new Set(results.map(r=>r.record.id)).size;
+
+  let html=`<div class="ds-header">
+    <span class="ds-icon">⚡</span>
+    <span class="ds-title">DEEP SCAN: <em>"${escHtml(q)}"</em></span>
+    <span class="ds-count">${totalHits} hit${totalHits!==1?'s':''} in ${totalRecs} record${totalRecs!==1?'s':''}</span>
+  </div>`;
+
+  if(!results.length){
+    html+=`<div class="sr-empty">No occurrences of <strong>"${escHtml(q)}"</strong> found anywhere.</div>`;
+  } else {
+    // Group by record
+    const byRecord={};
+    results.forEach(r=>{
+      if(!byRecord[r.record.id]) byRecord[r.record.id]={record:r.record,fields:[]};
+      byRecord[r.record.id].fields.push(r);
+    });
+    Object.values(byRecord).forEach(({record,fields})=>{
+      const recHits=fields.reduce((s,f)=>s+f.snippets.length,0);
+      html+=`<div class="ds-record-block">
+        <div class="ds-record-head" onclick="selectRecord('${record.id}');hideSearchPanel()">
+          <span class="ds-rec-dot" style="background:${CAT_COLORS[record.category]||'#4d9fff'}"></span>
+          <span class="ds-rec-name">${highlightText(record.name,q,'exact')}</span>
+          <span class="ds-rec-cat">${(record.category||'gen').toUpperCase()}</span>
+          <span class="ds-rec-hits">${recHits} hit${recHits!==1?'s':''}</span>
+        </div>`;
+      fields.forEach(f=>{
+        const tabField=f.field;
+        html+=`<div class="ds-field-block">
+          <div class="ds-field-label" onclick="selectRecord('${record.id}');hideSearchPanel();switchToMatchTab('${record.id}','${tabField}')">${f.label} <span class="ds-field-hits">${f.snippets.length}×</span></div>`;
+        f.snippets.forEach((s,i)=>{
+          html+=`<div class="ds-snippet-row" onclick="selectRecord('${record.id}');hideSearchPanel();switchToMatchTab('${record.id}','${tabField}')">
+            <span class="ds-line-num">L${s.lineNum}</span>
+            <span class="ds-snip-text">${s.snip}</span>
+          </div>`;
+        });
+        html+=`</div>`;
+      });
+      html+=`</div>`;
+    });
+  }
+  panel.innerHTML=html;
+  panel.classList.add('open');
+  panel.classList.add('ds-mode');
+}
+
+function showSearchPanel(){
+  const raw=document.getElementById('searchInput').value.trim();
+  const panel=document.getElementById('searchResultsPanel');
+  if(!raw){panel.classList.remove('open','ds-mode');return;}
+
+  // [[ deep scan ]] mode
+  const dsQuery=parseDeepScan(raw);
+  if(dsQuery){
+    panel.classList.remove('ds-mode');
+    showDeepScanPanel(dsQuery);
+    return;
+  }
+
+  panel.classList.remove('ds-mode');
+  const q=raw;
   const {exact,partial}=searchRecords(q);
   let html='';
   const total=exact.length+partial.length;
   if(!total){
-    html=`<div class="sr-empty">No results for "<strong>${escHtml(q)}</strong>"</div>`;
+    html=`<div class="sr-empty">No results for "<strong>${escHtml(q)}</strong>"<br><span style="font-size:10px;color:var(--t3)">Tip: use [[ ${escHtml(q)} ]] for deep scan</span></div>`;
   } else {
-    // Header count
     html+=`<div style="padding:6px 14px 4px;font-size:9px;color:var(--t2);font-family:var(--fh);letter-spacing:1px;border-bottom:1px solid rgba(77,159,255,0.08)">${total} RESULT${total!==1?'S':''} · FOUND IN RECORDS</div>`;
     const renderItem=(r,badge,badgeCls)=>{
       const locs=findMatchLocations(r,q);
