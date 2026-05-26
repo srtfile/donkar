@@ -4,7 +4,12 @@
     "name": "gdot m3u8 extractor",
     "category": "code",
     "tags": [],
-    "urls": [],
+    "urls": [
+      {
+        "label": "gdflix",
+        "href": "https://new18.gdflix.net"
+      }
+    ],
     "info": "",
     "code": {
       "lang": "python",
@@ -18,9 +23,16 @@
         "detail": "\"gdot m3u8 extractor\" created",
         "icon": "✨",
         "ts": "2026-05-26T05:51:22.418Z"
+      },
+      {
+        "id": "h_1779774895573",
+        "action": "updated",
+        "detail": "\"gdot m3u8 extractor\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-26T05:54:55.573Z"
       }
     ],
     "createdAt": "2026-05-26T05:51:22.418Z",
-    "updatedAt": "2026-05-26T05:51:22.418Z"
+    "updatedAt": "2026-05-26T05:54:55.573Z"
   }
 ]
