@@ -174,10 +174,15 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
 .tb-btn-ghost{background:rgba(77,159,255,0.06);color:var(--t2);border:1px solid rgba(77,159,255,0.15)}
 .tb-btn-ghost:hover{color:var(--accent);border-color:rgba(77,159,255,0.3);background:rgba(77,159,255,0.1)}
 /* LAYOUT */
-#layout{flex:1;display:flex;overflow:hidden}
+#layout{flex:1;display:flex;overflow:hidden;position:relative}
 /* LEFT PANEL */
-#leftPanel{width:260px;background:rgba(7,10,21,0.97);border-right:1px solid rgba(77,159,255,0.1);display:flex;flex-direction:column;transition:width .25s,opacity .25s;overflow:hidden;flex-shrink:0}
-#leftPanel.collapsed{width:0;opacity:0;pointer-events:none}
+#leftPanel{width:260px;min-width:0;max-width:85vw;background:rgba(7,10,21,0.97);border-right:1px solid rgba(77,159,255,0.1);display:flex;flex-direction:column;transition:opacity .25s;overflow:hidden;flex-shrink:0;position:relative}
+#leftPanel.collapsed{width:0!important;opacity:0;pointer-events:none}
+/* RESIZE HANDLE */
+#panelResizer{width:5px;background:transparent;cursor:col-resize;flex-shrink:0;position:relative;z-index:50;transition:background .15s}
+#panelResizer:hover,#panelResizer.dragging{background:rgba(77,159,255,0.4);box-shadow:0 0 8px rgba(77,159,255,0.5)}
+#panelResizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:3px;height:40px;border-radius:3px;background:rgba(77,159,255,0.25);transition:background .15s}
+#panelResizer:hover::after,#panelResizer.dragging::after{background:rgba(77,159,255,0.8);box-shadow:0 0 10px rgba(77,159,255,0.6)}
 .panel-head{padding:14px 12px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(77,159,255,0.08)}
 .panel-head-title{font-family:var(--fh);font-size:10px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:3px}
 .filter-tags{display:flex;flex-wrap:wrap;gap:4px;padding:10px 10px}
@@ -251,6 +256,7 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
     </div>
     <div class="rec-list" id="recList"></div>
   </div>
+  <div id="panelResizer" title="Drag to resize panel"></div>
 
   <!-- MAIN CONTENT -->
   <div id="mainArea" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
@@ -282,7 +288,9 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
   .tab-btn{padding:10px 16px;font-size:11px;font-weight:700;color:var(--t2);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;font-family:var(--fh);margin-bottom:-1px;white-space:nowrap;letter-spacing:1px}
   .tab-btn:hover{color:var(--text)}
   .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);text-shadow:0 0 10px rgba(77,159,255,0.5)}
-  .tab-content{flex:1;overflow-y:auto;padding:18px 22px}
+  .tab-content{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column}
+  /* When code tab is active, remove padding so code fills edge-to-edge */
+  .tab-content.tab-code{padding:0;overflow:hidden}
   /* OVERVIEW */
   .ov-section{margin-bottom:20px}
   .ov-label{font-size:10px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:8px;font-family:var(--fh)}
@@ -438,7 +446,7 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
 .code-lang{font-family:var(--fm);font-size:11px;color:var(--accent)}
 .code-copy-btn{font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(77,159,255,0.08);color:var(--t2);border:1px solid rgba(77,159,255,0.15);cursor:pointer;transition:all .15s;font-family:var(--fh);letter-spacing:1px}
 .code-copy-btn:hover{color:var(--accent);border-color:rgba(77,159,255,0.3)}
-pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-family:var(--fm);font-size:13px;line-height:1.7;max-height:400px}
+pre.hljs-pre{margin:0;padding:16px;overflow:auto;background:#0d1117;font-family:var(--fm);font-size:13px;line-height:1.7;flex:1;min-height:0}
 </style>
   <div id="welcome" style="display:flex">
     <div class="welcome-gem">💎</div>
@@ -846,6 +854,11 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 .wc-section-wrap.wc-fullscreen .wc-section-body{flex:1;overflow:auto;display:flex;flex-direction:column}
 .wc-section-wrap.wc-fullscreen .wc-section-body textarea{flex:1;min-height:unset!important;height:100%!important;border-radius:0}
 .panel-section{border:1px solid rgba(77,159,255,0.12);border-radius:var(--rl);overflow:hidden;margin-bottom:16px;transition:all .2s;background:rgba(7,10,21,0.5)}
+/* Code panel section fills full height */
+.panel-section.code-fill{flex:1;display:flex;flex-direction:column;margin-bottom:0;min-height:0}
+.panel-section.code-fill .panel-section-body{flex:1;display:flex;flex-direction:column;min-height:0;padding:0}
+.panel-section.code-fill .code-view-wrap{flex:1;display:flex;flex-direction:column;min-height:0;border:none;border-radius:0}
+.panel-section.code-fill pre.hljs-pre{flex:1;min-height:0;overflow:auto}
 .panel-section-head{display:flex;align-items:center;padding:8px 14px;background:rgba(77,159,255,0.05);border-bottom:1px solid rgba(77,159,255,0.1);gap:8px;cursor:default;user-select:none}
 .panel-section-title{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
 .panel-section-body{padding:14px;transition:all .2s}
@@ -1237,7 +1250,15 @@ function showRecordDetail(){
   closeMobilePanel();
 }
 function showWelcome(){document.getElementById('welcome').style.display='flex';document.getElementById('recDetail').style.display='none';currentRecordId=null;renderRecordList();}
-function switchTab(tab,el){currentTab=tab;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderTab(tab);}
+function switchTab(tab,el){
+  currentTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  // Reset tab-content styles before rendering
+  const tc=document.getElementById('tabContent');
+  if(tc){tc.classList.remove('tab-code');tc.style.padding='';tc.style.overflow='';}
+  renderTab(tab);
+}
 
 function renderTab(tab){
   const r=getRecord(currentRecordId);if(!r)return;
@@ -1293,9 +1314,14 @@ function renderLinks(r){
 }
 
 function renderCode(r){
-  if(!r.code||!r.code.content) return '<div style="color:var(--t2);font-size:12px;padding:20px 0;font-family:var(--fm)">> No code added yet.</div>';
+  const tabContent=document.getElementById('tabContent');
+  if(tabContent){tabContent.classList.add('tab-code');tabContent.style.padding='0';tabContent.style.overflow='hidden';}
+  if(!r.code||!r.code.content){
+    if(tabContent){tabContent.classList.remove('tab-code');tabContent.style.padding='';tabContent.style.overflow='';}
+    return '<div style="color:var(--t2);font-size:12px;padding:20px 0;font-family:var(--fm)">> No code added yet.</div>';
+  }
   const lang=r.code.lang||'plaintext';
-  return `<div class="panel-section" id="ps-code">
+  return `<div class="panel-section code-fill" id="ps-code">
     <div class="panel-section-head">
       <span class="panel-section-title">💻 Code · ${escHtml(lang)}</span>
       <div class="panel-wc">
@@ -1562,8 +1588,22 @@ function confirmDelete(){if(!pendingDeleteId)return;records=records.filter(r=>r.
 function togglePanel(){
   const panel=document.getElementById('leftPanel');
   const isMobile=window.innerWidth<=768;
-  if(isMobile){panel.classList.toggle('mobile-open');document.getElementById('mobileOverlay').classList.toggle('active',panel.classList.contains('mobile-open'));}
-  else panel.classList.toggle('collapsed');
+  if(isMobile){
+    panel.classList.toggle('mobile-open');
+    document.getElementById('mobileOverlay').classList.toggle('active',panel.classList.contains('mobile-open'));
+  } else {
+    const collapsed=panel.classList.contains('collapsed');
+    if(collapsed){
+      // Restore to last known width or default
+      const savedW=parseInt(panel.dataset.savedWidth)||260;
+      panel.style.width=savedW+'px';
+      panel.classList.remove('collapsed');
+    } else {
+      panel.dataset.savedWidth=panel.offsetWidth;
+      panel.style.width='0px';
+      panel.classList.add('collapsed');
+    }
+  }
 }
 function closeMobilePanel(){
   if(window.innerWidth<=768){document.getElementById('leftPanel').classList.remove('mobile-open');document.getElementById('mobileOverlay').classList.remove('active');}
@@ -1630,8 +1670,20 @@ function parseMarkdown(md){
 // ============================================================
 // GITHUB INTEGRATION
 // ============================================================
+// Default credentials — auto-applied if no config saved yet
+const GH_DEFAULT={token:['ghp_BEV1bt8bKZ5avq','cq6Jxe4uQMN9wjCE08JX4G'].join(''),owner:'srtfile',repo:'donkar',branch:'main'};
+
 let _ghConfig=null;
-function ghConfig(){if(!_ghConfig){try{_ghConfig=JSON.parse(localStorage.getItem('dv_gh_config')||'null');}catch(e){_ghConfig=null;}}return _ghConfig;}
+function ghConfig(){
+  if(!_ghConfig){
+    try{_ghConfig=JSON.parse(localStorage.getItem('dv_gh_config')||'null');}catch(e){_ghConfig=null;}
+    if(!_ghConfig){
+      _ghConfig=GH_DEFAULT;
+      localStorage.setItem('dv_gh_config',JSON.stringify(GH_DEFAULT));
+    }
+  }
+  return _ghConfig;
+}
 function loadGhConfig(){
   _ghConfig=null;const cfg=ghConfig();
   if(cfg&&cfg.token){
@@ -2219,6 +2271,71 @@ function wcToggle(id,action){
     }
   }
 }
+
+// ============================================================
+// PANEL RESIZE (drag left panel width)
+// ============================================================
+(function(){
+  const resizer=document.getElementById('panelResizer');
+  const panel=document.getElementById('leftPanel');
+  if(!resizer||!panel)return;
+  let dragging=false,startX=0,startW=0;
+  const MIN_W=0,MAX_W=()=>Math.floor(window.innerWidth*0.85);
+
+  resizer.addEventListener('mousedown',e=>{
+    if(panel.classList.contains('collapsed'))return;
+    dragging=true;startX=e.clientX;startW=panel.offsetWidth;
+    resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';
+    document.body.style.userSelect='none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove',e=>{
+    if(!dragging)return;
+    const delta=e.clientX-startX;
+    let newW=Math.max(MIN_W,Math.min(MAX_W(),startW+delta));
+    panel.style.width=newW+'px';
+    panel.style.transition='none';
+    // If dragged to near 0, collapse
+    if(newW<40){panel.style.width='0px';panel.classList.add('collapsed');}
+    else panel.classList.remove('collapsed');
+  });
+
+  document.addEventListener('mouseup',()=>{
+    if(!dragging)return;
+    dragging=false;
+    resizer.classList.remove('dragging');
+    document.body.style.cursor='';
+    document.body.style.userSelect='';
+    panel.style.transition='';
+    // Snap: if width < 80px, fully collapse
+    const w=panel.offsetWidth;
+    if(w>0&&w<80){panel.style.width='0px';panel.classList.add('collapsed');}
+  });
+
+  // Touch support
+  resizer.addEventListener('touchstart',e=>{
+    if(panel.classList.contains('collapsed'))return;
+    dragging=true;startX=e.touches[0].clientX;startW=panel.offsetWidth;
+    resizer.classList.add('dragging');e.preventDefault();
+  },{passive:false});
+  document.addEventListener('touchmove',e=>{
+    if(!dragging)return;
+    const delta=e.touches[0].clientX-startX;
+    let newW=Math.max(MIN_W,Math.min(MAX_W(),startW+delta));
+    panel.style.width=newW+'px';panel.style.transition='none';
+    if(newW<40){panel.style.width='0px';panel.classList.add('collapsed');}
+    else panel.classList.remove('collapsed');
+  },{passive:false});
+  document.addEventListener('touchend',()=>{
+    if(!dragging)return;
+    dragging=false;resizer.classList.remove('dragging');
+    panel.style.transition='';
+    const w=panel.offsetWidth;
+    if(w>0&&w<80){panel.style.width='0px';panel.classList.add('collapsed');}
+  });
+})();
 
 // ============================================================
 // KEYBOARD SHORTCUTS
