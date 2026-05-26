@@ -49,31 +49,102 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
 /* SCANLINE EFFECT */
 .scanlines{position:relative}
 .scanlines::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px);pointer-events:none;z-index:99}
-/* MOBILE */
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+
+/* Tablet (≤1024px) */
+@media(max-width:1024px){
+  #leftPanel{width:220px}
+  .tb-chip{display:none}
+  .gh-pill{display:none}
+  .welcome-shortcuts{grid-template-columns:1fr 1fr}
+  .ov-grid{grid-template-columns:1fr 1fr}
+  .fm-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
+
+/* Mobile (≤768px) */
 @media(max-width:768px){
+  html,body{font-size:14px}
+  /* Left panel slides in as drawer */
   #leftPanel{position:fixed!important;left:0;top:52px;bottom:0;z-index:200;width:280px!important;transform:translateX(-100%);transition:transform .3s ease!important;box-shadow:4px 0 30px rgba(0,0,0,0.5)}
   #leftPanel.mobile-open{transform:translateX(0)!important}
   #leftPanel.collapsed{transform:translateX(-100%)!important;width:280px!important;opacity:1!important;pointer-events:auto!important}
+  #panelResizer{display:none}
   #mobileOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199}
   #mobileOverlay.active{display:block}
-  .tb-search{max-width:none!important;flex:1!important}
+  /* Topbar */
+  #topbar{padding:0 8px;gap:4px}
+  .tb-search{max-width:none!important;flex:1!important;min-width:0}
   .tb-name{display:none}
   .tb-chip{display:none}
   .gh-pill{display:none}
-  .rd-title{font-size:16px!important}
-  .tab-btn{padding:8px 10px!important;font-size:11px!important}
-  .rd-actions{flex-direction:column;gap:4px}
-  #recDetail .rd-header{padding:12px 14px 0!important}
-  .tab-content{padding:12px!important}
-  .modal{margin:10px}
-  .modal-overlay{padding:10px}
-  .lock-card{padding:28px 24px;width:100%!important;max-width:360px}
-  .lock-title{font-size:16px!important}
+  .tb-btn{padding:0 8px!important;font-size:10px!important;height:28px!important}
+  .tb-btn .tb-btn-text{display:none}
+  /* Record detail */
+  .rd-title{font-size:15px!important}
+  .rd-title-row{flex-wrap:wrap;gap:8px}
+  .rd-actions{flex-direction:row;gap:4px;flex-wrap:wrap}
+  .rd-action-btn{height:26px;padding:0 8px;font-size:10px}
+  #recDetail .rd-header{padding:10px 12px 0!important}
+  .tabs-bar{padding:0 12px}
+  .tab-btn{padding:8px 10px!important;font-size:10px!important}
+  .tab-content{padding:10px 12px!important}
+  /* Overview grid */
+  .ov-grid{grid-template-columns:1fr 1fr!important}
+  /* Modals */
+  .modal{margin:8px;border-radius:var(--r)}
+  .modal-overlay{padding:8px;align-items:flex-end}
+  .modal-body{padding:14px!important}
+  .modal-head{padding:12px 14px 10px}
+  /* Lock screen */
+  .lock-card{padding:24px 18px;width:100%!important;max-width:340px}
+  .lock-title{font-size:15px!important}
+  /* Welcome */
   .welcome-shortcuts{grid-template-columns:1fr 1fr!important}
+  .welcome-title{font-size:18px!important;letter-spacing:2px}
+  .welcome-gem{width:60px!important;height:60px!important;font-size:28px!important}
+  /* File manager */
   .fm-sidebar{display:none}
   .fm-sidebar.fm-mobile-show{display:flex;position:fixed;left:0;top:52px;bottom:0;z-index:300;width:220px;box-shadow:4px 0 30px rgba(0,0,0,0.6)}
-  .code-editor-container{min-height:180px!important}
-  .ov-grid{grid-template-columns:1fr 1fr!important}
+  .fm-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))!important;gap:8px!important;padding:10px!important}
+  .fm-topbar{padding:0 10px;gap:6px}
+  .fm-title{font-size:12px!important;letter-spacing:1px}
+  /* Code editor */
+  .code-editor-container{min-height:160px!important}
+  .ce-actions{gap:4px}
+  .ce-action-btn{font-size:9px!important;padding:0 5px!important}
+  /* Panel sections */
+  .panel-section-head{padding:6px 10px}
+  .panel-wc{gap:3px}
+  .pwc-btn{height:18px!important;padding:0 5px!important;font-size:8px!important}
+  /* wc bars */
+  .wc-section-bar{padding:5px 10px}
+  .wc-btn{height:18px!important;padding:0 5px!important;font-size:8px!important}
+  /* Form */
+  .form-group{margin-bottom:12px}
+  .modal .form-input{font-size:13px;padding:8px 10px}
+  /* Search */
+  .tb-search-mode{font-size:9px!important;padding:0 6px!important}
+  /* Record list */
+  .rec-card{padding:8px 10px}
+  .rec-name{font-size:12px}
+}
+
+/* Small mobile (≤480px) */
+@media(max-width:480px){
+  .tb-btn{display:none}
+  /* Show only essential topbar buttons */
+  .tb-btn.tb-btn-primary{display:flex!important}
+  #topbar .tb-icon-btn{width:28px;height:28px}
+  .ov-grid{grid-template-columns:1fr!important}
+  .fm-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))!important}
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal{border-radius:var(--rx) var(--rx) 0 0;max-height:92vh}
+  .lock-card{border-radius:var(--rx) var(--rx) 0 0;max-width:100%!important;padding:24px 16px}
+  .welcome-shortcuts{grid-template-columns:1fr!important}
+  .tab-btn{padding:7px 8px!important;font-size:9px!important}
+  .rd-title{font-size:14px!important}
+  .fm-card-icon{font-size:28px!important}
+  .fm-card{padding:12px 8px 8px}
 }
 </style>
 </head>
@@ -1153,7 +1224,32 @@ function goHome(){
 function showApp(){
   document.getElementById('app').style.display='flex';
   loadRecords();loadGhConfig();renderRecordList();updateRecordCount();buildLangGrid();
-  if(ghConfig()) pullFromGitHub(true);
+  if(ghConfig()){
+    pullFromGitHub(true);
+    pullMediaFromGitHub();
+  }
+}
+
+async function pullMediaFromGitHub(){
+  const cfg=ghConfig();if(!cfg)return;
+  try{
+    const file=await ghGetFile('data/media-index.json');
+    if(file&&file.content){
+      const meta=JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g,'')))));
+      // Merge: keep local dataUrls, update metadata from GitHub
+      const localById={};
+      mediaFiles.forEach(f=>{localById[f.id]=f;});
+      meta.forEach(m=>{
+        if(localById[m.id]){
+          // Update metadata but keep local dataUrl
+          Object.assign(localById[m.id],m);
+        } else {
+          mediaFiles.push(m);
+        }
+      });
+      localStorage.setItem('dv_media',JSON.stringify(mediaFiles));
+    }
+  }catch(e){/* silent */}
 }
 
 // ============================================================
@@ -2072,7 +2168,29 @@ function importJSON(input){const file=input.files[0];if(!file)return;const reade
 // FILE MANAGER
 // ============================================================
 function loadMedia(){try{mediaFiles=JSON.parse(localStorage.getItem('dv_media')||'[]');}catch(e){mediaFiles=[];}}
-function saveMedia(){localStorage.setItem('dv_media',JSON.stringify(mediaFiles));}
+function saveMedia(){
+  localStorage.setItem('dv_media',JSON.stringify(mediaFiles));
+  scheduleGhMediaPush();
+}
+
+let ghMediaPushTimer=null;
+function scheduleGhMediaPush(){
+  if(!ghConfig())return;
+  if(ghMediaPushTimer)clearTimeout(ghMediaPushTimer);
+  ghMediaPushTimer=setTimeout(()=>pushMediaToGitHub(true),4000);
+}
+
+async function pushMediaToGitHub(silent=false){
+  const cfg=ghConfig();if(!cfg)return;
+  try{
+    // Save media metadata (not binary data — just the index)
+    const meta=mediaFiles.map(f=>({id:f.id,name:f.name,ext:f.ext,mimeType:f.mimeType,size:f.size,ghPath:f.ghPath,uploadedAt:f.uploadedAt,trashedAt:f.trashedAt||null}));
+    const content=JSON.stringify(meta,null,2);
+    const existing=await ghGetFile('data/media-index.json');
+    await ghPutFile('data/media-index.json',content,'DataVault: sync media index',existing?existing.sha:undefined);
+    if(!silent)toast('Media index synced!','success');
+  }catch(e){if(!silent)toast('Media sync failed: '+e.message,'error');}
+}
 
 function openFileManager(){loadMedia();fmCategoryFilter='all';renderFmSidebar();renderFileGrid();document.getElementById('fileManager').style.display='flex';}
 function closeFileManager(){document.getElementById('fileManager').style.display='none';}
