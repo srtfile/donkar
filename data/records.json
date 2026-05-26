@@ -1,5 +1,33 @@
 [
   {
+    "id": "r_1779778609660_cjvi6",
+    "name": "list of movie sites",
+    "category": "general",
+    "tags": [
+      "hindi movie site list",
+      "english movie site list",
+      "movie download sites"
+    ],
+    "urls": [],
+    "info": "https://www.filmyzilla93.com/",
+    "code": {
+      "lang": "plaintext",
+      "content": "https://www.filmyzilla93.com/"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1779778609661",
+        "action": "created",
+        "detail": "\"list of movie sites\" created",
+        "icon": "✨",
+        "ts": "2026-05-26T06:56:49.660Z"
+      }
+    ],
+    "createdAt": "2026-05-26T06:56:49.660Z",
+    "updatedAt": "2026-05-26T06:56:49.660Z"
+  },
+  {
     "id": "r_1779774682420_yg2yb",
     "name": "gdot m3u8 extractor",
     "category": "code",
