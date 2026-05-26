@@ -509,16 +509,18 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label" style="display:flex;align-items:center;gap:8px">
-        Info / Notes
-        <span style="display:flex;gap:4px;margin-left:auto">
-          <button type="button" class="pwc-btn pwc-min" title="Minimize" onclick="toggleFormSection('fs-info','min')" style="width:11px;height:11px"></button>
-          <button type="button" class="pwc-btn pwc-max" title="Maximize" onclick="toggleFormSection('fs-info','max')" style="width:11px;height:11px"></button>
-          <button type="button" class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFormSection('fs-info','full')" style="width:11px;height:11px"></button>
-        </span>
-      </label>
-      <div id="fs-info" style="transition:all .2s">
-        <textarea class="form-input form-textarea" id="recFormInfo" placeholder="Notes, description…"></textarea>
+      <div class="wc-section-wrap" id="wcs-info">
+        <div class="wc-section-bar">
+          <span class="wc-section-title">📋 INFO / NOTES</span>
+          <div class="wc-btns">
+            <button type="button" class="wc-btn wc-min" title="Minimize" onclick="wcToggle('wcs-info','min')">─</button>
+            <button type="button" class="wc-btn wc-max" title="Expand" onclick="wcToggle('wcs-info','max')">□</button>
+            <button type="button" class="wc-btn wc-full" title="Fullscreen" onclick="wcToggle('wcs-info','full')">⛶</button>
+          </div>
+        </div>
+        <div class="wc-section-body">
+          <textarea class="form-input form-textarea" id="recFormInfo" placeholder="Notes, description…"></textarea>
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -534,8 +536,17 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
     </div>
     <!-- VSCODE-LIKE CODE EDITOR -->
     <div class="form-group">
-      <label class="form-label">Code Content</label>
-      <div class="code-editor-container" id="codeEditorContainer">
+      <div class="wc-section-wrap" id="wcs-code">
+        <div class="wc-section-bar">
+          <span class="wc-section-title">💻 CODE CONTENT</span>
+          <div class="wc-btns">
+            <button type="button" class="wc-btn wc-min" title="Minimize" onclick="wcToggle('wcs-code','min')">─</button>
+            <button type="button" class="wc-btn wc-max" title="Expand" onclick="wcToggle('wcs-code','max')">□</button>
+            <button type="button" class="wc-btn wc-full" title="Fullscreen" onclick="wcToggle('wcs-code','full')">⛶</button>
+          </div>
+        </div>
+        <div class="wc-section-body" style="padding:0">
+          <div class="code-editor-container" id="codeEditorContainer">
         <div class="code-editor-titlebar">
           <div class="ce-traffic">
             <div class="ce-dot red" title="Clear editor" onclick="clearCodeEditor()"></div>
@@ -566,18 +577,22 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
           <span class="ce-status-item">Spaces: 2</span>
         </div>
       </div>
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <label class="form-label" style="display:flex;align-items:center;gap:8px">
-        README (Markdown)
-        <span style="display:flex;gap:4px;margin-left:auto">
-          <button type="button" class="pwc-btn pwc-min" title="Minimize" onclick="toggleFormSection('fs-readme','min')" style="width:11px;height:11px"></button>
-          <button type="button" class="pwc-btn pwc-max" title="Maximize" onclick="toggleFormSection('fs-readme','max')" style="width:11px;height:11px"></button>
-          <button type="button" class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFormSection('fs-readme','full')" style="width:11px;height:11px"></button>
-        </span>
-      </label>
-      <div id="fs-readme" style="transition:all .2s">
-        <textarea class="form-input form-textarea" id="recFormReadme" placeholder="# Title&#10;Markdown content…" style="min-height:100px"></textarea>
+      <div class="wc-section-wrap" id="wcs-readme">
+        <div class="wc-section-bar">
+          <span class="wc-section-title">📖 README (MARKDOWN)</span>
+          <div class="wc-btns">
+            <button type="button" class="wc-btn wc-min" title="Minimize" onclick="wcToggle('wcs-readme','min')">─</button>
+            <button type="button" class="wc-btn wc-max" title="Expand" onclick="wcToggle('wcs-readme','max')">□</button>
+            <button type="button" class="wc-btn wc-full" title="Fullscreen" onclick="wcToggle('wcs-readme','full')">⛶</button>
+          </div>
+        </div>
+        <div class="wc-section-body" id="wcs-readme-body">
+          <textarea class="form-input form-textarea" id="recFormReadme" placeholder="# Title&#10;Markdown content…" style="min-height:100px;border:none;border-radius:0"></textarea>
+        </div>
       </div>
     </div>
   </div>
@@ -806,6 +821,32 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 .pwc-btn.pwc-max{background:#27c93f;box-shadow:0 0 6px rgba(39,201,63,0.6)}
 .pwc-btn.pwc-full{background:#4d9fff;box-shadow:0 0 6px rgba(77,159,255,0.6)}
 .pwc-btn.pwc-close{background:#ff5f56;box-shadow:0 0 6px rgba(255,95,86,0.5)}
+/* WINDOW CONTROL SECTION BARS (for form fields) */
+.wc-section-wrap{border:1px solid rgba(77,159,255,0.18);border-radius:var(--r);overflow:hidden;transition:all .2s;background:rgba(7,10,21,0.4)}
+.wc-section-bar{display:flex;align-items:center;padding:6px 12px;background:rgba(77,159,255,0.07);border-bottom:1px solid rgba(77,159,255,0.12);gap:8px;user-select:none;flex-shrink:0}
+.wc-section-title{font-family:var(--fh);font-size:9px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;flex:1}
+.wc-btns{display:flex;align-items:center;gap:5px}
+.wc-btn{width:14px;height:14px;border-radius:50%;border:none;cursor:pointer;font-size:0;transition:all .15s;flex-shrink:0;position:relative;line-height:1}
+.wc-btn:hover{transform:scale(1.25);font-size:8px;color:#000;font-weight:900;display:flex;align-items:center;justify-content:center}
+.wc-btn.wc-min{background:#ffbd2e;box-shadow:0 0 8px rgba(255,189,46,0.7)}
+.wc-btn.wc-max{background:#27c93f;box-shadow:0 0 8px rgba(39,201,63,0.7)}
+.wc-btn.wc-full{background:#4d9fff;box-shadow:0 0 8px rgba(77,159,255,0.7)}
+.wc-section-body{transition:all .2s}
+.wc-section-body textarea,.wc-section-body .form-input{border-radius:0;border-left:none;border-right:none;border-bottom:none;border-top:none}
+.wc-section-wrap.wc-minimized .wc-section-body{display:none}
+.wc-section-wrap.wc-maximized{border-color:rgba(77,159,255,0.35);box-shadow:0 0 20px rgba(77,159,255,0.15)}
+.wc-section-wrap.wc-maximized .wc-section-body textarea{min-height:320px!important}
+.wc-section-wrap.wc-fullscreen{position:fixed;inset:8px;z-index:9997;border-radius:var(--rx);border-color:rgba(77,159,255,0.4);box-shadow:0 0 80px rgba(77,159,255,0.3),0 0 160px rgba(77,159,255,0.1);background:rgba(4,5,13,0.98);display:flex;flex-direction:column}
+.wc-section-wrap.wc-fullscreen .wc-section-body{flex:1;overflow:auto;display:flex;flex-direction:column}
+.wc-section-wrap.wc-fullscreen .wc-section-body textarea{flex:1;min-height:unset!important;height:100%!important;border-radius:0}
+/* Tooltip labels on wc buttons */
+.wc-btn{position:relative}
+.wc-btn::after{content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:rgba(4,5,13,0.95);color:var(--text);font-size:9px;font-family:var(--fh);letter-spacing:1px;padding:3px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;border:1px solid rgba(77,159,255,0.2);z-index:100}
+.wc-btn:hover::after{opacity:1}
+/* Neon glow on wc-section-bar hover */
+.wc-section-bar:hover .wc-btn.wc-min{box-shadow:0 0 12px rgba(255,189,46,0.9)}
+.wc-section-bar:hover .wc-btn.wc-max{box-shadow:0 0 12px rgba(39,201,63,0.9)}
+.wc-section-bar:hover .wc-btn.wc-full{box-shadow:0 0 12px rgba(77,159,255,0.9)}
 .panel-section{border:1px solid rgba(77,159,255,0.12);border-radius:var(--rl);overflow:hidden;margin-bottom:16px;transition:all .2s;background:rgba(7,10,21,0.5)}
 .panel-section-head{display:flex;align-items:center;padding:8px 14px;background:rgba(77,159,255,0.05);border-bottom:1px solid rgba(77,159,255,0.1);gap:8px;cursor:default;user-select:none}
 .panel-section-title{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
@@ -1448,6 +1489,12 @@ function openNewRecord(){
   document.getElementById('recFormReadme').value='';
   document.getElementById('urlList').innerHTML='';
   selectedLang='plaintext';buildLangGrid();updateCeLangBadge('plaintext');
+  // Reset wc section states
+  ['wcs-info','wcs-code','wcs-readme'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.remove('wc-minimized','wc-maximized','wc-fullscreen');
+    delete _wcState[id];
+  });
   onCodeInput();openModal('recordModal');
 }
 
@@ -1465,6 +1512,12 @@ function editCurrentRecord(){
   document.getElementById('recFormReadme').value=r.readme||'';
   document.getElementById('urlList').innerHTML='';
   (r.urls||[]).forEach(u=>addUrlRow(u.label,u.href));
+  // Reset wc section states
+  ['wcs-info','wcs-code','wcs-readme'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.remove('wc-minimized','wc-maximized','wc-fullscreen');
+    delete _wcState[id];
+  });
   buildLangGrid();updateCeLangBadge(selectedLang);onCodeInput();openModal('recordModal');
 }
 
@@ -2117,6 +2170,54 @@ function toggleFormSection(id,action){
       el.style.position='';el.style.inset='';el.style.zIndex='';
       el.style.background='';el.style.borderRadius='';el.style.padding='';el.style.boxShadow='';
       if(ta){ta.style.height='';ta.style.minHeight='';}
+    }
+  }
+}
+
+// NEW unified window-control toggle for wc-section-wrap elements
+const _wcState={};
+function wcToggle(id,action){
+  const el=document.getElementById(id);if(!el)return;
+  if(!_wcState[id])_wcState[id]={min:false,max:false,full:false};
+  const s=_wcState[id];
+  // Reset all states first for clean transitions
+  if(action==='min'){
+    s.min=!s.min;
+    if(s.min){
+      // collapse to just the bar
+      s.max=false;s.full=false;
+      el.classList.add('wc-minimized');
+      el.classList.remove('wc-maximized','wc-fullscreen');
+    } else {
+      el.classList.remove('wc-minimized');
+    }
+  } else if(action==='max'){
+    s.max=!s.max;
+    if(s.max){
+      s.min=false;s.full=false;
+      el.classList.add('wc-maximized');
+      el.classList.remove('wc-minimized','wc-fullscreen');
+      // For code editor, also expand the container height
+      const ce=el.querySelector('#codeEditorContainer');
+      if(ce){ce.style.minHeight='400px';ce.style.maxHeight='600px';}
+    } else {
+      el.classList.remove('wc-maximized');
+      const ce=el.querySelector('#codeEditorContainer');
+      if(ce){ce.style.minHeight='';ce.style.maxHeight='';}
+    }
+  } else if(action==='full'){
+    s.full=!s.full;
+    if(s.full){
+      s.min=false;s.max=false;
+      el.classList.add('wc-fullscreen');
+      el.classList.remove('wc-minimized','wc-maximized');
+      // For code editor fullscreen, expand the container
+      const ce=el.querySelector('#codeEditorContainer');
+      if(ce){ce.style.minHeight='unset';ce.style.maxHeight='none';ce.style.flex='1';}
+    } else {
+      el.classList.remove('wc-fullscreen');
+      const ce=el.querySelector('#codeEditorContainer');
+      if(ce){ce.style.minHeight='';ce.style.maxHeight='';ce.style.flex='';}
     }
   }
 }
