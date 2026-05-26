@@ -478,10 +478,15 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 
 <!-- RECORD FORM MODAL -->
 <div class="modal-overlay" id="recordModal">
-<div class="modal" style="max-width:680px">
+<div class="modal" style="max-width:680px" id="recordModalInner">
   <div class="modal-head">
     <span class="modal-title" id="recordModalTitle">NEW RECORD</span>
-    <button class="modal-close" onclick="closeModal('recordModal')">✕</button>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('recordModal','min')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('recordModal','max')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('recordModal','full')" style="width:16px;height:16px"></button>
+      <button class="modal-close" onclick="closeModal('recordModal')">✕</button>
+    </div>
   </div>
   <div class="modal-body">
     <input type="hidden" id="recFormId">
@@ -504,8 +509,17 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Info / Notes</label>
-      <textarea class="form-input form-textarea" id="recFormInfo" placeholder="Notes, description…"></textarea>
+      <label class="form-label" style="display:flex;align-items:center;gap:8px">
+        Info / Notes
+        <span style="display:flex;gap:4px;margin-left:auto">
+          <button type="button" class="pwc-btn pwc-min" title="Minimize" onclick="toggleFormSection('fs-info','min')" style="width:11px;height:11px"></button>
+          <button type="button" class="pwc-btn pwc-max" title="Maximize" onclick="toggleFormSection('fs-info','max')" style="width:11px;height:11px"></button>
+          <button type="button" class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFormSection('fs-info','full')" style="width:11px;height:11px"></button>
+        </span>
+      </label>
+      <div id="fs-info" style="transition:all .2s">
+        <textarea class="form-input form-textarea" id="recFormInfo" placeholder="Notes, description…"></textarea>
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label">URLs</label>
@@ -524,9 +538,9 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
       <div class="code-editor-container" id="codeEditorContainer">
         <div class="code-editor-titlebar">
           <div class="ce-traffic">
-            <div class="ce-dot red" title="Close" onclick="clearCodeEditor()"></div>
-            <div class="ce-dot yellow" title="Minimize" onclick="toggleEditorMinimize()"></div>
-            <div class="ce-dot green" title="Maximize" onclick="toggleEditorMaximize()"></div>
+            <div class="ce-dot red" title="Clear editor" onclick="clearCodeEditor()"></div>
+            <div class="ce-dot yellow" title="Minimize editor" onclick="toggleEditorMinimize()"></div>
+            <div class="ce-dot green" title="Maximize editor" onclick="toggleEditorMaximize()"></div>
           </div>
           <span class="ce-lang-badge" id="ceLangBadge">plaintext</span>
           <div class="ce-actions">
@@ -535,7 +549,8 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
               <input type="file" id="ceFileInput" style="display:none" onchange="uploadCodeFile(this)">
             </label>
             <button class="ce-action-btn ce-copy-btn" onclick="copyEditorCode()">📋 COPY</button>
-            <button class="ce-action-btn ce-full-btn" onclick="toggleEditorMaximize()">⤢ MAX</button>
+            <button class="ce-action-btn ce-full-btn" onclick="toggleEditorMaximize()" id="ceMaxBtn">⤢ MAX</button>
+            <button class="ce-action-btn" style="background:rgba(0,229,255,0.1);color:var(--teal);border:1px solid rgba(0,229,255,0.25)" onclick="toggleEditorFullscreen()" id="ceFsBtn" title="Fullscreen">⛶ FS</button>
           </div>
         </div>
         <div class="code-editor-body" id="codeEditorBody">
@@ -553,8 +568,17 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">README (Markdown)</label>
-      <textarea class="form-input form-textarea" id="recFormReadme" placeholder="# Title&#10;Markdown content…" style="min-height:100px"></textarea>
+      <label class="form-label" style="display:flex;align-items:center;gap:8px">
+        README (Markdown)
+        <span style="display:flex;gap:4px;margin-left:auto">
+          <button type="button" class="pwc-btn pwc-min" title="Minimize" onclick="toggleFormSection('fs-readme','min')" style="width:11px;height:11px"></button>
+          <button type="button" class="pwc-btn pwc-max" title="Maximize" onclick="toggleFormSection('fs-readme','max')" style="width:11px;height:11px"></button>
+          <button type="button" class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFormSection('fs-readme','full')" style="width:11px;height:11px"></button>
+        </span>
+      </label>
+      <div id="fs-readme" style="transition:all .2s">
+        <textarea class="form-input form-textarea" id="recFormReadme" placeholder="# Title&#10;Markdown content…" style="min-height:100px"></textarea>
+      </div>
     </div>
   </div>
   <div class="modal-footer">
@@ -569,7 +593,12 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <div class="modal" style="max-width:480px">
   <div class="modal-head">
     <span class="modal-title">GITHUB SETTINGS</span>
-    <button class="modal-close" onclick="closeModal('ghModal')">✕</button>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('ghModal','min')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('ghModal','max')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('ghModal','full')" style="width:16px;height:16px"></button>
+      <button class="modal-close" onclick="closeModal('ghModal')">✕</button>
+    </div>
   </div>
   <div class="modal-body">
     <div class="form-group"><label class="form-label">Personal Access Token</label><input class="form-input" id="ghToken" type="password" placeholder="ghp_…"></div>
@@ -589,7 +618,15 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <!-- DOWNLOAD MODAL -->
 <div class="modal-overlay" id="downloadModal">
 <div class="modal" style="max-width:440px">
-  <div class="modal-head"><span class="modal-title">EXPORT & SYNC</span><button class="modal-close" onclick="closeModal('downloadModal')">✕</button></div>
+  <div class="modal-head">
+    <span class="modal-title">EXPORT & SYNC</span>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('downloadModal','min')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleModalWindow('downloadModal','max')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleModalWindow('downloadModal','full')" style="width:16px;height:16px"></button>
+      <button class="modal-close" onclick="closeModal('downloadModal')">✕</button>
+    </div>
+  </div>
   <div class="modal-body" style="display:flex;flex-direction:column;gap:8px">
     <button class="btn btn-ghost" style="justify-content:flex-start;height:40px" onclick="exportJSON()">📄 Download as JSON</button>
     <button class="btn btn-ghost" style="justify-content:flex-start;height:40px" onclick="exportCSV()">📊 Download as CSV</button>
@@ -610,7 +647,13 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 <!-- DELETE CONFIRM -->
 <div class="modal-overlay" id="deleteModal">
 <div class="modal" style="max-width:380px">
-  <div class="modal-head"><span class="modal-title">DELETE RECORD</span><button class="modal-close" onclick="closeModal('deleteModal')">✕</button></div>
+  <div class="modal-head">
+    <span class="modal-title">DELETE RECORD</span>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleModalWindow('deleteModal','min')" style="width:16px;height:16px"></button>
+      <button class="modal-close" onclick="closeModal('deleteModal')">✕</button>
+    </div>
+  </div>
   <div class="modal-body">
     <p style="color:var(--t2);font-size:14px;line-height:1.6;font-family:var(--fm)">Delete <strong id="deleteRecName" style="color:var(--red)"></strong>? This cannot be undone.</p>
   </div>
@@ -635,6 +678,12 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 .fm-cat-btn:hover{background:rgba(77,159,255,0.06);color:var(--text);border-color:rgba(77,159,255,0.1)}
 .fm-cat-btn.active{background:rgba(77,159,255,0.1);color:var(--accent);border-color:rgba(77,159,255,0.25);box-shadow:0 0 10px rgba(77,159,255,0.05)}
 .fm-cat-count{margin-left:auto;font-size:10px;font-family:var(--fm);background:rgba(77,159,255,0.1);padding:1px 6px;border-radius:10px;color:var(--accent)}
+.fm-cat-btn.folder-cat{color:var(--teal);font-weight:700;border-top:1px solid rgba(0,229,255,0.12);margin-top:4px;padding-top:10px}
+.fm-cat-btn.folder-cat:hover{background:rgba(0,229,255,0.06);border-color:rgba(0,229,255,0.2)}
+.fm-cat-btn.folder-cat.active{background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);box-shadow:0 0 10px rgba(0,229,255,0.08)}
+.fm-cat-btn.sub-cat{font-size:11px;padding:6px 10px 6px 22px;color:var(--t2)}
+.fm-cat-btn.sub-cat:hover{background:rgba(77,159,255,0.05);color:var(--text)}
+.fm-cat-btn.sub-cat.active{background:rgba(77,159,255,0.08);color:var(--accent);border-color:rgba(77,159,255,0.2)}
 .fm-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .fm-toolbar{padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(77,159,255,0.08);flex-shrink:0}
 .fm-search{flex:1;max-width:280px;position:relative}
@@ -701,7 +750,10 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
     ⬆ UPLOAD
     <input type="file" id="fmFileInput" multiple style="display:none" onchange="handleFileUpload(this.files)">
   </label>
-  <button class="btn btn-ghost" onclick="closeFileManager()" style="font-size:11px">✕ CLOSE</button>
+  <button class="btn btn-ghost" title="Minimize File Manager" onclick="toggleFmWindow('min')" style="font-size:14px;width:32px;height:32px;padding:0;background:rgba(255,189,46,0.1);border-color:rgba(255,189,46,0.3);color:#ffbd2e">─</button>
+  <button class="btn btn-ghost" title="Maximize File Manager" onclick="toggleFmWindow('max')" style="font-size:14px;width:32px;height:32px;padding:0;background:rgba(39,201,63,0.1);border-color:rgba(39,201,63,0.3);color:#27c93f">□</button>
+  <button class="btn btn-ghost" title="Fullscreen File Manager" onclick="toggleFmWindow('full')" style="font-size:14px;width:32px;height:32px;padding:0;background:rgba(77,159,255,0.1);border-color:rgba(77,159,255,0.3);color:#4d9fff">⛶</button>
+  <button class="btn btn-ghost" onclick="closeFileManager()" style="font-size:11px;background:rgba(255,51,102,0.1);border-color:rgba(255,51,102,0.3);color:var(--red)">✕ CLOSE</button>
 </div>
 <div class="fm-layout">
   <div class="fm-sidebar" id="fmSidebar"></div>
@@ -727,10 +779,15 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 
 <!-- FILE VIEWER MODAL -->
 <div class="modal-overlay" id="fileViewerModal">
-<div class="modal" style="max-width:900px;max-height:95vh">
+<div class="modal" style="max-width:900px;max-height:95vh" id="fileViewerModalInner">
   <div class="modal-head">
     <span class="modal-title" id="fvTitle">FILE VIEWER</span>
-    <button class="modal-close" onclick="closeModal('fileViewerModal')">✕</button>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+      <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleFvWindow('min')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleFvWindow('max')" style="width:16px;height:16px"></button>
+      <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFvWindow('full')" style="width:16px;height:16px"></button>
+      <button class="modal-close" onclick="closeModal('fileViewerModal')">✕</button>
+    </div>
   </div>
   <div class="modal-body" id="fvBody" style="padding:16px;overflow:auto"></div>
   <div class="modal-footer" id="fvFooter">
@@ -741,7 +798,26 @@ pre.hljs-pre{margin:0;padding:16px;overflow-x:auto;background:#0d1117;font-famil
 </div>
 
 <style>
-/* NEON AUDIO PLAYER */
+/* PANEL WINDOW CONTROLS */
+.panel-wc{display:flex;align-items:center;gap:5px;margin-left:auto}
+.pwc-btn{width:13px;height:13px;border-radius:50%;border:none;cursor:pointer;transition:all .15s;flex-shrink:0;position:relative}
+.pwc-btn:hover{transform:scale(1.2);filter:brightness(1.3)}
+.pwc-btn.pwc-min{background:#ffbd2e;box-shadow:0 0 6px rgba(255,189,46,0.6)}
+.pwc-btn.pwc-max{background:#27c93f;box-shadow:0 0 6px rgba(39,201,63,0.6)}
+.pwc-btn.pwc-full{background:#4d9fff;box-shadow:0 0 6px rgba(77,159,255,0.6)}
+.pwc-btn.pwc-close{background:#ff5f56;box-shadow:0 0 6px rgba(255,95,86,0.5)}
+.panel-section{border:1px solid rgba(77,159,255,0.12);border-radius:var(--rl);overflow:hidden;margin-bottom:16px;transition:all .2s;background:rgba(7,10,21,0.5)}
+.panel-section-head{display:flex;align-items:center;padding:8px 14px;background:rgba(77,159,255,0.05);border-bottom:1px solid rgba(77,159,255,0.1);gap:8px;cursor:default;user-select:none}
+.panel-section-title{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
+.panel-section-body{padding:14px;transition:all .2s}
+.panel-section.minimized .panel-section-body{display:none}
+.panel-section.fullscreen{position:fixed;inset:10px;z-index:3000;border-radius:var(--rx);box-shadow:0 0 80px rgba(77,159,255,0.3),0 0 160px rgba(77,159,255,0.1);background:rgba(4,5,13,0.98);overflow:auto}
+.panel-section.fullscreen .panel-section-body{height:calc(100% - 42px);overflow:auto}
+.panel-section.maximized{border-color:rgba(77,159,255,0.3);box-shadow:0 0 30px rgba(77,159,255,0.15)}
+/* README section */
+.readme-section-body{padding:14px}
+/* Code section */
+.code-section-body{padding:0}
 .neon-audio-player{background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.2);border-radius:var(--rl);padding:20px;box-shadow:0 0 30px rgba(0,229,255,0.08)}
 .nap-title{font-family:var(--fh);font-size:13px;color:var(--teal);margin-bottom:16px;text-align:center;letter-spacing:2px;text-shadow:0 0 15px rgba(0,229,255,0.5)}
 .nap-controls{display:flex;align-items:center;gap:12px;margin-bottom:12px}
@@ -815,49 +891,78 @@ const FILE_CATS = [
   {id:'all',label:'🗂 ALL FILES',exts:null},
   {id:'html',label:'🌐 HTML',exts:['html','htm']},
   {id:'css',label:'🎨 CSS',exts:['css','scss','sass','less']},
-  {id:'js',label:'⚡ JS/TS',exts:['js','ts','jsx','tsx','mjs']},
+  {id:'js',label:'⚡ JS/JSX',exts:['js','jsx','mjs']},
   {id:'py',label:'🐍 Python',exts:['py','pyw','ipynb']},
-  {id:'code',label:'💻 Other Code',exts:['php','go','rs','java','cpp','c','h','rb','sh','swift','kt','cs','json','xml','yaml','yml','sql','md','txt']},
+  {id:'code',label:'💻 Other Code',exts:['php','go','rs','java','cpp','c','h','rb','sh','swift','kt','cs','json','xml','yaml','yml','sql','tsx']},
   {id:'image',label:'🖼 Images',exts:['jpg','jpeg','png','gif','webp','svg','bmp','ico','avif']},
   {id:'audio',label:'🎵 Audio',exts:['mp3','wav','ogg','m4a','flac','aac']},
   {id:'video',label:'🎬 Video',exts:['mp4','webm','mov','avi','mkv','ts','m4v']},
-  {id:'pdf',label:'📕 PDF',exts:['pdf']},
-  {id:'docx',label:'📝 Word',exts:['docx','doc','odt','rtf']},
-  {id:'xlsx',label:'📊 Excel',exts:['xlsx','xls','ods','csv']},
+  {id:'documents',label:'📂 Documents',exts:['pdf','xlsx','xls','ods','csv','txt','md','docx','doc','odt','rtf'],isFolder:true},
+  {id:'doc_pdf',label:'  📕 PDF',exts:['pdf'],parentId:'documents'},
+  {id:'doc_excel',label:'  � Spreadsheets',exts:['xlsx','xls','ods','csv'],parentId:'documents'},
+  {id:'doc_text',label:'  📄 Text Files',exts:['txt'],parentId:'documents'},
+  {id:'doc_md',label:'  📝 Markdown',exts:['md'],parentId:'documents'},
+  {id:'doc_word',label:'  � Word Docs',exts:['docx','doc','odt','rtf'],parentId:'documents'},
   {id:'archive',label:'🗜 Archive',exts:['zip','rar','7z','tar','gz','bz2']},
   {id:'trash',label:'🗑 Trash',exts:null},
 ];
 
 function getFileNeonClass(ext){
   ext = (ext||'').toLowerCase();
-  if(['html','htm'].includes(ext)) return {cls:'neon-html',icon:'🌐',color:'#ff6b35'};
-  if(['css','scss','sass'].includes(ext)) return {cls:'neon-css',icon:'🎨',color:'#4d9fff'};
-  if(['js','jsx','mjs'].includes(ext)) return {cls:'neon-js',icon:'⚡',color:'#ffaa00'};
-  if(['ts','tsx'].includes(ext)) return {cls:'neon-blue',icon:'🔷',color:'#4d9fff'};
-  if(['py','pyw'].includes(ext)) return {cls:'neon-py',icon:'🐍',color:'#00f5a0'};
-  if(['php'].includes(ext)) return {cls:'neon-purple',icon:'🐘',color:'#bf5fff'};
-  if(['go'].includes(ext)) return {cls:'neon-teal',icon:'🦫',color:'#00e5ff'};
-  if(['rs'].includes(ext)) return {cls:'neon-amber',icon:'🦀',color:'#ffaa00'};
-  if(['java','kt'].includes(ext)) return {cls:'neon-red',icon:'☕',color:'#ff3366'};
-  if(['c','cpp','h'].includes(ext)) return {cls:'neon-purple',icon:'⚙',color:'#bf5fff'};
-  if(['rb'].includes(ext)) return {cls:'neon-red',icon:'💎',color:'#ff3366'};
-  if(['sh','bash'].includes(ext)) return {cls:'neon-green',icon:'$_',color:'#00f5a0'};
-  if(['json'].includes(ext)) return {cls:'neon-amber',icon:'{}',color:'#ffaa00'};
-  if(['xml','yaml','yml'].includes(ext)) return {cls:'neon-txt',icon:'📋',color:'#6496ff'};
-  if(['md','txt'].includes(ext)) return {cls:'neon-txt',icon:'📄',color:'#6496ff'};
-  if(['sql'].includes(ext)) return {cls:'neon-teal',icon:'🗄',color:'#00e5ff'};
-  if(['jpg','jpeg','png','gif','webp','svg','bmp','ico','avif'].includes(ext)) return {cls:'neon-pink',icon:'🖼',color:'#ff4da6'};
-  if(['mp3','wav','ogg','m4a','flac','aac'].includes(ext)) return {cls:'neon-teal',icon:'🎵',color:'#00e5ff'};
-  if(['mp4','webm','mov','avi','mkv'].includes(ext)) return {cls:'neon-purple',icon:'🎬',color:'#bf5fff'};
-  if(['pdf'].includes(ext)) return {cls:'neon-red',icon:'📕',color:'#ff3366'};
-  if(['docx','doc','odt','rtf'].includes(ext)) return {cls:'neon-blue',icon:'📝',color:'#4d9fff'};
-  if(['xlsx','xls','ods','csv'].includes(ext)) return {cls:'neon-green',icon:'📊',color:'#00f5a0'};
-  if(['zip','rar','7z','tar','gz'].includes(ext)) return {cls:'neon-amber',icon:'🗜',color:'#ffaa00'};
-  return {cls:'neon-blue',icon:'📄',color:'#4d9fff'};
+  if(['html','htm'].includes(ext)) return {cls:'neon-html',icon:'<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="6" fill="#ff6b3522"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#ff6b35">🌐</text></svg>',iconEmoji:'🌐',color:'#ff6b35'};
+  if(['css','scss','sass','less'].includes(ext)) return {cls:'neon-css',iconEmoji:'🎨',color:'#4d9fff'};
+  if(['js','jsx','mjs'].includes(ext)) return {cls:'neon-js',iconEmoji:'⚡',color:'#ffaa00'};
+  if(['ts'].includes(ext)) return {cls:'neon-purple',iconEmoji:'🎬',color:'#bf5fff'};
+  if(['tsx'].includes(ext)) return {cls:'neon-blue',iconEmoji:'🔷',color:'#4d9fff'};
+  if(['py','pyw','ipynb'].includes(ext)) return {cls:'neon-py',iconEmoji:'🐍',color:'#00f5a0'};
+  if(['php'].includes(ext)) return {cls:'neon-purple',iconEmoji:'🐘',color:'#bf5fff'};
+  if(['go'].includes(ext)) return {cls:'neon-teal',iconEmoji:'🦫',color:'#00e5ff'};
+  if(['rs'].includes(ext)) return {cls:'neon-amber',iconEmoji:'🦀',color:'#ffaa00'};
+  if(['java'].includes(ext)) return {cls:'neon-red',iconEmoji:'☕',color:'#ff3366'};
+  if(['kt','swift'].includes(ext)) return {cls:'neon-amber',iconEmoji:'📱',color:'#ffaa00'};
+  if(['c','cpp','h'].includes(ext)) return {cls:'neon-purple',iconEmoji:'⚙️',color:'#bf5fff'};
+  if(['cs'].includes(ext)) return {cls:'neon-purple',iconEmoji:'🔵',color:'#bf5fff'};
+  if(['rb'].includes(ext)) return {cls:'neon-red',iconEmoji:'💎',color:'#ff3366'};
+  if(['sh','bash'].includes(ext)) return {cls:'neon-green',iconEmoji:'🖥️',color:'#00f5a0'};
+  if(['json'].includes(ext)) return {cls:'neon-amber',iconEmoji:'📦',color:'#ffaa00'};
+  if(['xml'].includes(ext)) return {cls:'neon-txt',iconEmoji:'📋',color:'#6496ff'};
+  if(['yaml','yml'].includes(ext)) return {cls:'neon-txt',iconEmoji:'⚙️',color:'#6496ff'};
+  if(['md'].includes(ext)) return {cls:'neon-txt',iconEmoji:'📝',color:'#6496ff'};
+  if(['txt'].includes(ext)) return {cls:'neon-txt',iconEmoji:'📄',color:'#6496ff'};
+  if(['sql'].includes(ext)) return {cls:'neon-teal',iconEmoji:'🗄️',color:'#00e5ff'};
+  if(['jpg','jpeg'].includes(ext)) return {cls:'neon-pink',iconEmoji:'🖼️',color:'#ff4da6'};
+  if(['png'].includes(ext)) return {cls:'neon-pink',iconEmoji:'🖼️',color:'#ff4da6'};
+  if(['gif'].includes(ext)) return {cls:'neon-pink',iconEmoji:'🎞️',color:'#ff4da6'};
+  if(['svg'].includes(ext)) return {cls:'neon-pink',iconEmoji:'✏️',color:'#ff4da6'};
+  if(['webp','bmp','ico','avif'].includes(ext)) return {cls:'neon-pink',iconEmoji:'🖼️',color:'#ff4da6'};
+  if(['mp3'].includes(ext)) return {cls:'neon-teal',iconEmoji:'🎵',color:'#00e5ff'};
+  if(['wav'].includes(ext)) return {cls:'neon-teal',iconEmoji:'🎙️',color:'#00e5ff'};
+  if(['ogg','m4a','flac','aac'].includes(ext)) return {cls:'neon-teal',iconEmoji:'�',color:'#00e5ff'};
+  if(['mp4','m4v'].includes(ext)) return {cls:'neon-purple',iconEmoji:'🎬',color:'#bf5fff'};
+  if(['webm'].includes(ext)) return {cls:'neon-purple',iconEmoji:'📹',color:'#bf5fff'};
+  if(['mov'].includes(ext)) return {cls:'neon-purple',iconEmoji:'🎥',color:'#bf5fff'};
+  if(['avi'].includes(ext)) return {cls:'neon-purple',iconEmoji:'📽️',color:'#bf5fff'};
+  if(['mkv'].includes(ext)) return {cls:'neon-purple',iconEmoji:'�️',color:'#bf5fff'};
+  if(['pdf'].includes(ext)) return {cls:'neon-red',iconEmoji:'📕',color:'#ff3366'};
+  if(['docx','doc'].includes(ext)) return {cls:'neon-blue',iconEmoji:'📘',color:'#4d9fff'};
+  if(['odt','rtf'].includes(ext)) return {cls:'neon-blue',iconEmoji:'�',color:'#4d9fff'};
+  if(['xlsx','xls'].includes(ext)) return {cls:'neon-green',iconEmoji:'📊',color:'#00f5a0'};
+  if(['ods'].includes(ext)) return {cls:'neon-green',iconEmoji:'📈',color:'#00f5a0'};
+  if(['csv'].includes(ext)) return {cls:'neon-green',iconEmoji:'�',color:'#00f5a0'};
+  if(['zip'].includes(ext)) return {cls:'neon-amber',iconEmoji:'🗜️',color:'#ffaa00'};
+  if(['rar'].includes(ext)) return {cls:'neon-amber',iconEmoji:'📦',color:'#ffaa00'};
+  if(['7z','tar','gz','bz2'].includes(ext)) return {cls:'neon-amber',iconEmoji:'�️',color:'#ffaa00'};
+  return {cls:'neon-blue',iconEmoji:'📄',color:'#4d9fff'};
 }
 
 function getFileCatId(ext){
   ext = (ext||'').toLowerCase();
+  if(ext==='ts') return 'video';
+  if(['pdf'].includes(ext)) return 'doc_pdf';
+  if(['xlsx','xls','ods','csv'].includes(ext)) return 'doc_excel';
+  if(['txt'].includes(ext)) return 'doc_text';
+  if(['md'].includes(ext)) return 'doc_md';
+  if(['docx','doc','odt','rtf'].includes(ext)) return 'doc_word';
   for(const cat of FILE_CATS){
     if(cat.exts && cat.exts.includes(ext)) return cat.id;
   }
@@ -1109,17 +1214,35 @@ function renderTab(tab){
 }
 
 function renderOverview(r){
-  return `<div class="ov-section">
-    <div class="ov-label">Info / Notes</div>
-    <div class="ov-info">${escHtml(r.info||'No notes yet.')}</div>
+  return `<div class="panel-section" id="ps-info">
+    <div class="panel-section-head">
+      <span class="panel-section-title">📋 Info / Notes</span>
+      <div class="panel-wc">
+        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-info','min')"></button>
+        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-info','max')"></button>
+        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-info','full')"></button>
+      </div>
+    </div>
+    <div class="panel-section-body">
+      <div class="ov-info">${escHtml(r.info||'No notes yet.')}</div>
+    </div>
   </div>
-  <div class="ov-section">
-    <div class="ov-label">Details</div>
-    <div class="ov-grid">
-      <div class="ov-card"><div class="ov-card-label">CATEGORY</div><div class="ov-card-val">${r.category||'general'}</div></div>
-      <div class="ov-card"><div class="ov-card-label">CREATED</div><div class="ov-card-val">${fmtDate(r.createdAt)}</div></div>
-      <div class="ov-card"><div class="ov-card-label">UPDATED</div><div class="ov-card-val">${fmtDate(r.updatedAt)}</div></div>
-      <div class="ov-card"><div class="ov-card-label">LINKS</div><div class="ov-card-val">${(r.urls||[]).length} URL(s)</div></div>
+  <div class="panel-section" id="ps-details">
+    <div class="panel-section-head">
+      <span class="panel-section-title">📊 Details</span>
+      <div class="panel-wc">
+        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-details','min')"></button>
+        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-details','max')"></button>
+        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-details','full')"></button>
+      </div>
+    </div>
+    <div class="panel-section-body">
+      <div class="ov-grid">
+        <div class="ov-card"><div class="ov-card-label">CATEGORY</div><div class="ov-card-val">${r.category||'general'}</div></div>
+        <div class="ov-card"><div class="ov-card-label">CREATED</div><div class="ov-card-val">${fmtDate(r.createdAt)}</div></div>
+        <div class="ov-card"><div class="ov-card-label">UPDATED</div><div class="ov-card-val">${fmtDate(r.updatedAt)}</div></div>
+        <div class="ov-card"><div class="ov-card-label">LINKS</div><div class="ov-card-val">${(r.urls||[]).length} URL(s)</div></div>
+      </div>
     </div>
   </div>`;
 }
@@ -1133,18 +1256,42 @@ function renderLinks(r){
 function renderCode(r){
   if(!r.code||!r.code.content) return '<div style="color:var(--t2);font-size:12px;padding:20px 0;font-family:var(--fm)">> No code added yet.</div>';
   const lang=r.code.lang||'plaintext';
-  return `<div class="code-view-wrap">
-    <div class="code-view-header">
-      <span class="code-lang">${escHtml(lang)}</span>
-      <button class="code-copy-btn" onclick="copyCode()">COPY</button>
+  return `<div class="panel-section" id="ps-code">
+    <div class="panel-section-head">
+      <span class="panel-section-title">💻 Code · ${escHtml(lang)}</span>
+      <div class="panel-wc">
+        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-code','min')"></button>
+        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-code','max')"></button>
+        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-code','full')"></button>
+      </div>
     </div>
-    <pre class="hljs-pre"><code class="language-${escHtml(lang)}" id="codeBlock">${escHtml(r.code.content)}</code></pre>
+    <div class="panel-section-body code-section-body">
+      <div class="code-view-wrap" style="border:none;border-radius:0">
+        <div class="code-view-header">
+          <span class="code-lang">${escHtml(lang)}</span>
+          <button class="code-copy-btn" onclick="copyCode()">COPY</button>
+        </div>
+        <pre class="hljs-pre"><code class="language-${escHtml(lang)}" id="codeBlock">${escHtml(r.code.content)}</code></pre>
+      </div>
+    </div>
   </div>`;
 }
 
 function renderReadme(r){
   if(!r.readme) return '<div style="color:var(--t2);font-size:12px;padding:20px 0;font-family:var(--fm)">> No README added yet.</div>';
-  return `<div class="readme-body">${parseMarkdown(r.readme)}</div>`;
+  return `<div class="panel-section" id="ps-readme">
+    <div class="panel-section-head">
+      <span class="panel-section-title">📖 README</span>
+      <div class="panel-wc">
+        <button class="pwc-btn pwc-min" title="Minimize" onclick="togglePanelSection('ps-readme','min')"></button>
+        <button class="pwc-btn pwc-max" title="Maximize" onclick="togglePanelSection('ps-readme','max')"></button>
+        <button class="pwc-btn pwc-full" title="Fullscreen" onclick="togglePanelSection('ps-readme','full')"></button>
+      </div>
+    </div>
+    <div class="panel-section-body readme-section-body">
+      <div class="readme-body">${parseMarkdown(r.readme)}</div>
+    </div>
+  </div>`;
 }
 
 function renderHistory(r){
@@ -1238,12 +1385,31 @@ function toggleEditorMinimize(){
 
 function toggleEditorMaximize(){
   const c=document.getElementById('codeEditorContainer');
+  const btn=document.getElementById('ceMaxBtn');
   editorMaximized=!editorMaximized;
   if(editorMaximized){
     c.style.position='fixed';c.style.inset='60px 20px 20px';c.style.zIndex='2000';c.style.maxHeight='none';c.style.borderRadius='var(--rl)';
     c.style.boxShadow='0 0 80px rgba(77,159,255,0.3)';
+    if(btn)btn.textContent='⤡ RESTORE';
   } else {
     c.style.position='';c.style.inset='';c.style.zIndex='';c.style.maxHeight='';c.style.borderRadius='';c.style.boxShadow='';
+    if(btn)btn.textContent='⤢ MAX';
+  }
+}
+
+let editorFullscreen=false;
+function toggleEditorFullscreen(){
+  const c=document.getElementById('codeEditorContainer');
+  const btn=document.getElementById('ceFsBtn');
+  editorFullscreen=!editorFullscreen;
+  if(editorFullscreen){
+    c.style.position='fixed';c.style.inset='0';c.style.zIndex='9998';c.style.maxHeight='none';c.style.borderRadius='0';
+    c.style.boxShadow='0 0 120px rgba(77,159,255,0.5)';
+    if(btn)btn.textContent='✕ EXIT FS';
+    editorMaximized=false;
+  } else {
+    c.style.position='';c.style.inset='';c.style.zIndex='';c.style.maxHeight='';c.style.borderRadius='';c.style.boxShadow='';
+    if(btn)btn.textContent='⛶ FS';
   }
 }
 
@@ -1499,15 +1665,26 @@ function closeFileManager(){document.getElementById('fileManager').style.display
 function renderFmSidebar(){
   const sidebar=document.getElementById('fmSidebar');
   const active=mediaFiles.filter(f=>!f.trashedAt);const trashed=mediaFiles.filter(f=>f.trashedAt);
-  sidebar.innerHTML=FILE_CATS.map(cat=>{
+  let html='';
+  FILE_CATS.forEach(cat=>{
     let count=0;
     if(cat.id==='all')count=active.length;
     else if(cat.id==='trash')count=trashed.length;
-    else count=active.filter(f=>cat.exts&&cat.exts.includes((f.ext||'').toLowerCase())).length;
-    return`<button class="fm-cat-btn ${fmCategoryFilter===cat.id?'active':''}" onclick="setFmCategory('${cat.id}')">
+    else if(cat.isFolder){
+      count=active.filter(f=>cat.exts&&cat.exts.includes((f.ext||'').toLowerCase())).length;
+    } else {
+      count=active.filter(f=>cat.exts&&cat.exts.includes((f.ext||'').toLowerCase())).length;
+    }
+    const isSubCat=!!cat.parentId;
+    const isFolder=!!cat.isFolder;
+    let extraClass='';
+    if(isFolder)extraClass='folder-cat';
+    else if(isSubCat)extraClass='sub-cat';
+    html+=`<button class="fm-cat-btn ${extraClass} ${fmCategoryFilter===cat.id?'active':''}" onclick="setFmCategory('${cat.id}')">
       <span>${cat.label}</span><span class="fm-cat-count">${count}</span>
     </button>`;
-  }).join('');
+  });
+  sidebar.innerHTML=html;
 }
 
 function setFmCategory(cat){
@@ -1522,7 +1699,12 @@ function renderFileGrid(){
   const catDef=FILE_CATS.find(c=>c.id===fmCategoryFilter);
   if(fmCategoryFilter==='trash')files=mediaFiles.filter(f=>f.trashedAt);
   else if(fmCategoryFilter==='all')files=mediaFiles.filter(f=>!f.trashedAt);
-  else files=mediaFiles.filter(f=>!f.trashedAt&&catDef&&catDef.exts&&catDef.exts.includes((f.ext||'').toLowerCase()));
+  else if(catDef&&catDef.isFolder){
+    // show all files matching the folder's exts
+    files=mediaFiles.filter(f=>!f.trashedAt&&catDef.exts&&catDef.exts.includes((f.ext||'').toLowerCase()));
+  } else {
+    files=mediaFiles.filter(f=>!f.trashedAt&&catDef&&catDef.exts&&catDef.exts.includes((f.ext||'').toLowerCase()));
+  }
   if(search)files=files.filter(f=>f.name.toLowerCase().includes(search));
   document.getElementById('fmFileCount').textContent=files.length+' file'+(files.length!==1?'s':'');
   if(!files.length){grid.innerHTML=`<div class="fm-empty"><div class="fm-empty-icon">📭</div><div>${fmCategoryFilter==='trash'?'Trash is empty':'No files here yet'}</div></div>`;return;}
@@ -1532,7 +1714,7 @@ function renderFileGrid(){
       ?`<button class="fm-act-btn" style="color:${nt.color};border-color:${nt.color};background:transparent" onclick="event.stopPropagation();restoreFile('${f.id}')">RESTORE</button><button class="fm-act-btn" style="color:#ff3366;border-color:#ff3366;background:transparent" onclick="event.stopPropagation();deleteFilePermanent('${f.id}')">DELETE</button>`
       :`<button class="fm-act-btn" style="color:${nt.color};border-color:${nt.color};background:transparent" onclick="event.stopPropagation();openFileViewer('${f.id}')">OPEN</button><button class="fm-act-btn" style="color:var(--t2);border-color:rgba(100,150,255,0.2);background:transparent" onclick="event.stopPropagation();downloadMediaFile('${f.id}')">DL</button><button class="fm-act-btn" style="color:#ff3366;border-color:#ff3366;background:transparent" onclick="event.stopPropagation();trashFile('${f.id}')">DEL</button>`;
     return`<div class="fm-card ${nt.cls}" onclick="openFileViewer('${f.id}')">
-      <div class="fm-card-icon" style="color:${nt.color}">${nt.icon}</div>
+      <div class="fm-card-icon" style="color:${nt.color}">${nt.iconEmoji||nt.icon||'📄'}</div>
       <div class="fm-card-name" title="${escHtml(f.name)}">${escHtml(f.name)}</div>
       <div class="fm-card-meta">${fmtSize(f.size)}</div>
       <div class="fm-card-meta">.${escHtml(f.ext||'?')}</div>
@@ -1612,9 +1794,9 @@ function openFileViewer(id){
   if(['jpg','jpeg','png','gif','webp','svg','bmp','ico','avif'].includes(ext)){
     html=src?`<div class="img-viewer"><img src="${src}" alt="${escHtml(f.name)}"></div>`:noPreview(ghRawUrl);
   }
-  // VIDEO
+  // VIDEO (including .ts)
   else if(['mp4','webm','mov','avi','mkv','ts','m4v'].includes(ext)){
-    html=src?`<div class="vid-viewer"><video controls><source src="${src}" type="${f.mimeType}">No video support.</video></div>`:noPreview(ghRawUrl);
+    html=src?`<div class="vid-viewer"><video controls><source src="${src}" type="${f.mimeType||'video/mp2t'}">No video support.</video></div>`:noPreview(ghRawUrl);
   }
   // AUDIO
   else if(['mp3','wav','ogg','m4a','flac','aac'].includes(ext)){
@@ -1682,16 +1864,21 @@ function buildCodeFileViewer(f,src,ghUrl,ext){
   const nt=getFileNeonClass(ext);
   if(f.dataUrl){
     let code='';try{code=decodeURIComponent(escape(atob(f.dataUrl.split(',')[1])));}catch(e){code='(Could not decode)';}
-    return`<div class="fv-code-editor" style="border-color:${nt.color}22;box-shadow:0 0 20px ${nt.color}11">
+  return`<div class="fv-code-editor" style="border-color:${nt.color}22;box-shadow:0 0 20px ${nt.color}11">
       <div class="fv-code-header" style="border-bottom-color:${nt.color}22">
         <span class="fv-code-lang" style="color:${nt.color}">${ext.toUpperCase()} · ${escHtml(f.name)}</span>
-        <div style="display:flex;gap:6px">
+        <div style="display:flex;gap:6px;align-items:center">
+          <button class="pwc-btn pwc-min" title="Minimize" onclick="toggleFvCodeSection('min')" style="width:13px;height:13px"></button>
+          <button class="pwc-btn pwc-max" title="Maximize" onclick="toggleFvCodeSection('max')" style="width:13px;height:13px"></button>
+          <button class="pwc-btn pwc-full" title="Fullscreen" onclick="toggleFvCodeSection('full')" style="width:13px;height:13px"></button>
           <button class="fv-code-edit-btn" style="color:${nt.color};border-color:${nt.color}33;background:${nt.color}11" onclick="toggleFvEdit()">✏ EDIT</button>
           <button class="fv-code-edit-btn" style="color:var(--t2);border-color:rgba(100,150,255,0.15)" onclick="copyFvCode()">📋 COPY</button>
         </div>
       </div>
-      <pre style="margin:0;max-height:55vh;overflow:auto;background:#0d1117;padding:16px;font-family:var(--fm);font-size:13px;line-height:1.7"><code class="language-${hljsLang}" id="fvCodeBlock">${escHtml(code)}</code></pre>
-      <textarea class="fv-editable-area" id="fvEditArea" spellcheck="false" style="height:55vh">${escHtml(code)}</textarea>
+      <div id="fvCodeSectionBody">
+        <pre style="margin:0;max-height:55vh;overflow:auto;background:#0d1117;padding:16px;font-family:var(--fm);font-size:13px;line-height:1.7"><code class="language-${hljsLang}" id="fvCodeBlock">${escHtml(code)}</code></pre>
+        <textarea class="fv-editable-area" id="fvEditArea" spellcheck="false" style="height:55vh">${escHtml(code)}</textarea>
+      </div>
     </div>`;
   }
   return`<div style="text-align:center;padding:30px;color:var(--t2);font-family:var(--fm)">
@@ -1728,6 +1915,30 @@ function copyFvCode(){
   if(text)navigator.clipboard.writeText(text).then(()=>toast('Copied!','success'));
 }
 
+let fvCodeSectionState={min:false,full:false};
+function toggleFvCodeSection(action){
+  const body=document.getElementById('fvCodeSectionBody');if(!body)return;
+  if(action==='min'){
+    fvCodeSectionState.min=!fvCodeSectionState.min;
+    body.style.display=fvCodeSectionState.min?'none':'';
+  } else if(action==='max'){
+    const pre=body.querySelector('pre');
+    if(pre)pre.style.maxHeight=pre.style.maxHeight==='none'?'55vh':'none';
+  } else if(action==='full'){
+    fvCodeSectionState.full=!fvCodeSectionState.full;
+    const inner=document.getElementById('fileViewerModalInner');
+    if(fvCodeSectionState.full){
+      if(inner){inner.style.maxWidth='none';inner.style.width='100vw';inner.style.maxHeight='100vh';inner.style.borderRadius='0';}
+      const overlay=document.getElementById('fileViewerModal');if(overlay)overlay.style.padding='0';
+      const pre=body.querySelector('pre');if(pre)pre.style.maxHeight='calc(100vh - 120px)';
+    } else {
+      if(inner){inner.style.maxWidth='900px';inner.style.width='';inner.style.maxHeight='95vh';inner.style.borderRadius='';}
+      const overlay=document.getElementById('fileViewerModal');if(overlay)overlay.style.padding='16px';
+      const pre=body.querySelector('pre');if(pre)pre.style.maxHeight='55vh';
+    }
+  }
+}
+
 function buildAudioPlayer(f,src){
   if(!src)return`<div style="color:var(--t2);padding:30px;text-align:center;font-family:var(--fm)">No audio source available.</div>`;
   return`<div class="neon-audio-player">
@@ -1758,6 +1969,157 @@ function napToggle(){const audio=document.getElementById('napAudio'),btn=documen
 function napSeek(e){const audio=document.getElementById('napAudio'),wrap=document.getElementById('napProgressWrap');if(!audio||!wrap||!audio.duration)return;const rect=wrap.getBoundingClientRect();audio.currentTime=((e.clientX-rect.left)/rect.width)*audio.duration;}
 function napVol(v){const audio=document.getElementById('napAudio');if(audio)audio.volume=parseFloat(v);}
 function fmtAudioTime(s){if(isNaN(s))return'0:00';const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+
+// ============================================================
+// FILE MANAGER WINDOW CONTROLS
+// ============================================================
+let fmWinState={min:false,max:false,full:false};
+function toggleFmWindow(action){
+  const fm=document.getElementById('fileManager');
+  if(action==='min'){
+    fmWinState.min=!fmWinState.min;
+    if(fmWinState.min){
+      fm.style.height='52px';fm.style.overflow='hidden';
+      fmWinState.max=false;fmWinState.full=false;
+    } else {
+      fm.style.height='';fm.style.overflow='';
+    }
+  } else if(action==='max'){
+    fmWinState.max=!fmWinState.max;
+    if(fmWinState.max){
+      fm.style.inset='10px';fm.style.borderRadius='var(--rx)';fm.style.boxShadow='0 0 80px rgba(77,159,255,0.3)';
+      fmWinState.min=false;fmWinState.full=false;fm.style.height='';fm.style.overflow='';
+    } else {
+      fm.style.inset='0';fm.style.borderRadius='';fm.style.boxShadow='';
+    }
+  } else if(action==='full'){
+    fmWinState.full=!fmWinState.full;
+    if(fmWinState.full){
+      fm.style.inset='0';fm.style.borderRadius='0';fm.style.boxShadow='none';
+      fmWinState.min=false;fmWinState.max=false;fm.style.height='';fm.style.overflow='';
+    } else {
+      fm.style.inset='0';fm.style.borderRadius='';fm.style.boxShadow='';
+    }
+  }
+}
+
+// FILE VIEWER WINDOW CONTROLS
+let fvWinState={min:false,max:false,full:false};
+function toggleFvWindow(action){
+  const inner=document.getElementById('fileViewerModalInner');
+  const body=document.getElementById('fvBody');
+  const footer=document.getElementById('fvFooter');
+  if(!inner)return;
+  if(action==='min'){
+    fvWinState.min=!fvWinState.min;
+    if(body)body.style.display=fvWinState.min?'none':'';
+    if(footer)footer.style.display=fvWinState.min?'none':'';
+  } else if(action==='max'){
+    fvWinState.max=!fvWinState.max;
+    if(fvWinState.max){
+      inner.style.maxWidth='none';inner.style.width='calc(100vw - 40px)';inner.style.maxHeight='calc(100vh - 40px)';
+      inner.style.boxShadow='0 0 80px rgba(77,159,255,0.4)';
+    } else {
+      inner.style.maxWidth='900px';inner.style.width='';inner.style.maxHeight='95vh';inner.style.boxShadow='';
+    }
+  } else if(action==='full'){
+    fvWinState.full=!fvWinState.full;
+    const overlay=document.getElementById('fileViewerModal');
+    if(fvWinState.full){
+      if(overlay)overlay.style.padding='0';
+      inner.style.maxWidth='none';inner.style.width='100vw';inner.style.maxHeight='100vh';inner.style.borderRadius='0';
+      inner.style.boxShadow='none';
+    } else {
+      if(overlay)overlay.style.padding='16px';
+      inner.style.maxWidth='900px';inner.style.width='';inner.style.maxHeight='95vh';inner.style.borderRadius='';inner.style.boxShadow='';
+    }
+  }
+}
+
+// GENERIC MODAL WINDOW CONTROLS
+const _modalWinState={};
+function toggleModalWindow(modalId,action){
+  const overlay=document.getElementById(modalId);
+  const inner=overlay?overlay.querySelector('.modal'):null;
+  if(!inner)return;
+  if(!_modalWinState[modalId])_modalWinState[modalId]={min:false,max:false,full:false};
+  const s=_modalWinState[modalId];
+  const body=inner.querySelector('.modal-body');
+  const footer=inner.querySelector('.modal-footer');
+  if(action==='min'){
+    s.min=!s.min;
+    if(body)body.style.display=s.min?'none':'';
+    if(footer)footer.style.display=s.min?'none':'';
+  } else if(action==='max'){
+    s.max=!s.max;
+    if(s.max){
+      inner.style.maxWidth='none';inner.style.width='calc(100vw - 40px)';inner.style.maxHeight='calc(100vh - 40px)';
+      inner.style.boxShadow='0 0 80px rgba(77,159,255,0.4)';
+    } else {
+      inner.style.maxWidth='';inner.style.width='';inner.style.maxHeight='90vh';inner.style.boxShadow='';
+    }
+  } else if(action==='full'){
+    s.full=!s.full;
+    if(s.full){
+      overlay.style.padding='0';
+      inner.style.maxWidth='none';inner.style.width='100vw';inner.style.maxHeight='100vh';inner.style.borderRadius='0';inner.style.boxShadow='none';
+    } else {
+      overlay.style.padding='16px';
+      inner.style.maxWidth='';inner.style.width='';inner.style.maxHeight='90vh';inner.style.borderRadius='';inner.style.boxShadow='';
+    }
+  }
+}
+
+// ============================================================
+// PANEL SECTION WINDOW CONTROLS
+// ============================================================
+const _psState={};
+function togglePanelSection(id,action){
+  const el=document.getElementById(id);if(!el)return;
+  if(!_psState[id])_psState[id]={min:false,max:false,full:false};
+  const s=_psState[id];
+  if(action==='min'){
+    s.min=!s.min;
+    el.classList.toggle('minimized',s.min);
+    if(s.min){s.full=false;s.max=false;el.classList.remove('fullscreen','maximized');}
+  } else if(action==='max'){
+    s.max=!s.max;
+    el.classList.toggle('maximized',s.max);
+    if(s.max){s.min=false;s.full=false;el.classList.remove('minimized','fullscreen');}
+  } else if(action==='full'){
+    s.full=!s.full;
+    el.classList.toggle('fullscreen',s.full);
+    if(s.full){s.min=false;s.max=false;el.classList.remove('minimized','maximized');}
+  }
+}
+
+const _fsState={};
+function toggleFormSection(id,action){
+  const el=document.getElementById(id);if(!el)return;
+  if(!_fsState[id])_fsState[id]={min:false,full:false};
+  const s=_fsState[id];
+  if(action==='min'){
+    s.min=!s.min;
+    el.style.display=s.min?'none':'';
+  } else if(action==='max'){
+    // expand textarea
+    const ta=el.querySelector('textarea');
+    if(ta){ta.style.minHeight=ta.style.minHeight==='300px'?'':'300px';}
+  } else if(action==='full'){
+    s.full=!s.full;
+    const ta=el.querySelector('textarea');
+    if(s.full){
+      el.style.position='fixed';el.style.inset='60px 20px 20px';el.style.zIndex='9997';
+      el.style.background='rgba(4,5,13,0.98)';el.style.borderRadius='var(--rl)';
+      el.style.padding='12px';el.style.boxShadow='0 0 80px rgba(77,159,255,0.3)';
+      if(ta){ta.style.height='calc(100% - 24px)';ta.style.minHeight='unset';}
+    } else {
+      el.style.position='';el.style.inset='';el.style.zIndex='';
+      el.style.background='';el.style.borderRadius='';el.style.padding='';el.style.boxShadow='';
+      if(ta){ta.style.height='';ta.style.minHeight='';}
+    }
+  }
+}
 
 // ============================================================
 // KEYBOARD SHORTCUTS
