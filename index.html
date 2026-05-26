@@ -78,11 +78,23 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
 </style>
 </head>
 <body>
+<!-- Sync session check — runs before render to prevent lock screen flash -->
+<script>
+(function(){
+  if(localStorage.getItem('dv_session')==='unlocked'){
+    // Pre-hide lock screen before DOM paints
+    document.addEventListener('DOMContentLoaded',function(){
+      var ls=document.getElementById('lockScreen');
+      if(ls) ls.style.display='none';
+    });
+  }
+})();
+</script>
 
 <div id="mobileOverlay" onclick="closeMobilePanel()"></div>
 
 <!-- LOCK SCREEN -->
-<div id="lockScreen" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column">
+<div id="lockScreen" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column">
 <style>
 #lockScreen{background:radial-gradient(ellipse at 50% 40%,#070e2a 0%,var(--bg) 65%)}
 .lock-card{background:linear-gradient(135deg,rgba(20,26,50,0.95),rgba(10,15,35,0.98));border:1px solid rgba(77,159,255,0.2);border-radius:var(--rx);padding:40px 44px;width:400px;max-width:95vw;box-shadow:0 0 60px rgba(77,159,255,0.1),0 0 120px rgba(77,159,255,0.05),inset 0 1px 0 rgba(255,255,255,0.05)}
@@ -1036,11 +1048,17 @@ async function sha256(str){
 // LOCK SCREEN
 // ============================================================
 async function initLock(){
+  // Set default password hash if not set
   if(!localStorage.getItem('dv_pw_hash')){
     localStorage.setItem('dv_pw_hash', await sha256('donkar'));
   }
-  // Persistent login — stays logged in across reloads and new tabs
-  if(localStorage.getItem('dv_session')==='unlocked'){ showApp(); return; }
+  // Check persistent session — if already logged in, go straight to app
+  if(localStorage.getItem('dv_session')==='unlocked'){
+    document.getElementById('lockScreen').style.display='none';
+    showApp();
+    return;
+  }
+  // Not logged in — show lock screen
   document.getElementById('lockScreen').style.display='flex';
   document.getElementById('lockPwInput').addEventListener('keydown',e=>{ if(e.key==='Enter') submitLock(); });
 }
