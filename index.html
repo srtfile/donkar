@@ -204,17 +204,20 @@ body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;
 .match-exact{background:rgba(0,245,160,0.2);color:var(--green);border-radius:2px;padding:0 2px}
 .match-partial{background:rgba(77,159,255,0.15);color:var(--accent);border-radius:2px;padding:0 2px}
 /* SEARCH RESULTS DROPDOWN */
-.search-results-panel{position:absolute;top:100%;left:0;right:0;background:rgba(7,10,21,0.98);border:1px solid rgba(77,159,255,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);z-index:500;max-height:300px;overflow-y:auto;display:none;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.search-results-panel{position:absolute;top:100%;left:0;right:0;background:rgba(7,10,21,0.98);border:1px solid rgba(77,159,255,0.2);border-top:none;border-radius:0 0 var(--r) var(--r);z-index:500;max-height:480px;overflow-y:auto;display:none;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
 .search-results-panel.open{display:block}
-.sr-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(77,159,255,0.06);transition:background .15s;display:flex;align-items:center;gap:8px}
-.sr-item:hover{background:rgba(77,159,255,0.08)}
 .sr-item-name{font-size:13px;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sr-badge{font-size:9px;font-family:var(--fh);padding:1px 6px;border-radius:10px;letter-spacing:1px;flex-shrink:0}
 .sr-badge.exact{background:rgba(0,245,160,0.15);color:var(--green);border:1px solid rgba(0,245,160,0.3)}
 .sr-badge.partial{background:rgba(77,159,255,0.12);color:var(--accent);border:1px solid rgba(77,159,255,0.25)}
 .sr-cat{font-size:9px;font-family:var(--fm);color:var(--t3)}
 .sr-empty{padding:20px;text-align:center;color:var(--t2);font-size:12px;font-family:var(--fm)}
-/* CAT DOTS */
+/* Search result location badges & snippets */
+.sr-loc-badge{font-size:9px;font-family:var(--fh);padding:1px 6px;border-radius:8px;background:rgba(77,159,255,0.1);color:var(--accent);border:1px solid rgba(77,159,255,0.2);letter-spacing:.5px}
+.sr-snippet{font-size:11px;color:var(--t2);font-family:var(--fm);line-height:1.5;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.sr-snippet mark{background:rgba(0,245,160,0.25);color:var(--green);border-radius:2px;padding:0 2px;font-style:normal}
+.sr-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(77,159,255,0.06);transition:background .15s;display:flex;align-items:flex-start;gap:8px}
+.sr-item:hover{background:rgba(77,159,255,0.08)}
 .cat-general{background:#4d9fff}.cat-code{background:#00f5a0}.cat-docs{background:#ffaa00}.cat-debug{background:#ff3366}
 </style>
 <div id="topbar">
@@ -1036,7 +1039,8 @@ async function initLock(){
   if(!localStorage.getItem('dv_pw_hash')){
     localStorage.setItem('dv_pw_hash', await sha256('donkar'));
   }
-  if(sessionStorage.getItem('dv_session')==='unlocked'){ showApp(); return; }
+  // Persistent login — stays logged in across reloads and new tabs
+  if(localStorage.getItem('dv_session')==='unlocked'){ showApp(); return; }
   document.getElementById('lockScreen').style.display='flex';
   document.getElementById('lockPwInput').addEventListener('keydown',e=>{ if(e.key==='Enter') submitLock(); });
 }
@@ -1051,7 +1055,8 @@ async function submitLock(){
   if(!pw){setLockErr('Enter your password.');return;}
   const hash=await sha256(pw),stored=localStorage.getItem('dv_pw_hash');
   if(hash===stored){
-    lockAttempts=0;sessionStorage.setItem('dv_session','unlocked');
+    lockAttempts=0;
+    localStorage.setItem('dv_session','unlocked'); // persist across tabs/reloads
     document.getElementById('lockScreen').style.display='none';showApp();
   } else {
     lockAttempts++;
@@ -1079,7 +1084,7 @@ async function submitRecovery(){
   localStorage.setItem('dv_pw_hash',await sha256(pw1));hideRecovery();setLockErr('Password reset!');toast('Password reset!','success');
 }
 function lockApp(){
-  sessionStorage.removeItem('dv_session');
+  localStorage.removeItem('dv_session');
   document.getElementById('app').style.display='none';
   document.getElementById('lockScreen').style.display='flex';
   document.getElementById('lockPwInput').value='';setLockErr('');
@@ -1103,11 +1108,75 @@ function updateRecordCount(){const c=document.getElementById('recCountChip');if(
 // ============================================================
 // ADVANCED SEARCH
 // ============================================================
+// ADVANCED SEARCH ENGINE
+// ============================================================
 function cycleSearchMode(){
   const modes=['SMART','EXACT','FUZZY'];
   searchMode=modes[(modes.indexOf(searchMode)+1)%modes.length];
   document.getElementById('searchModeBtn').textContent=searchMode;
   onSearchInput();
+}
+
+// Extract a short snippet around a match position
+function getSnippet(text,q,maxLen=80){
+  if(!text||!q) return '';
+  const idx=text.toLowerCase().indexOf(q.toLowerCase());
+  if(idx===-1) return '';
+  const start=Math.max(0,idx-20);
+  const end=Math.min(text.length,idx+q.length+40);
+  let snip=(start>0?'…':'')+text.slice(start,end)+(end<text.length?'…':'');
+  // highlight the match inside snippet
+  const esc=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  try{ snip=snip.replace(new RegExp(`(${esc})`,'gi'),'<mark>$1</mark>'); }catch(e){}
+  return snip;
+}
+
+// Find ALL fields where query appears, return array of {field, snippet}
+function findMatchLocations(r, q){
+  const ql=q.toLowerCase();
+  const locs=[];
+  const fields=[
+    {key:'name',   label:'Name',   val:r.name||''},
+    {key:'info',   label:'Info/Notes', val:r.info||''},
+    {key:'code',   label:'Code',   val:(r.code&&r.code.content)||''},
+    {key:'readme', label:'README', val:r.readme||''},
+    {key:'tags',   label:'Tags',   val:(r.tags||[]).join(', ')},
+    {key:'urls',   label:'Links',  val:(r.urls||[]).map(u=>u.href+' '+u.label).join(' ')},
+  ];
+  fields.forEach(f=>{
+    if(f.val.toLowerCase().includes(ql)){
+      locs.push({field:f.key, label:f.label, snippet:getSnippet(f.val,q)});
+    }
+  });
+  return locs;
+}
+
+// Score a record for SMART ranking
+function scoreMatch(r,q){
+  const name=(r.name||'').toLowerCase();
+  const info=(r.info||'').toLowerCase();
+  const tags=(r.tags||[]).join(' ').toLowerCase();
+  const code=((r.code&&r.code.content)||'').toLowerCase();
+  const readme=(r.readme||'').toLowerCase();
+  const urls=(r.urls||[]).map(u=>u.href+' '+u.label).join(' ').toLowerCase();
+  let s=0;
+  if(name===q) s+=10;
+  else if(name.startsWith(q)) s+=6;
+  else if(name.includes(q)) s+=4;
+  if(tags.split(/[\s,]+/).some(t=>t===q)) s+=5;
+  else if(tags.includes(q)) s+=2;
+  if(info.includes(q)) s+=3;
+  if(code.includes(q)) s+=2;
+  if(readme.includes(q)) s+=2;
+  if(urls.includes(q)) s+=3;
+  return s;
+}
+
+function fuzzyMatch(str,q){
+  let si=0,qi=0;
+  str=str.toLowerCase();q=q.toLowerCase();
+  while(si<str.length&&qi<q.length){if(str[si]===q[qi])qi++;si++;}
+  return qi===q.length;
 }
 
 function searchRecords(q){
@@ -1116,38 +1185,27 @@ function searchRecords(q){
   const exact=[],partial=[];
   records.forEach(r=>{
     if(filterCat!=='all'&&r.category!==filterCat) return;
-    const name=(r.name||'').toLowerCase(),info=(r.info||'').toLowerCase();
-    const tags=(r.tags||[]).join(' ').toLowerCase();
     if(searchMode==='EXACT'){
+      const name=(r.name||'').toLowerCase(),info=(r.info||'').toLowerCase();
+      const tags=(r.tags||[]).join(' ').toLowerCase();
+      const code=((r.code&&r.code.content)||'').toLowerCase();
+      const readme=(r.readme||'').toLowerCase();
+      const urls=(r.urls||[]).map(u=>u.href+' '+u.label).join(' ').toLowerCase();
       if(name===ql||(r.tags||[]).some(t=>t.toLowerCase()===ql)) exact.push(r);
-      else if(name.includes(ql)||info.includes(ql)||tags.includes(ql)) partial.push(r);
+      else if([name,info,tags,code,readme,urls].some(v=>v.includes(ql))) partial.push(r);
     } else if(searchMode==='FUZZY'){
-      if(fuzzyMatch(name,ql)||fuzzyMatch(info,ql)) partial.push(r);
-      else if(name.includes(ql)||info.includes(ql)) exact.push(r);
-    } else { // SMART
+      const allText=[r.name,r.info,(r.code&&r.code.content)||'',r.readme,(r.tags||[]).join(' '),(r.urls||[]).map(u=>u.href).join(' ')].join(' ');
+      if(fuzzyMatch(allText,ql)) partial.push(r);
+    } else { // SMART — search everywhere
       const score=scoreMatch(r,ql);
-      if(score>=2) exact.push(r);
+      if(score>=4) exact.push(r);
       else if(score>=1) partial.push(r);
     }
   });
+  // Sort by score descending
+  const byScore=(a,b)=>scoreMatch(b,ql)-scoreMatch(a,ql);
+  exact.sort(byScore);partial.sort(byScore);
   return {exact,partial,all:[...exact,...partial]};
-}
-
-function scoreMatch(r,q){
-  const name=(r.name||'').toLowerCase(),info=(r.info||'').toLowerCase(),tags=(r.tags||[]).join(' ').toLowerCase();
-  let s=0;
-  if(name===q) s+=3;
-  else if(name.startsWith(q)) s+=2;
-  else if(name.includes(q)) s+=1;
-  if(tags.split(' ').some(t=>t===q)) s+=2;
-  if(info.includes(q)) s+=0.5;
-  return s;
-}
-
-function fuzzyMatch(str,q){
-  let si=0,qi=0;
-  while(si<str.length&&qi<q.length){if(str[si]===q[qi])qi++;si++;}
-  return qi===q.length;
 }
 
 function highlightText(text,q,matchType){
@@ -1172,25 +1230,40 @@ function showSearchPanel(){
   if(!q){panel.classList.remove('open');return;}
   const {exact,partial}=searchRecords(q);
   let html='';
-  if(!exact.length&&!partial.length){
-    html=`<div class="sr-empty">No results for "${escHtml(q)}"</div>`;
+  const total=exact.length+partial.length;
+  if(!total){
+    html=`<div class="sr-empty">No results for "<strong>${escHtml(q)}</strong>"</div>`;
   } else {
-    exact.slice(0,5).forEach(r=>{
-      html+=`<div class="sr-item" onclick="selectRecord('${r.id}');hideSearchPanel()">
-        <span class="sr-cat" style="color:${CAT_COLORS[r.category]||'#4d9fff'}">${(r.category||'gen').toUpperCase()}</span>
-        <span class="sr-item-name">${highlightText(r.name,q,'exact')}</span>
-        <span class="sr-badge exact">EXACT</span>
+    // Header count
+    html+=`<div style="padding:6px 14px 4px;font-size:9px;color:var(--t2);font-family:var(--fh);letter-spacing:1px;border-bottom:1px solid rgba(77,159,255,0.08)">${total} RESULT${total!==1?'S':''} · FOUND IN RECORDS</div>`;
+    const renderItem=(r,badge,badgeCls)=>{
+      const locs=findMatchLocations(r,q);
+      const locBadges=locs.map(l=>`<span class="sr-loc-badge">${l.label}</span>`).join('');
+      const firstSnippet=locs.length?`<div class="sr-snippet">${locs[0].snippet}</div>`:'';
+      return `<div class="sr-item" onclick="selectRecord('${r.id}');hideSearchPanel();switchToMatchTab('${r.id}','${locs[0]?locs[0].field:'overview'}')">
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+            <span class="sr-cat" style="color:${CAT_COLORS[r.category]||'#4d9fff'}">${(r.category||'gen').toUpperCase()}</span>
+            <span class="sr-item-name">${highlightText(r.name,q,badgeCls==='exact'?'exact':'partial')}</span>
+            <span class="sr-badge ${badgeCls}">${badge}</span>
+          </div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:2px">${locBadges}</div>
+          ${firstSnippet}
+        </div>
       </div>`;
-    });
-    partial.slice(0,5).forEach(r=>{
-      html+=`<div class="sr-item" onclick="selectRecord('${r.id}');hideSearchPanel()">
-        <span class="sr-cat" style="color:${CAT_COLORS[r.category]||'#4d9fff'}">${(r.category||'gen').toUpperCase()}</span>
-        <span class="sr-item-name">${highlightText(r.name,q,'partial')}</span>
-        <span class="sr-badge partial">MATCH</span>
-      </div>`;
-    });
+    };
+    exact.slice(0,6).forEach(r=>{ html+=renderItem(r,'EXACT','exact'); });
+    partial.slice(0,4).forEach(r=>{ html+=renderItem(r,'MATCH','partial'); });
   }
   panel.innerHTML=html;panel.classList.add('open');
+}
+
+// Jump to the tab where the match was found
+function switchToMatchTab(id,field){
+  const tabMap={name:'overview',info:'overview',tags:'overview',urls:'links',code:'code',readme:'readme'};
+  const tab=tabMap[field]||'overview';
+  const btn=document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+  if(btn) switchTab(tab,btn);
 }
 
 function hideSearchPanel(){document.getElementById('searchResultsPanel').classList.remove('open');}
