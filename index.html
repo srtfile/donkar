@@ -264,7 +264,7 @@ mark.ds-mark{background:rgba(0,245,160,0.3);color:var(--green);border-radius:2px
   <div class="tb-sep"></div>
   <div class="tb-search" id="tbSearchWrap">
     <div class="tb-search-wrap">
-      <button class="tb-search-mode" id="searchModeBtn" onclick="cycleSearchMode()" title="Search mode: SMART / EXACT / FUZZY">SMART</button>
+      <button class="tb-search-mode" id="searchModeBtn" onclick="cycleSearchMode()" title="Cycle: SMART → EXACT → FUZZY → DEEP [[]]">SMART</button>
       <span class="tb-search-icon">⌕</span>
       <input id="searchInput" type="text" placeholder="Search… or [[ word ]] for deep scan" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)" onfocus="showSearchPanel()" autocomplete="off">
     </div>
@@ -1172,9 +1172,38 @@ function updateRecordCount(){const c=document.getElementById('recCountChip');if(
 // ADVANCED SEARCH ENGINE
 // ============================================================
 function cycleSearchMode(){
-  const modes=['SMART','EXACT','FUZZY'];
+  const modes=['SMART','EXACT','FUZZY','DEEP'];
+  const btn=document.getElementById('searchModeBtn');
+  const input=document.getElementById('searchInput');
+  const prev=searchMode;
   searchMode=modes[(modes.indexOf(searchMode)+1)%modes.length];
-  document.getElementById('searchModeBtn').textContent=searchMode;
+  btn.textContent=searchMode;
+
+  // Style the button based on mode
+  btn.style.color='';btn.style.borderColor='';btn.style.background='';btn.style.boxShadow='';btn.style.textShadow='';
+  if(searchMode==='DEEP'){
+    btn.style.color='#f5c400';
+    btn.style.borderColor='rgba(245,196,0,0.5)';
+    btn.style.background='rgba(245,196,0,0.12)';
+    btn.style.boxShadow='0 0 12px rgba(245,196,0,0.4)';
+    btn.style.textShadow='0 0 8px rgba(245,196,0,0.8)';
+    // Wrap current text in [[ ]] or insert empty brackets
+    const cur=input.value.trim();
+    const dsMatch=cur.match(/^\[\[\s*(.*?)\s*\]\]$/);
+    const inner=dsMatch?dsMatch[1]:cur;
+    input.value=`[[ ${inner} ]]`;
+    // Place cursor between the brackets for easy typing
+    const pos=inner?input.value.length:3;
+    input.setSelectionRange(pos,pos);
+    input.focus();
+  } else {
+    // Leaving DEEP mode — strip brackets if present
+    if(prev==='DEEP'){
+      const cur=input.value.trim();
+      const dsMatch=cur.match(/^\[\[\s*(.*?)\s*\]\]$/);
+      if(dsMatch) input.value=dsMatch[1];
+    }
+  }
   onSearchInput();
 }
 
@@ -1279,12 +1308,25 @@ function highlightText(text,q,matchType){
 }
 
 function onSearchInput(){
-  const raw=document.getElementById('searchInput').value;
+  const input=document.getElementById('searchInput');
+  let raw=input.value;
+
+  // If DEEP mode is active and user typed without brackets, auto-wrap
+  if(searchMode==='DEEP'){
+    const alreadyWrapped=/^\[\[.*\]\]$/.test(raw.trim());
+    if(!alreadyWrapped && raw.trim()){
+      const cursor=input.selectionStart;
+      input.value=`[[ ${raw.trim()} ]]`;
+      // keep cursor inside brackets
+      const newPos=Math.min(cursor+3, input.value.length-3);
+      input.setSelectionRange(newPos,newPos);
+      raw=input.value;
+    }
+  }
+
   searchQuery=raw;
-  // For [[ ]] deep scan, don't filter the left panel list
   const dsQuery=parseDeepScan(raw.trim());
   if(dsQuery){
-    // Keep list as-is, just show deep scan panel
     showSearchPanel();
     return;
   }
@@ -1449,8 +1491,22 @@ function switchToMatchTab(id,field){
   if(btn) switchTab(tab,btn);
 }
 
-function hideSearchPanel(){document.getElementById('searchResultsPanel').classList.remove('open');}
-function onSearchKeydown(e){if(e.key==='Escape'){hideSearchPanel();document.getElementById('searchInput').value='';searchQuery='';renderRecordList();}}
+function hideSearchPanel(){document.getElementById('searchResultsPanel').classList.remove('open','ds-mode');}
+function onSearchKeydown(e){
+  if(e.key==='Escape'){
+    hideSearchPanel();
+    const input=document.getElementById('searchInput');
+    input.value='';searchQuery='';
+    // Reset DEEP mode back to SMART on Escape
+    if(searchMode==='DEEP'){
+      searchMode='SMART';
+      const btn=document.getElementById('searchModeBtn');
+      btn.textContent='SMART';
+      btn.style.color='';btn.style.borderColor='';btn.style.background='';btn.style.boxShadow='';btn.style.textShadow='';
+    }
+    renderRecordList();
+  }
+}
 
 document.addEventListener('click',e=>{
   if(!document.getElementById('tbSearchWrap').contains(e.target)) hideSearchPanel();
