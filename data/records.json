@@ -8,7 +8,7 @@
     "info": "1.https://vsembed.ru/api/, https://vidsrc.domains/, vidsrc.to\nhttps://vidsrc.domains/\n2.https://vidnest.fun/  api documentation\n",
     "code": {
       "lang": "plaintext",
-      "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1"
+      "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1\nhttps://vidnest.fun/movie/[TMDB_ID], https://vidnest.fun/tv/[TMDB_ID]/[SEASON]/[EPISODE]"
     },
     "readme": "",
     "history": [
@@ -25,10 +25,17 @@
         "detail": "\"Movies sites api list\" updated",
         "icon": "✏️",
         "ts": "2026-05-27T11:07:00.122Z"
+      },
+      {
+        "id": "h_1779880152946",
+        "action": "updated",
+        "detail": "\"Movies sites api list\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-27T11:09:12.946Z"
       }
     ],
     "createdAt": "2026-05-27T11:00:14.582Z",
-    "updatedAt": "2026-05-27T11:07:00.122Z"
+    "updatedAt": "2026-05-27T11:09:12.946Z"
   },
   {
     "id": "r_1779871689458_watdy",
