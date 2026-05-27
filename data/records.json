@@ -27,10 +27,17 @@
         "detail": "\"dood.watch direct link extractor\" created",
         "icon": "✨",
         "ts": "2026-05-27T14:10:19.413Z"
+      },
+      {
+        "id": "h_1779891213861",
+        "action": "updated",
+        "detail": "\"dood.watch direct link extractor\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-27T14:13:33.861Z"
       }
     ],
     "createdAt": "2026-05-27T14:10:19.413Z",
-    "updatedAt": "2026-05-27T14:10:19.413Z"
+    "updatedAt": "2026-05-27T14:13:33.861Z"
   },
   {
     "id": "r_1779890664599_y2l0b",
