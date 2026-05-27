@@ -5,10 +5,10 @@
     "category": "general",
     "tags": [],
     "urls": [],
-    "info": "1.https://vsembed.ru/api/, https://vidsrc.domains/, vidsrc.to\nhttps://vidsrc.domains/\n2.https://vidnest.fun/  api documentation\n3.https://www.vidfast.net/ api documentation\n",
+    "info": "1.https://vsembed.ru/api/, https://vidsrc.domains/, vidsrc.to\nhttps://vidsrc.domains/\n2.https://vidnest.fun/  api documentation\n3.https://www.vidfast.net/ api documentation\n4.https://www.videasy.net/docs\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
     "code": {
       "lang": "plaintext",
-      "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1\nhttps://vidfast.pro/movie/tt6263850, https://vidfast.pro/tv/{id}/{season}/{episode}?autoPlay=true\n\n\nhttps://vidnest.fun/movie/[TMDB_ID], https://vidnest.fun/tv/[TMDB_ID]/[SEASON]/[EPISODE]"
+      "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1\nhttps://vidfast.pro/movie/tt6263850, https://vidfast.pro/tv/{id}/{season}/{episode}?autoPlay=true\nhttps://player.videasy.net/movie/299534, https://player.videasy.net/tv/show_id/season/episode\n\nhttps://vidnest.fun/movie/[TMDB_ID], https://vidnest.fun/tv/[TMDB_ID]/[SEASON]/[EPISODE]"
     },
     "readme": "",
     "history": [
@@ -39,10 +39,17 @@
         "detail": "\"Movies sites api list\" updated",
         "icon": "✏️",
         "ts": "2026-05-27T11:13:54.188Z"
+      },
+      {
+        "id": "h_1779880602658",
+        "action": "updated",
+        "detail": "\"Movies sites api list\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-27T11:16:42.658Z"
       }
     ],
     "createdAt": "2026-05-27T11:00:14.582Z",
-    "updatedAt": "2026-05-27T11:13:54.188Z"
+    "updatedAt": "2026-05-27T11:16:42.658Z"
   },
   {
     "id": "r_1779871689458_watdy",
