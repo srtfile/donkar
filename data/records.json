@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779889836575_qn5jy",
+    "name": "https://bigshare.io/watch/e/83370  - direct mp4 extractor",
+    "category": "code",
+    "tags": [],
+    "urls": [],
+    "info": "https://bigshare.io/watch/e/83370  possibley found this inside of primesrc.me",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport json\nimport requests\n\nDEFAULT_URL = \"https://bigshare.io/watch/e/83370\"\n\nUA = \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\"\n\nHEADERS = {\n    \"user-agent\": UA,\n    \"accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8\",\n    \"accept-language\": \"en-US,en;q=0.9\",\n    \"accept-encoding\": \"gzip, deflate, br\",\n    \"sec-ch-ua\": '\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"',\n    \"sec-ch-ua-mobile\": \"?0\",\n    \"sec-ch-ua-platform\": '\"Windows\"',\n    \"sec-fetch-dest\": \"document\",\n    \"sec-fetch-mode\": \"navigate\",\n    \"sec-fetch-site\": \"none\",\n    \"sec-fetch-user\": \"?1\",\n    \"upgrade-insecure-requests\": \"1\",\n    \"dnt\": \"1\",\n}\n\nURL_RE = re.compile(r\"url:\\s*['\\\"](https?://[^'\\\"]+\\.(?:mp4|mkv|m3u8|mpd|webm)[^'\\\"]*)['\\\"]\", re.I)\nTITLE_RE = re.compile(r\"<title>(.*?)</title>\", re.I | re.S)\nCSRF_RE = re.compile(r'name=[\"\\']csrf-token[\"\\']\\s+content=[\"\\']([^\"\\']+)[\"\\']', re.I)\n\n\ndef fetch_html(url: str) -> str:\n    try:\n        r = requests.get(url, headers=HEADERS, timeout=30, allow_redirects=True)\n        if r.status_code == 200 and \"artplayer\" in r.text.lower():\n            return r.text\n    except Exception:\n        pass\n\n    try:\n        import cloudscraper\n        s = cloudscraper.create_scraper(browser={\"browser\": \"chrome\", \"platform\": \"windows\", \"mobile\": False})\n        r = s.get(url, headers=HEADERS, timeout=45)\n        r.raise_for_status()\n        return r.text\n    except ImportError:\n        pass\n    except Exception:\n        pass\n\n    from selenium import webdriver\n    from selenium.webdriver.chrome.options import Options\n    from selenium.webdriver.support.ui import WebDriverWait\n    opts = Options()\n    opts.add_argument(\"--headless=new\")\n    opts.add_argument(\"--disable-blink-features=AutomationControlled\")\n    opts.add_argument(f\"--user-agent={UA}\")\n    drv = webdriver.Chrome(options=opts)\n    try:\n        drv.get(url)\n        WebDriverWait(drv, 30).until(lambda d: \"artplayer\" in d.page_source.lower())\n        return drv.page_source\n    finally:\n        drv.quit()\n\n\ndef extract(url: str = DEFAULT_URL) -> dict:\n    html = fetch_html(url)\n    matches = list(dict.fromkeys(URL_RE.findall(html)))\n    title = TITLE_RE.search(html)\n    csrf = CSRF_RE.search(html)\n    return {\n        \"page_url\": url,\n        \"title\": title.group(1).strip() if title else None,\n        \"csrf\": csrf.group(1) if csrf else None,\n        \"stream_urls\": matches,\n        \"primary\": matches[0] if matches else None,\n    }\n\n\nif __name__ == \"__main__\":\n    target = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    result = extract(target)\n    print(json.dumps(result, indent=2, ensure_ascii=False))\n    if not result[\"primary\"]:\n        sys.exit(1)\n"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1779889836575",
+        "action": "created",
+        "detail": "\"https://bigshare.io/watch/e/83370  - direct mp4 extractor\" created",
+        "icon": "✨",
+        "ts": "2026-05-27T13:50:36.574Z"
+      }
+    ],
+    "createdAt": "2026-05-27T13:50:36.574Z",
+    "updatedAt": "2026-05-27T13:50:36.574Z"
+  },
+  {
     "id": "r_1779889124309_6qk21",
     "name": "https://upzur.com/embed-im6qf2esvfok.html  extract mp4 direct urls from this url",
     "category": "code",
