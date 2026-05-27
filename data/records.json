@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779902878769_t2fcp",
+    "name": "https://photojin.icu/download/0oDOxMzN2gTO3cTM m3u8 finder",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "this https://photojin.icu/download/0oDOxMzN2gTO3cTM found in indian movies sites",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport requests\n\nDEFAULT_URL = \"https://photojin.icu/download/0oDOxMzN2gTO3cTM:,,wSDhVbERHZjZ2c\"\n\nHEADERS = {\n    \"accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"accept-language\": \"en-US,en;q=0.9\",\n    \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"dnt\": \"1\",\n}\n\nXHR_HEADERS = {\n    \"accept\": \"application/json, text/plain, */*\",\n    \"accept-language\": \"en-US,en;q=0.9\",\n    \"cache-control\": \"no-cache\",\n    \"content-type\": \"application/json; charset=UTF-8\",\n    \"origin\": \"https://photojin.icu\",\n    \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"x-requested-with\": \"xmlhttprequest\",\n    \"dnt\": \"1\",\n}\n\n\ndef get_direct_link(page_url: str) -> str:\n    session = requests.Session()\n\n    # Step 1: GET the download page — server sets PHPSESSID and embeds access_token in hidden input\n    r1 = session.get(page_url, headers=HEADERS, timeout=20)\n    r1.raise_for_status()\n\n    token_match = re.search(r'<input[^>]+name=\"access_token\"[^>]+value=\"([^\"]+)\"', r1.text)\n    uid_match   = re.search(r'<link[^>]+rel=\"canonical\"[^>]+href=\"/download/([^\"]+)\"', r1.text)\n    title_match = re.search(r'<title>(.*?)</title>', r1.text, re.DOTALL)\n\n    if not token_match:\n        raise RuntimeError(\"access_token not found in page HTML\")\n    if not uid_match:\n        raise RuntimeError(\"uid not found in page HTML\")\n\n    access_token = token_match.group(1)\n    uid          = uid_match.group(1)\n    title        = title_match.group(1).strip() if title_match else uid\n\n    print(f\"[+] Title      : {title}\")\n    print(f\"[+] UID        : {uid}\")\n    print(f\"[+] Token      : {access_token[:40]}...\")\n\n    # Step 2: POST /action with DOWNLOAD_GENERATE — returns direct download_url\n    xhr_headers = {**XHR_HEADERS, \"referer\": page_url}\n    payload = {\n        \"type\": \"DOWNLOAD_GENERATE\",\n        \"payload\": {\n            \"uid\": uid,\n            \"access_token\": access_token,\n        }\n    }\n\n    r2 = session.post(\"https://photojin.icu/action\", json=payload, headers=xhr_headers, timeout=20)\n    r2.raise_for_status()\n\n    data = r2.json()\n    if not data.get(\"status\"):\n        raise RuntimeError(f\"API returned error: {data}\")\n\n    download_url = data[\"download_url\"]\n    return download_url, title\n\n\ndef main():\n    page_url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    print(f\"[*] Extracting from: {page_url}\\n\")\n\n    try:\n        url, title = get_direct_link(page_url)\n        print(f\"\\n[✓] Direct download URL:\\n{url}\\n\")\n        print(f\"[i] This is a Google-hosted video file (video-downloads.googleusercontent.com)\")\n        print(f\"[i] Download with: curl -L -o \\\"{title}\\\" \\\"{url}\\\"\")\n    except Exception as e:\n        print(f\"[!] Failed: {e}\")\n        sys.exit(1)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "readme": "# new2.movcloud.click.py\n\nDate: 2026-05-27\n\n## Overview\n\n`new2.movcloud.click.py` extracts download information from a MovCloud embed page. It fetches page metadata, resolves available Google Drive links, and constructs proxy download URLs using available worker hosts.\n\n## Requirements\n\n- Python 3.x\n- `requests`\n\n## What it does\n\n- Fetches JSON metadata from the MovCloud API endpoint.\n- Extracts file name, file size, Google Drive links, fast download links, and Viking links.\n- Resolves Google Drive download URLs and adds any required confirmation tokens.\n- Retrieves available Cloudflare workers from the site and builds proxy URLs for downloads.\n- Validates live worker proxy URLs and prints the best available option.\n\n## Usage\n\nRun the script with a MovCloud page URL:\n\n```bash\npython new2.movcloud.click.py https://new2.movcloud.click/s/1875bc69684a3d62\n```\n\nIf no URL is provided, the script uses a default sample URL.\n\n## Notes\n\n- The script includes a custom browser-like header set to emulate a real browser request.\n- Worker proxy URLs are built with an XOR-based token and timestamped query parameters.\n- The script prints resolved download links and all capture results in a friendly summary.\n",
+    "history": [
+      {
+        "id": "h_1779902878769",
+        "action": "created",
+        "detail": "\"https://photojin.icu/download/0oDOxMzN2gTO3cTM m3u8 finder\" created",
+        "icon": "✨",
+        "ts": "2026-05-27T17:27:58.764Z"
+      }
+    ],
+    "createdAt": "2026-05-27T17:27:58.764Z",
+    "updatedAt": "2026-05-27T17:27:58.764Z"
+  },
+  {
     "id": "r_1779893600263_2nznb",
     "name": "https://new2.movcloud.click/s/1875bc69684a3d62  gdrive direct download link extractor",
     "category": "code",
