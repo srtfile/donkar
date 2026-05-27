@@ -4,7 +4,12 @@
     "name": "https://streamruby.com/embed-2lsz9uozaoaa.html   - Direct m3u8 urls extractor python code",
     "category": "code",
     "tags": [],
-    "urls": [],
+    "urls": [
+      {
+        "label": "streamruby",
+        "href": "https://streamruby.com/"
+      }
+    ],
     "info": "",
     "code": {
       "lang": "plaintext",
@@ -18,10 +23,17 @@
         "detail": "\"https://streamruby.com/embed-2lsz9uozaoaa.html   - Direct m3u8 urls extractor python code\" created",
         "icon": "✨",
         "ts": "2026-05-27T13:01:00.732Z"
+      },
+      {
+        "id": "h_1779886926374",
+        "action": "updated",
+        "detail": "\"https://streamruby.com/embed-2lsz9uozaoaa.html   - Direct m3u8 urls extractor python code\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-27T13:02:06.373Z"
       }
     ],
     "createdAt": "2026-05-27T13:01:00.732Z",
-    "updatedAt": "2026-05-27T13:01:00.732Z"
+    "updatedAt": "2026-05-27T13:02:06.373Z"
   },
   {
     "id": "r_1779879614583_dmfh9",
