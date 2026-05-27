@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779889124309_6qk21",
+    "name": "https://upzur.com/embed-im6qf2esvfok.html  extract mp4 direct urls from this url",
+    "category": "code",
+    "tags": [],
+    "urls": [],
+    "info": "https://upzur.com/embed-im6qf2esvfok.html  found this from this primesrc.me possible",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport requests\n\nDEFAULT_URL = \"https://upzur.com/embed-im6qf2esvfok.html\"\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"Accept-Language\": \"en-US,en;q=0.9\",\n    \"DNT\": \"1\",\n}\n\nCOOKIES = {\"lang\": \"english\", \"aff\": \"4881\"}\n\n\ndef extract_from_embed(embed_url: str) -> list[str]:\n    \"\"\"Extract direct MP4 URLs from an upzur.com embed page.\"\"\"\n    session = requests.Session()\n    session.headers.update(HEADERS)\n    session.cookies.update(COOKIES)\n\n    results = []\n\n    # Step 1: fetch embed page\n    r = session.get(embed_url, timeout=15)\n    r.raise_for_status()\n    html = r.text\n\n    # Step 2: extract video file ID from embed URL\n    file_id_match = re.search(r\"embed-([a-z0-9]+)\\.html\", embed_url)\n    if not file_id_match:\n        raise ValueError(f\"Cannot parse file ID from URL: {embed_url}\")\n    file_id = file_id_match.group(1)\n\n    # Step 3: decode obfuscated JS array -> direct video.mp4 src\n    # The embed page contains a reversed hex-encoded array that builds a <source src=\"...\"> tag\n    array_match = re.search(r'var\\s+\\w+\\s*=\\s*(\\[(?:\"[^\"]*\",?\\s*)+\\])', html)\n    if array_match:\n        raw = array_match.group(1)\n        chars = re.findall(r'\"(\\\\x[0-9a-fA-F]{2}|[^\"\\\\])\"', raw)\n        decoded = \"\".join(\n            bytes.fromhex(c[2:]).decode() if c.startswith(\"\\\\x\") else c\n            for c in reversed(chars)\n        )\n        mp4_match = re.search(r'src=\"(https://[^\"]+\\.mp4)\"', decoded)\n        if mp4_match:\n            results.append(mp4_match.group(1))\n\n    # Step 4: also try regex directly on raw HTML for peanut.upzur.com mp4 URLs\n    direct = re.findall(r'https://peanut\\.upzur\\.com/d/[^\"\\'>\\s]+\\.mp4', html)\n    results.extend(u for u in direct if u not in results)\n\n    # Step 5: POST to download page to get the tokenized download link\n    page_url = f\"https://upzur.com/{file_id}.html\"\n    session.headers[\"Referer\"] = embed_url\n    session.get(page_url, timeout=15)  # load page first to get aff cookie\n\n    post_data = {\n        \"op\": \"download2\",\n        \"id\": file_id,\n        \"rand\": \"\",\n        \"referer\": embed_url,\n        \"method_free\": \"\",\n        \"method_premium\": \"\",\n        \"adblock_detected\": \"1\",\n    }\n    session.headers.update({\n        \"Origin\": \"https://upzur.com\",\n        \"Referer\": page_url,\n        \"Content-Type\": \"application/x-www-form-urlencoded\",\n    })\n    r2 = session.post(page_url, data=post_data, timeout=15)\n    r2.raise_for_status()\n\n    # parse download link from response HTML\n    dl_links = re.findall(\n        r'href=\"(https://peanut\\.upzur\\.com/d/[^\"]+)\"', r2.text\n    )\n    results.extend(u for u in dl_links if u not in results)\n\n    # also catch any mp4 in the response\n    extra = re.findall(r'https://peanut\\.upzur\\.com/d/[^\"\\'>\\s]+\\.mp4', r2.text)\n    results.extend(u for u in extra if u not in results)\n\n    return results\n\n\ndef main():\n    url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    print(f\"[*] Extracting from: {url}\")\n    try:\n        links = extract_from_embed(url)\n    except Exception as e:\n        print(f\"[!] Error: {e}\")\n        sys.exit(1)\n\n    if not links:\n        print(\"[!] No direct media links found.\")\n        sys.exit(1)\n\n    print(f\"[+] Found {len(links)} link(s):\\n\")\n    for i, link in enumerate(links, 1):\n        print(f\"  [{i}] {link}\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "readme": "# Upzur.com MP4 Extractor\n> Last updated: May 27, 2026\n\nA simple Python script to extract direct `.mp4` download links from upzur.com embed pages.\n\n## Requirements\n\n- Python 3.10+\n- `requests`\n\nInstall the dependency:\n\n```bash\npip install requests\n```\n\n## Usage\n\n**Default URL:**\n```bash\npython upzur.com.py\n```\n\n**Custom URL:**\n```bash\npython upzur.com.py https://upzur.com/embed-yourcode.html\n```\n\n## Output\n\n```\n[*] Extracting from: https://upzur.com/embed-im6qf2esvfok.html\n[+] Found 2 link(s):\n\n  [1] https://peanut.upzur.com/d/abc123.../video.mp4\n  [2] https://peanut.upzur.com/d/xyz789.../MovieName.mp4\n```\n\n## How It Works\n\n1. Fetches the embed page\n2. Decodes the obfuscated JS array to find the video source\n3. Scans raw HTML for direct `peanut.upzur.com` mp4 URLs\n4. POSTs to the download page to get tokenized download links\n\n## Notes\n\n- Requires Python 3.10+ for `list[str]` type hint syntax\n- Links are tokenized and may expire after some time",
+    "history": [
+      {
+        "id": "h_1779889124309",
+        "action": "created",
+        "detail": "\"https://upzur.com/embed-im6qf2esvfok.html  extract mp4 direct urls from this url\" created",
+        "icon": "✨",
+        "ts": "2026-05-27T13:38:44.309Z"
+      }
+    ],
+    "createdAt": "2026-05-27T13:38:44.309Z",
+    "updatedAt": "2026-05-27T13:38:44.309Z"
+  },
+  {
     "id": "r_1779886860732_zxqm5",
     "name": "https://streamruby.com/embed-2lsz9uozaoaa.html   - Direct m3u8 urls extractor python code",
     "category": "code",
