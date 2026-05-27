@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779870619011_drr80",
+    "name": "list of movie sites which is alrady researched",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "https://zonafilm.ru/movies/karatel-poslednee-ubiistvo   this is russian lanuge of of hollywod movie which has no direct movie streaming api"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1779870619011",
+        "action": "created",
+        "detail": "\"list of movie sites which is alrady researched\" created",
+        "icon": "✨",
+        "ts": "2026-05-27T08:30:19.010Z"
+      }
+    ],
+    "createdAt": "2026-05-27T08:30:19.010Z",
+    "updatedAt": "2026-05-27T08:30:19.010Z"
+  },
+  {
     "id": "r_1779778609660_cjvi6",
     "name": "list of movie sites",
     "category": "general",
