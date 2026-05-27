@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779893197725_6q4px",
+    "name": "https://mixdrop21.net/e/9n9vml60u33qp1d  m3u8 link extractor or finder",
+    "category": "code",
+    "tags": [],
+    "urls": [],
+    "info": "this link https://mixdrop21.net/e/9n9vml60u33qp1d mostly used many sites include primesrc ",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport ast\nimport requests\nfrom bs4 import BeautifulSoup\nfrom urllib.parse import urlparse\n\nclass Colors:\n    header = '\\033[95m'\n    okblue = '\\033[94m'\n    okcyan = '\\033[96m'\n    okgreen = '\\033[92m'\n    warning = '\\033[93m'\n    fail = '\\033[91m'\n    endc = '\\033[0m'\n    bold = '\\033[1m'\n    underline = '\\033[4m'\n\n# Constants\nbase_url = \"https://mixdrop21.net/e/9n9vml60u33qp1d\"\nuser_agent = \"Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36\"\ndefault_domain = '{uri.scheme}://{uri.netloc}/'.format(uri=urlparse(base_url))\nheaders = {\n    'Referer': default_domain,\n    'User-Agent': user_agent\n}\n\n# Utility Functions\n''' JS Unpacker '''\ndef unpack(p, a, c, k, e=None, d=None):\n    digits = \"0123456789abcdefghijklmnopqrstuvwxyz\"\n    def base_encode(n):\n        rem = n % a\n        digit = chr(rem + 29) if rem > 35 else digits[rem]\n        if n < a:\n            return digit\n        return base_encode(n // a) + digit\n\n    d = {} if d is None else d\n    for i in range(c - 1, -1, -1):\n        key = base_encode(i)\n        d[key] = k[i] if i < len(k) and k[i] else key\n\n    pattern = re.compile(r'\\b\\w+\\b')\n    def replace(m):\n        w = m.group(0)\n        return d.get(w, w)\n\n    return pattern.sub(replace, p)\n\n# Fetch the initial response\nbase_url = base_url.replace('/f/', '/e/')\nresponse = requests.get(base_url, headers=headers).text\n\n# Packed data pattern\npattern = r'eval\\(function\\((.*?)\\)\\{.*\\}\\((.*?)\\)\\)'\ndata_match = re.search(pattern, response)\n\n# Extract packed data if found\ndata = \"\"\nif data_match:\n    data = data_match.group(2).replace(\".split('|')\", \"\");\n    data = ast.literal_eval(data)\nelse:\n    exit(f\"{Colors.fail}Error: Cannot find packed data. File might be deleted. Exiting...{Colors.endc}\")\n\n# Extract variables from packed data\np,a,c,k,e,d = data[0], int(data[1]), int(data[2]), data[3].split('|'), 0, {}\n\n# Replace function to decode the packed data\ndecoded_data = unpack(p,a,c,k,e,d)\n\n# Regex to find the video URL\nregex_match = re.search(r'MDCore\\.wurl=\\\"(.*?)\\\"', decoded_data)\n\n# Get video URL\nvideo_url = \"\"\nif regex_match:\n    video_url = f\"https:{regex_match.group(1)}\"\nelse:\n    print(f\"{Colors.fail}Video URL not found!{Colors.endc}\")\n\n# Print Results\nprint(\"\\n\" + \"#\"*25 + \"\\n\" + \"#\"*25)\nprint(f\"Captured URL: {Colors.okgreen}{video_url}{Colors.endc}\")\nprint(\"#\"*25 + \"\\n\" + \"#\"*25)\nprint(f\"{Colors.warning}### Use these headers to access the URL\")\n\n# Print headers by key: value\nfor key, value in headers.items():\n    print(f\"{Colors.okcyan}{key}:{Colors.endc} {value}\")\nprint(\"\\n\")"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1779893197725",
+        "action": "created",
+        "detail": "\"https://mixdrop21.net/e/9n9vml60u33qp1d  m3u8 link extractor or finder\" created",
+        "icon": "✨",
+        "ts": "2026-05-27T14:46:37.725Z"
+      }
+    ],
+    "createdAt": "2026-05-27T14:46:37.725Z",
+    "updatedAt": "2026-05-27T14:46:37.725Z"
+  },
+  {
     "id": "r_1779893083998_ybjr9",
     "name": "https://luluvdoo.com/e/7d22wlk04ucd  m3u8 direct link extractor also work sometimes for download",
     "category": "code",
