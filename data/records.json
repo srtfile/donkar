@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779879614583_dmfh9",
+    "name": "Movies sites api list",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://vsembed.ru/api/\n",
+    "code": {
+      "lang": "plaintext",
+      "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1779879614583",
+        "action": "created",
+        "detail": "\"Movies sites api list\" created",
+        "icon": "✨",
+        "ts": "2026-05-27T11:00:14.582Z"
+      }
+    ],
+    "createdAt": "2026-05-27T11:00:14.582Z",
+    "updatedAt": "2026-05-27T11:00:14.582Z"
+  },
+  {
     "id": "r_1779871689458_watdy",
     "name": "movie sreaim direct api or download apis list",
     "category": "general",
