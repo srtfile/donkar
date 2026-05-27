@@ -15,7 +15,7 @@
       "lang": "plaintext",
       "content": "import re\nimport sys\nimport argparse\n\nfrom curl_cffi import requests\n\nDEFAULT_URL = \"https://streamruby.com/embed-2lsz9uozaoaa.html\"\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"Accept-Language\": \"en-US,en;q=0.9\",\n    \"Referer\": \"https://streamruby.com/\",\n}\n\n\ndef unpack_p_a_c_k(packed_js):\n    m = re.search(\n        r\"eval\\(function\\(p,a,c,k,e,d\\)\\{[^}]+\\}\\('(.*?)',(\\d+),(\\d+),'(.*?)'\\.split\\('\\|'\\)\\)\\)\",\n        packed_js, re.DOTALL\n    )\n    if not m:\n        return packed_js\n    body, base, count, kw_raw = m.group(1), int(m.group(2)), int(m.group(3)), m.group(4)\n    keywords = kw_raw.split('|')\n\n    def replacer(match):\n        idx = int(match.group(0), base)\n        return keywords[idx] if idx < len(keywords) and keywords[idx] else match.group(0)\n\n    return re.sub(r'\\b\\w+\\b', replacer, body)\n\n\ndef get_streams(url=DEFAULT_URL):\n    print(f\"[*] Fetching: {url}\")\n    r = requests.get(url, headers=HEADERS, impersonate=\"chrome120\", timeout=30)\n    r.raise_for_status()\n    html = r.text\n\n    scripts = re.findall(r'<script[^>]*>(.*?)</script>', html, re.DOTALL)\n    packed_js = next((s for s in scripts if 'eval(function(p,a,c,k' in s), None)\n\n    if not packed_js:\n        print(\"[-] No packed JS found in page\")\n        return []\n\n    unpacked = unpack_p_a_c_k(packed_js)\n\n    m3u8s = re.findall(r'https?://[^\\s\\'\"<>]+\\.m3u8[^\\s\\'\"<>]*', unpacked)\n    return list(dict.fromkeys(m3u8s))\n\n\ndef main():\n    parser = argparse.ArgumentParser(description=\"StreamRuby m3u8 extractor\")\n    parser.add_argument(\"url\", nargs=\"?\", default=DEFAULT_URL)\n    args = parser.parse_args()\n\n    streams = get_streams(args.url)\n\n    if streams:\n        print(f\"\\n[+] Found {len(streams)} stream(s):\\n\")\n        for i, s in enumerate(streams, 1):\n            print(f\"  [{i}] {s}\")\n        master = next((s for s in streams if \"master.m3u8\" in s), streams[0])\n        print(f\"\\n[BEST] {master}\")\n        return master\n    else:\n        print(\"[-] No streams found.\")\n        return None\n\n\nif __name__ == \"__main__\":\n    main()\n"
     },
-    "readme": "",
+    "readme": "# StreamRuby m3u8 Extractor\n\nA simple Python script to extract `.m3u8` stream URLs from StreamRuby embed pages.\n\n## Requirements\n\n- Python 3.7+\n- [`curl_cffi`](https://github.com/yifeikong/curl_cffi)\n\nInstall the dependency:\n\n```bash\npip install curl_cffi\n```\n\n## Usage\n\n**Default URL:**\n```bash\npython extractor.py\n```\n\n**Custom URL:**\n```bash\npython extractor.py https://streamruby.com/embed-yourcode.html\n```\n\n## Output\n\nThe script prints all found stream URLs and highlights the best one (prefers `master.m3u8`):\n\n```\n[*] Fetching: https://streamruby.com/embed-2lsz9uozaoaa.html\n\n[+] Found 1 stream(s):\n\n  [1] https://cdn.example.com/hls/master.m3u8\n\n[BEST] https://cdn.example.com/hls/master.m3u8\n```\n\n## How It Works\n\n1. Fetches the embed page using a browser-impersonated request\n2. Locates the packed JavaScript (`eval(function(p,a,c,k...)`)\n3. Unpacks and deobfuscates the JS\n4. Extracts all `.m3u8` URLs from the result\n\n## Notes\n\n- Uses `curl_cffi` with Chrome 120 impersonation to bypass basic bot detection\n- Returns `None` if no streams are found",
     "history": [
       {
         "id": "h_1779886860732",
@@ -30,10 +30,17 @@
         "detail": "\"https://streamruby.com/embed-2lsz9uozaoaa.html   - Direct m3u8 urls extractor python code\" updated",
         "icon": "✏️",
         "ts": "2026-05-27T13:02:06.373Z"
+      },
+      {
+        "id": "h_1779887572659",
+        "action": "updated",
+        "detail": "\"https://streamruby.com/embed-2lsz9uozaoaa.html   - Direct m3u8 urls extractor python code\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-27T13:12:52.658Z"
       }
     ],
     "createdAt": "2026-05-27T13:01:00.732Z",
-    "updatedAt": "2026-05-27T13:02:06.373Z"
+    "updatedAt": "2026-05-27T13:12:52.658Z"
   },
   {
     "id": "r_1779879614583_dmfh9",
