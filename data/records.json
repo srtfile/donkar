@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779961863289_l3ptb",
+    "name": "https://savefiles.com/e/p7ydrt7zuo4n  direct m3u8 finder",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "this https://savefiles.com/e/p7ydrt7zuo4n  mostly found in primesrc.me",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport cloudscraper\n\nDEFAULT_URL = \"https://savefiles.com/e/p7ydrt7zuo4n\"\n\nHEADERS = {\n    \"accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8\",\n    \"accept-language\": \"en-US,en;q=0.9\",\n    \"origin\": \"https://savefiles.com\",\n    \"referer\": \"https://savefiles.com/\",\n    \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"dnt\": \"1\",\n}\n\n\ndef extract_file_code(url: str) -> str:\n    match = re.search(r\"/e/([a-z0-9]+)\", url)\n    if not match:\n        raise ValueError(f\"Cannot extract file_code from URL: {url}\")\n    return match.group(1)\n\n\ndef get_m3u8(page_url: str = DEFAULT_URL) -> str:\n    file_code = extract_file_code(page_url)\n\n    scraper = cloudscraper.create_scraper(\n        browser={\"browser\": \"chrome\", \"platform\": \"windows\", \"mobile\": False}\n    )\n\n    # Step 1: visit embed page to get cf_clearance + cookies\n    scraper.get(page_url, headers=HEADERS)\n\n    # Step 2: POST to /dl — this returns the HTML with JWPlayer sources\n    post_headers = {**HEADERS, \"content-type\": \"application/x-www-form-urlencoded\",\n                    \"sec-fetch-dest\": \"document\", \"sec-fetch-mode\": \"navigate\",\n                    \"sec-fetch-site\": \"same-origin\", \"referer\": page_url}\n\n    resp = scraper.post(\n        \"https://savefiles.com/dl\",\n        data=f\"op=embed&file_code={file_code}&auto=1&referer=\",\n        headers=post_headers,\n        allow_redirects=True,\n    )\n    resp.raise_for_status()\n\n    # Step 3: extract m3u8 from JWPlayer sources config\n    match = re.search(r'sources:\\s*\\[\\{file:\"([^\"]+\\.m3u8[^\"]+)\"', resp.text)\n    if not match:\n        # fallback: any m3u8 URL in the page\n        match = re.search(r'(https://[^\\s\"\\']+\\.m3u8[^\\s\"\\']*)', resp.text)\n    if not match:\n        raise RuntimeError(\"No m3u8 URL found in response. Cloudflare may have blocked the request.\")\n\n    return match.group(1)\n\n\ndef main():\n    url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    print(f\"[*] Extracting stream from: {url}\")\n    m3u8_url = get_m3u8(url)\n    print(f\"\\n[+] Master m3u8:\\n{m3u8_url}\\n\")\n    print(f\"[i] Play with:\\n    mpv \\\"{m3u8_url}\\\"\\n    vlc \\\"{m3u8_url}\\\"\")\n    return m3u8_url\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "readme": "# savefiles.com (2).py\n\nDate: 2026-05-28\n\n## Overview\n\n`savefiles.com (2).py` extracts the direct HLS playlist URL from SaveFiles embed pages. It uses `cloudscraper` to bypass Cloudflare protections, posts the required embed request, and parses the JWPlayer configuration to locate the master `.m3u8` link.\n\n## Requirements\n\n- Python 3.8+\n- `cloudscraper`\n\nInstall the dependency:\n\n```powershell\npip install cloudscraper\n```\n\n## What it does\n\n1. Extracts the file code from a SaveFiles embed URL.\n2. Visits the embed page to obtain Cloudflare clearance and cookies.\n3. Posts to `https://savefiles.com/dl` with the extracted file code.\n4. Parses the response HTML for JWPlayer `sources` or any `.m3u8` URL.\n5. Prints the resolved master playlist URL for use in players like `mpv` or `VLC`.\n\n## Usage\n\nRun the script with a SaveFiles embed URL, or let it use the default built-in example:\n\n```powershell\npython \"savefiles.com (2).py\" https://savefiles.com/e/p7ydrt7zuo4n\n```\n\nThe script prints the master HLS URL and example player commands:\n\n```powershell\nmpv \"<m3u8_url>\"\nvlc \"<m3u8_url>\"\n```\n\n## Notes\n\n- The script uses a realistic browser-like header set to mimic normal browser traffic.\n- If no `.m3u8` URL is found, Cloudflare may have blocked the request or the page format may have changed.\n- This is a lightweight extractor designed for SaveFiles embed pages only.\n\n## Example\n\n```powershell\npython \"savefiles.com (2).py\"\n```\n\nThis will use the default demo URL and print the captured master playlist URL.\n",
+    "history": [
+      {
+        "id": "h_1779961863289",
+        "action": "created",
+        "detail": "\"https://savefiles.com/e/p7ydrt7zuo4n  direct m3u8 finder\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T09:51:03.289Z"
+      }
+    ],
+    "createdAt": "2026-05-28T09:51:03.289Z",
+    "updatedAt": "2026-05-28T09:51:03.289Z"
+  },
+  {
     "id": "r_1779961592098_3e0k8",
     "name": "https://streamwish.to/e/6kwa9hp2pvok  m3u8 link extractor",
     "category": "code",
