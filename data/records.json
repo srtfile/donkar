@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779962049960_hp54q",
+    "name": "https://streamruby.com/embed-2lsz9uozaoaa.html m3u8 url finder",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "this url https://streamruby.com/embed-2lsz9uozaoaa.html  mostly found in primesrc.me movie api",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport argparse\n\nfrom curl_cffi import requests\n\nDEFAULT_URL = \"https://streamruby.com/embed-2lsz9uozaoaa.html\"\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"Accept-Language\": \"en-US,en;q=0.9\",\n    \"Referer\": \"https://streamruby.com/\",\n}\n\n\ndef unpack_p_a_c_k(packed_js):\n    m = re.search(\n        r\"eval\\(function\\(p,a,c,k,e,d\\)\\{[^}]+\\}\\('(.*?)',(\\d+),(\\d+),'(.*?)'\\.split\\('\\|'\\)\\)\\)\",\n        packed_js, re.DOTALL\n    )\n    if not m:\n        return packed_js\n    body, base, count, kw_raw = m.group(1), int(m.group(2)), int(m.group(3)), m.group(4)\n    keywords = kw_raw.split('|')\n\n    def replacer(match):\n        idx = int(match.group(0), base)\n        return keywords[idx] if idx < len(keywords) and keywords[idx] else match.group(0)\n\n    return re.sub(r'\\b\\w+\\b', replacer, body)\n\n\ndef get_streams(url=DEFAULT_URL):\n    print(f\"[*] Fetching: {url}\")\n    r = requests.get(url, headers=HEADERS, impersonate=\"chrome120\", timeout=30)\n    r.raise_for_status()\n    html = r.text\n\n    scripts = re.findall(r'<script[^>]*>(.*?)</script>', html, re.DOTALL)\n    packed_js = next((s for s in scripts if 'eval(function(p,a,c,k' in s), None)\n\n    if not packed_js:\n        print(\"[-] No packed JS found in page\")\n        return []\n\n    unpacked = unpack_p_a_c_k(packed_js)\n\n    m3u8s = re.findall(r'https?://[^\\s\\'\"<>]+\\.m3u8[^\\s\\'\"<>]*', unpacked)\n    return list(dict.fromkeys(m3u8s))\n\n\ndef main():\n    parser = argparse.ArgumentParser(description=\"StreamRuby m3u8 extractor\")\n    parser.add_argument(\"url\", nargs=\"?\", default=DEFAULT_URL)\n    args = parser.parse_args()\n\n    streams = get_streams(args.url)\n\n    if streams:\n        print(f\"\\n[+] Found {len(streams)} stream(s):\\n\")\n        for i, s in enumerate(streams, 1):\n            print(f\"  [{i}] {s}\")\n        master = next((s for s in streams if \"master.m3u8\" in s), streams[0])\n        print(f\"\\n[BEST] {master}\")\n        return master\n    else:\n        print(\"[-] No streams found.\")\n        return None\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1779962049960",
+        "action": "created",
+        "detail": "\"https://streamruby.com/embed-2lsz9uozaoaa.html m3u8 url finder\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T09:54:09.960Z"
+      }
+    ],
+    "createdAt": "2026-05-28T09:54:09.960Z",
+    "updatedAt": "2026-05-28T09:54:09.960Z"
+  },
+  {
     "id": "r_1779961863289_l3ptb",
     "name": "https://savefiles.com/e/p7ydrt7zuo4n  direct m3u8 finder",
     "category": "general",
