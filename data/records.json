@@ -1,5 +1,34 @@
 [
   {
+    "id": "r_1779962890762_uq9fa",
+    "name": "https://vidmoly.net/embed-zquo82b8dm1k.html  m3u8 direct link extractor",
+    "category": "code",
+    "tags": [],
+    "urls": [
+      {
+        "label": "vidmoly",
+        "href": "https://vidmoly.net/embed-zquo82b8dm1k.html"
+      }
+    ],
+    "info": "this is https://vidmoly.net/embed-zquo82b8dm1k.html mostly found in primesrc.me",
+    "code": {
+      "lang": "python",
+      "content": "import re\n\ntry:\n    from ...config import GLOBAL_SESSION\nexcept ImportError:\n    from aniworld.config import GLOBAL_SESSION\n\n# -----------------------------\n# Constants\n# -----------------------------\nFILE_LINK_PATTERN = re.compile(r'file\\s*:\\s*[\\'\"]([^\\'\"]+?\\.m3u8[^\\'\"]*)[\\'\"]')\nPREVIEW_IMAGE_PATTERN = re.compile(\n    r'image\\s*:\\s*[\\'\"]([^\\'\"]+\\.(?:jpg|jpeg|png|webp))[\\'\"]'\n)\n\n\n# -----------------------------\n# Helper Functions\n# -----------------------------\ndef _get_headers():\n    \"\"\"Return headers for Vidmoly requests.\"\"\"\n    return {\"Referer\": \"https://vidmoly.biz\"}\n\n\ndef _extract_regex(pattern, content, name, url):\n    \"\"\"Extract regex match or raise ValueError.\"\"\"\n    if not content:\n        raise ValueError(f\"No HTML content for {url}\")\n    match = pattern.search(content)\n    if not match:\n        raise ValueError(f\"{name} not found in {url}\")\n    return match.group(1)\n\n\ndef _extract_script_content(html):\n    \"\"\"Return all script contents concatenated.\"\"\"\n    scripts = re.findall(\n        r\"<script[^>]*>(.*?)</script>\", html, re.DOTALL | re.IGNORECASE\n    )\n    return \"\\n\".join(filter(None, scripts))  # join non-empty scripts\n\n\n# -----------------------------\n# Main Vidmoly Functions\n# -----------------------------\ndef get_direct_link_from_vidmoly(embed_url):\n    \"\"\"Get direct Vidmoly video link.\"\"\"\n    if not embed_url:\n        raise ValueError(\"Embed URL cannot be empty\")\n\n    resp = GLOBAL_SESSION.get(embed_url, headers=_get_headers())\n    resp.raise_for_status()\n    html = resp.text\n\n    script_content = _extract_script_content(html)\n    return _extract_regex(\n        FILE_LINK_PATTERN, script_content, \"Direct video URL\", embed_url\n    )\n\n\ndef get_preview_image_link_from_vidmoly(embed_url):\n    \"\"\"Get Vidmoly preview image URL.\"\"\"\n    if not embed_url:\n        raise ValueError(\"Embed URL cannot be empty\")\n\n    resp = GLOBAL_SESSION.get(embed_url, headers=_get_headers())\n    resp.raise_for_status()\n    html = resp.text\n\n    script_content = _extract_script_content(html)\n    return _extract_regex(\n        PREVIEW_IMAGE_PATTERN, script_content, \"Preview image URL\", embed_url\n    )\n\n\nif __name__ == \"__main__\":\n    # Tested on 2026/02/18 -> WORKING\n    # Example: https://vidmoly.net/embed-zquo82b8dm1k.html\n\n    link = input(\"Enter Vidmoly Link: \").strip()\n    if not link:\n        print(\"Error: No link provided\")\n        exit(1)\n\n    try:\n        print(\"=\" * 25)\n\n        direct_link = get_direct_link_from_vidmoly(link)\n        print(\"Direct link:\", direct_link)\n        print(\"=\" * 25)\n\n        preview_img = get_preview_image_link_from_vidmoly(link)\n        print(\"Preview image:\", preview_img)\n        print(\"=\" * 25)\n\n        print(\n            f'mpv --http-header-fields=\"Referer: https://vidmoly.biz\" \"{direct_link}\"'\n        )\n        print(\"=\" * 25)\n\n    except Exception as e:\n        print(\"Error:\", e)\n        exit(1)\n"
+    },
+    "readme": "# vidmoly.py\n\nDate: 2026-05-28\n\n## Overview\n\n`vidmoly.py` extracts the direct video stream and preview image URLs from Vidmoly embed pages. It fetches the embed page HTML, extracts script contents, and uses regex-based parsing to find the `.m3u8` file reference and the preview image URL.\n\n## Requirements\n\n- Python 3.8+\n- `requests` (via `GLOBAL_SESSION` from the local config)\n\nNote: This script expects a `GLOBAL_SESSION` object imported from the local `aniworld.config` module.\n\n## What it does\n\n- Loads the Vidmoly embed page with a `Referer: https://vidmoly.biz` header.\n- Collects all inline `<script>` contents from the page.\n- Extracts the direct `.m3u8` playlist URL from the player configuration.\n- Extracts the preview image URL from the same script block.\n- Prints a ready-to-use `mpv` command with the correct Referer header.\n\n## Usage\n\nRun the script and provide a Vidmoly embed URL when prompted:\n\n```powershell\npython vidmoly.py\n```\n\nExample input:\n\n```text\nhttps://vidmoly.net/embed-zquo82b8dm1k.html\n```\n\n## Results\n\nThe script prints:\n\n- `Direct link:` — the resolved `.m3u8` streaming URL\n- `Preview image:` — the thumbnail image URL\n- `mpv` command — ready to play the stream with the required Referer header\n\nExample output:\n\n```text\nDirect link: https://prx-1590-for.vmwesa.online/hls2/.../master.m3u8?...\nPreview image: https://i1612.imgvm.com/i/01/01424/zquo82b8dm1k.jpg\nmpv --http-header-fields=\"Referer: https://vidmoly.biz\" \"<direct_link>\"\n```\n\n## Notes\n\n- The script is designed for Vidmoly embed pages that expose the `.m3u8` URL in inline script content.\n- If extraction fails, the page format may have changed or the required script block may be hidden.\n- The `Referer` header is required for clean playback with players like `mpv`.",
+    "history": [
+      {
+        "id": "h_1779962890762",
+        "action": "created",
+        "detail": "\"https://vidmoly.net/embed-zquo82b8dm1k.html  m3u8 direct link extractor\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T10:08:10.761Z"
+      }
+    ],
+    "createdAt": "2026-05-28T10:08:10.761Z",
+    "updatedAt": "2026-05-28T10:08:10.761Z"
+  },
+  {
     "id": "r_1779962415913_iq766",
     "name": "https://streamta.site/e/1bZVvmXvZ4ueOvM  m3u8 link finder",
     "category": "code",
