@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779964057733_0wx1q",
+    "name": "https://watch-online.mom/e/2u8xaggmmsro  direct m3u8 capture",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "this https://watch-online.mom/e/2u8xaggmmsro  sites mostly found in indian movie sites",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport requests\n\nDEFAULT_URL = \"https://watch-online.mom/e/2u8xaggmmsro\"\n\nHEADERS = {\n    \"accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"accept-language\": \"en-US,en;q=0.9\",\n    \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"dnt\": \"1\",\n}\n\n\ndef decode_packed(packed_js):\n    m = re.search(\n        r\"}\\('(.*)',(\\d+),(\\d+),'(.*?)'\\.split\\('\\|'\\)\\)\",\n        packed_js, re.DOTALL\n    )\n    if not m:\n        return \"\"\n    body, base, _, kw_str = m.group(1), int(m.group(2)), m.group(3), m.group(4)\n    keywords = kw_str.split(\"|\")\n\n    def lookup(word):\n        try:\n            idx = int(word, base)\n            return keywords[idx] if idx < len(keywords) and keywords[idx] else word\n        except Exception:\n            return word\n\n    return re.sub(r'\\b(\\w+)\\b', lambda x: lookup(x.group(1)), body)\n\n\ndef extract_m3u8(url=DEFAULT_URL):\n    session = requests.Session()\n    base_domain = re.match(r\"(https?://[^/]+)\", url).group(1)\n\n    r = session.get(url, headers=HEADERS, timeout=15)\n    r.raise_for_status()\n    html = r.text\n\n    # Decode the eval(function(p,a,c,k,e,d){...}) packed JS block\n    packed_m = re.search(\n        r\"eval\\(function\\(p,a,c,k,e,d\\).*?split\\('\\|'\\)\\)\\)\",\n        html, re.DOTALL\n    )\n    decoded = decode_packed(packed_m.group(0)) if packed_m else \"\"\n    search_text = decoded + html\n\n    # Prefer the local /stream/ HLS4 path (most stable, same-origin)\n    stream = re.search(r\"(/stream/[^\\s\\\"'\\\\]+\\.m3u8)\", search_text)\n    if stream:\n        result = base_domain + stream.group(1)\n        print(\"[stream]\", result)\n        return result\n\n    # Fallback: external HLS2/HLS3 URL\n    m3u8 = re.search(r\"(https?://[^\\s\\\"'\\\\]+\\.m3u8)\", search_text)\n    if m3u8:\n        result = m3u8.group(1)\n        print(\"[m3u8]\", result)\n        return result\n\n    print(\"[error] No stream URL found\")\n    return None\n\n\nif __name__ == \"__main__\":\n    target = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    result = extract_m3u8(target)\n    if result:\n        print(\"\\n[RESULT]\", result)\n    else:\n        print(\"\\n[FAILED] Could not extract stream URL\")\n"
+    },
+    "readme": "# watch-online.mom.py README\n\nDate: 2026-05-28\n\n## Overview\n\n`watch-online.mom.py` is a script designed to extract the direct streaming URL from a `watch-online.mom` page and print it in a clean, usable format.\n\n## What it does\n\n- Accepts a `watch-online.mom` video page link.\n- Fetches the page content.\n- Extracts the direct HLS playlist URL from the page.\n- Prints the final stream URL for playback or downloading.\n\n## Example usage\n\nRun the script with Python from the folder containing `watch-online.mom.py`:\n\n```powershell\nPS C:\\Users\\AC\\Desktop\\straming domain list> & C:/Users/AC/AppData/Local/Programs/Python/Python310/python.exe \"c:/Users/AC/Desktop/straming domain list/watch-online.mom.py\"\n```\n\n## Real output from the provided run\n\n[stream] https://watch-online.mom/stream/Hm1XwNtqC4SZjWKnazHgGQ/kjhhiuahiuhgihdf/1780007141/72111398/master.m3u8\n\n[RESULT] https://watch-online.mom/stream/Hm1XwNtqC4SZjWKnazHgGQ/kjhhiuahiuhgihdf/1780007141/72111398/master.m3u8\n\n## Notes\n\n- The README filename follows the requested pattern: `watch-online.mom_readme.md`.\n- Save this file in the same directory as `watch-online.mom.py` for easy reference.\n",
+    "history": [
+      {
+        "id": "h_1779964057733",
+        "action": "created",
+        "detail": "\"https://watch-online.mom/e/2u8xaggmmsro  direct m3u8 capture\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T10:27:37.733Z"
+      }
+    ],
+    "createdAt": "2026-05-28T10:27:37.733Z",
+    "updatedAt": "2026-05-28T10:27:37.733Z"
+  },
+  {
     "id": "r_1779963899328_s98ro",
     "name": "https://voe.sx/e/80z1tpfbkgyc direct m3u8 link extractor",
     "category": "code",
