@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1779963538301_5egaz",
+    "name": "https://vids.st/e/40263  m3u8 direct link grabber",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "this https://vids.st/e/40263  found in primesrc.me or other websites",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport json\nimport requests\n\nDEFAULT_URL = \"https://vids.st/e/40263\"\n\nUA = (\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \"\n      \"(KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\")\n\nCDN_TEMPLATE = \"https://cdn.vids.st/video{id}/master.m3u8\"\nPOSTER_TEMPLATE = \"https://cdn.vids.st/video{id}/thumb{id}.jpg\"\n\nID_RE = re.compile(r\"/e/(\\d+)\")\nURL_RE = re.compile(r'const\\s+url\\s*=\\s*\"([^\"]+\\.m3u8[^\"]*)\"')\nTITLE_RE = re.compile(r'<meta\\s+property=\"og:title\"\\s+content=\"([^\"]+)\"', re.I)\nPOSTER_RE = re.compile(r'const\\s+poster\\s*=\\s*\"([^\"]+)\"')\n\n\ndef _verify(stream_url, referer=\"https://vids.st/\"):\n    h = {\"User-Agent\": UA, \"Referer\": referer, \"Accept\": \"*/*\"}\n    r = requests.get(stream_url, headers=h, timeout=15, stream=True)\n    ok = r.status_code == 200 and b\"#EXTM3U\" in r.raw.read(64)\n    r.close()\n    return ok\n\n\ndef _from_id(vid):\n    return {\n        \"id\": vid,\n        \"stream\": CDN_TEMPLATE.format(id=vid),\n        \"poster\": POSTER_TEMPLATE.format(id=vid),\n        \"title\": None,\n        \"method\": \"cdn-direct\",\n    }\n\n\ndef _from_page(url):\n    try:\n        from curl_cffi import requests as cf\n        r = cf.get(url, impersonate=\"chrome\", timeout=20,\n                   headers={\"Referer\": \"https://vids.st/\"})\n    except Exception:\n        r = requests.get(url, headers={\"User-Agent\": UA, \"Referer\": \"https://vids.st/\"},\n                         timeout=20)\n    r.raise_for_status()\n    html = r.text.replace(\"\\\\/\", \"/\")\n    m = URL_RE.search(html)\n    if not m:\n        return None\n    title = TITLE_RE.search(html)\n    poster = POSTER_RE.search(html)\n    vid_m = ID_RE.search(url)\n    return {\n        \"id\": vid_m.group(1) if vid_m else None,\n        \"stream\": m.group(1),\n        \"poster\": poster.group(1) if poster else None,\n        \"title\": title.group(1) if title else None,\n        \"method\": \"page-scrape\",\n    }\n\n\ndef extract(url=DEFAULT_URL):\n    m = ID_RE.search(url)\n    if m:\n        info = _from_id(m.group(1))\n        try:\n            if _verify(info[\"stream\"]):\n                return info\n        except Exception:\n            pass\n    return _from_page(url)\n\n\ndef main():\n    url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    data = extract(url)\n    if not data or not data.get(\"stream\"):\n        print(\"No stream URL found.\")\n        sys.exit(1)\n    print(json.dumps(data, indent=2, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "readme": "# vids_extractor.py\n\nDate: 2026-05-28\n\n## Overview\n\n`vids_extractor.py` extracts direct stream, poster, and title metadata from `vids.st` embed pages. It can resolve content either by constructing CDN URLs from the embedded numeric ID or by scraping the page HTML for the actual `.m3u8` source.\n\n## Requirements\n\n- Python 3.8+\n- `requests`\n\nInstall the dependency:\n\n```powershell\npip install requests\n```\n\n## What it does\n\n- Parses a `vids.st` embed URL and extracts the numeric video ID.\n- First tries a CDN direct URL pattern using the ID.\n- If that fails, fetches the page and scrapes the embedded JavaScript for the `.m3u8` source.\n- Verifies the stream URL by checking for a valid HLS playlist response.\n- Outputs JSON with `id`, `stream`, `poster`, `title`, and `method`.\n\n## Usage\n\nRun the script with a `vids.st` embed URL, or let it use the built-in default:\n\n```powershell\npython vids_extractor.py https://vids.st/e/40263\n```\n\n## Real output example\n\nFrom your provided run, the script returned:\n\n```json\n{\n  \"id\": \"40263\",\n  \"stream\": \"https://cdn.vids.st/video40263/master.m3u8\",\n  \"poster\": \"https://cdn.vids.st/video40263/thumb40263.jpg\",\n  \"title\": \"A.Marvel.Television.Special.Presentation.--.The.Punisher.One.Last.Kill.2026.1080p.DSNP.WEB-DL.DDP5.1.Atmos.H.264-RUDR.mkv.mp4\",\n  \"method\": \"page-scrape\"\n}\n```\n\n## Notes\n\n- The script prefers the `cdn-direct` approach if the numeric ID verifies, otherwise it falls back to a page scrape.\n- The returned `stream` URL is a master HLS playlist and can be opened in players like `mpv` or `VLC`.\n- The `poster` URL points to the thumbnail image associated with the video.\n\n## Example\n\n```powershell\npython vids_extractor.py\n```\n\nThis uses the default demo URL and prints the extracted metadata as JSON.\n",
+    "history": [
+      {
+        "id": "h_1779963538301",
+        "action": "created",
+        "detail": "\"https://vids.st/e/40263  m3u8 direct link grabber\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T10:18:58.301Z"
+      }
+    ],
+    "createdAt": "2026-05-28T10:18:58.301Z",
+    "updatedAt": "2026-05-28T10:18:58.301Z"
+  },
+  {
     "id": "r_1779963252056_o78tx",
     "name": "https://videzz.net/embed-xneznizpludf.html m3u8 link grabber",
     "category": "code",
