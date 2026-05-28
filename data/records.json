@@ -1,5 +1,34 @@
 [
   {
+    "id": "r_1779963252056_o78tx",
+    "name": "https://videzz.net/embed-xneznizpludf.html m3u8 link grabber",
+    "category": "code",
+    "tags": [],
+    "urls": [
+      {
+        "label": "https://videzz.net",
+        "href": "https://videzz.net/embed-xneznizpludf.html"
+      }
+    ],
+    "info": "this https://videzz.net/embed-xneznizpludf.html  found in Primesrc.me",
+    "code": {
+      "lang": "plaintext",
+      "content": "import re\n\nimport niquests\n\ntry:\n    from ...config import DEFAULT_USER_AGENT, GLOBAL_SESSION\nexcept ImportError:\n    from aniworld.config import DEFAULT_USER_AGENT, GLOBAL_SESSION\n\n\n# Compile regex pattern once for better performance\nSOURCE_LINK_PATTERN = re.compile(r'src:\\s*\"([^\"]+)\"')\nIMAGE_LINK_PATTERN = re.compile(r'poster:\\s*\"([^\"]+)\"')\n\n\ndef get_direct_link_from_vidoza(embeded_vidoza_link):\n    \"\"\"Get direct Vidoza video URL.\"\"\"\n    try:\n        resp = GLOBAL_SESSION.get(\n            embeded_vidoza_link, headers={\"User-Agent\": DEFAULT_USER_AGENT}\n        )\n        resp.raise_for_status()\n        html = resp.text\n\n        if \"sourcesCode:\" in html:\n            match = SOURCE_LINK_PATTERN.search(html)\n            if match:\n                return match.group(1)\n\n    except niquests.RequestException as err:\n        raise ValueError(f\"Failed to fetch Vidoza page: {err}\") from err\n\n\ndef get_preview_image_link_from_vidoza(embeded_vidoza_link):\n    \"\"\"Get Vidoza preview image URL.\"\"\"\n    try:\n        resp = GLOBAL_SESSION.get(\n            embeded_vidoza_link, headers={\"User-Agent\": DEFAULT_USER_AGENT}\n        )\n        resp.raise_for_status()\n        html = resp.text\n\n        if \"sourcesCode:\" in html:\n            match = IMAGE_LINK_PATTERN.search(html)\n            if match:\n                return match.group(1)\n\n    except niquests.RequestException as err:\n        raise ValueError(f\"Failed to fetch Vidoza page: {err}\") from err\n\n\nif __name__ == \"__main__\":\n    # Tested on 2026/01/27 -> WORKING\n    # Example: https://videzz.net/embed-xneznizpludf.html\n\n    # logging.basicConfig(level=logging.DEBUG)\n\n    link = input(\"Enter Vidoza Link: \").strip()\n    if not link:\n        print(\"Error: No link provided\")\n        exit(1)\n\n    try:\n        print(\"=\" * 25)\n\n        direct_link = get_direct_link_from_vidoza(link)\n        print(\"Direct link:\", direct_link)\n        print(\"=\" * 25)\n\n        print(\"Preview image:\", get_preview_image_link_from_vidoza(link))\n        print(\"=\" * 25)\n\n        print(\n            f'mpv \"{direct_link}\" --http-header-fields=User-Agent: \"{DEFAULT_USER_AGENT}\"'\n        )\n\n        print(\"=\" * 25)\n    except ValueError as e:\n        print(\"Error:\", e)\n"
+    },
+    "readme": "# vidoza.py\n\nDate: 2026-05-28\n\n## Overview\n\n`vidoza.py` extracts the direct video stream and preview image URLs from Vidoza embed pages. It fetches the embed page HTML with a browser-like user agent, scans inline script content for the Vidoza player configuration, and returns the direct media link and preview thumbnail.\n\n## Requirements\n\n- Python 3.8+\n- `niquests` (used indirectly by the local `GLOBAL_SESSION` config)\n\nThe script expects a `GLOBAL_SESSION` object and `DEFAULT_USER_AGENT` from the local `aniworld.config` module.\n\n## What it does\n\n- Sends a GET request to the Vidoza embed URL with the correct `User-Agent` header.\n- Searches the embedded JavaScript for `sourcesCode:` and extracts the direct video source URL.\n- Extracts the preview image URL from the same script block when available.\n- Prints the direct stream URL, preview image, and an `mpv` playback command.\n\n## Usage\n\nRun the script and enter a Vidoza embed link when prompted:\n\n```powershell\npython vidoza.py\n```\n\nExample input:\n\n```text\nhttps://videzz.net/embed-xneznizpludf.html\n```\n\n## Results\n\nFrom the provided execution example, the script returned:\n\n- Direct link:\n  `https://str42.vidoza.net/vod/v2/nvl4jrfxiyfeieno3xhtxevanjm2vtcqcg3l3hupdgopsuku6hgw3or3tdkr3es4vq/v.mp4`\n- Preview image:\n  `https://str42.vidoza.net/i/04/08296/xneznizpludf.jpg?v=1779962996`\n- `mpv` command:\n  `mpv \"https://str42.vidoza.net/vod/v2/nvl4jrfxiyfeieno3xhtxevanjm2vtcqcg3l3hupdgopsuku6hgw3or3tdkr3es4vq/v.mp4\" --http-header-fields=User-Agent: \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36\"`\n\n## Notes\n\n- The script uses `GLOBAL_SESSION` from `aniworld.config` to manage requests consistently across the project.\n- If extraction fails, the page structure may have changed or the embed page may no longer expose the expected `sourcesCode:` block.\n- The direct stream URL is ready to use in standard media players or download tools.\n",
+    "history": [
+      {
+        "id": "h_1779963252056",
+        "action": "created",
+        "detail": "\"https://videzz.net/embed-xneznizpludf.html m3u8 link grabber\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T10:14:12.056Z"
+      }
+    ],
+    "createdAt": "2026-05-28T10:14:12.056Z",
+    "updatedAt": "2026-05-28T10:14:12.056Z"
+  },
+  {
     "id": "r_1779962890762_uq9fa",
     "name": "https://vidmoly.net/embed-zquo82b8dm1k.html  m3u8 direct link extractor",
     "category": "code",
