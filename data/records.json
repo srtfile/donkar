@@ -1,5 +1,34 @@
 [
   {
+    "id": "r_1779962415913_iq766",
+    "name": "https://streamta.site/e/1bZVvmXvZ4ueOvM  m3u8 link finder",
+    "category": "code",
+    "tags": [],
+    "urls": [
+      {
+        "label": "streamta.site",
+        "href": "https://streamta.site/e/1bZVvmXvZ4ueOvM"
+      }
+    ],
+    "info": "This is https://streamta.site/e/1bZVvmXvZ4ueOvM Mostly found in Primesrc.me",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport requests\n\nDEFAULT_URL = \"https://streamta.site/e/1bZVvmXvZ4ueOvM\"\n\nUA = \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\"\n\n_STR = re.compile(r\"\\s*(['\\\"])((?:\\\\.|(?!\\1).)*)\\1\\s*\")\n_PAREN_STR = re.compile(r\"\\s*\\(\\s*(['\\\"])((?:\\\\.|(?!\\1).)*)\\1\\s*\\)\\s*\")\n_SUBSTR = re.compile(r\"\\.substring\\(\\s*(\\d+)(?:\\s*,\\s*(\\d+))?\\s*\\)\")\n_PLUS = re.compile(r\"\\s*\\+\\s*\")\n\n\ndef _read_term(s: str, i: int) -> tuple[str, int] | None:\n    m = _STR.match(s, i)\n    if m:\n        return m.group(2), m.end()\n    m = _PAREN_STR.match(s, i)\n    if not m:\n        return None\n    lit = m.group(2)\n    j = m.end()\n    while True:\n        sm = _SUBSTR.match(s, j)\n        if not sm:\n            break\n        a = int(sm.group(1))\n        b = int(sm.group(2)) if sm.group(2) else None\n        lit = lit[a:b] if b is not None else lit[a:]\n        j = sm.end()\n    return lit, j\n\n\ndef _resolve_innerhtml(stmt: str) -> str | None:\n    out_parts: list[str] = []\n    i = 0\n    n = len(stmt)\n    while i < n:\n        term = _read_term(stmt, i)\n        if term is None:\n            return None\n        out_parts.append(term[0])\n        i = term[1]\n        if i >= n:\n            break\n        pm = _PLUS.match(stmt, i)\n        if not pm:\n            return None\n        i = pm.end()\n    return \"\".join(out_parts)\n\n\ndef extract_signed_get_video_candidates(html: str) -> list[str]:\n    seen: list[str] = []\n    for m in re.finditer(\n        r\"document\\.getElementById\\(\\s*['\\\"]([^'\\\"]+)['\\\"]\\s*\\)\\.innerHTML\\s*=\\s*([^;]+);\",\n        html,\n    ):\n        resolved = _resolve_innerhtml(m.group(2).strip())\n        if not resolved:\n            continue\n        if \"/get_video?id=\" not in resolved or \"token=\" not in resolved:\n            continue\n        if resolved.startswith(\"//\"):\n            resolved = \"https:\" + resolved\n        elif resolved.startswith(\"/\"):\n            resolved = \"https://streamta.site\" + resolved\n        if resolved not in seen:\n            seen.append(resolved)\n    if not seen:\n        raise RuntimeError(\"could not deobfuscate any /get_video URL from HTML\")\n    return seen\n\n\ndef get_direct_link(page_url: str = DEFAULT_URL) -> str:\n    s = requests.Session()\n    s.headers.update({\n        \"User-Agent\": UA,\n        \"Accept-Language\": \"en-US,en;q=0.9\",\n    })\n    r = s.get(page_url, timeout=20)\n    r.raise_for_status()\n\n    last_err = None\n    for signed in extract_signed_get_video_candidates(r.text):\n        try:\n            r2 = s.get(signed, headers={\"Referer\": page_url}, allow_redirects=False, timeout=20)\n        except requests.RequestException as e:\n            last_err = e\n            continue\n        if r2.status_code in (301, 302, 303, 307, 308) and \"Location\" in r2.headers:\n            return r2.headers[\"Location\"]\n        if r2.status_code == 200:\n            return signed\n        last_err = RuntimeError(f\"{r2.status_code} for {signed}\")\n    raise RuntimeError(f\"no candidate worked: {last_err}\")\n\n\nif __name__ == \"__main__\":\n    target = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    print(get_direct_link(target))\n"
+    },
+    "readme": "# streamta_extractor.py\n\nDate: 2026-05-28\n\n## Overview\n\n`streamta_extractor.py` extracts direct download URLs from StreamTa embed pages. It parses obfuscated JavaScript in the page HTML, reconstructs signed `/get_video` calls, and follows redirects to reveal the actual video location.\n\n## Requirements\n\n- Python 3.8+\n- `requests`\n\nInstall the dependency:\n\n```powershell\npip install requests\n```\n\n## What it does\n\n- Loads the StreamTa embed page and fetches the HTML.\n- Scans the page for `document.getElementById(...).innerHTML = ...` assignments.\n- Resolves concatenated string literals and substring expressions to reconstruct hidden video URLs.\n- Filters for signed `/get_video?id=...&token=...` candidates.\n- Attempts each candidate and returns the first redirect or direct URL that works.\n\n## Usage\n\nRun the script with a StreamTa embed URL, or use the default built-in example:\n\n```powershell\npython streamta_extractor.py https://streamta.site/e/1bZVvmXvZ4ueOvM\n```\n\nIf no URL is provided, the script uses the default `DEFAULT_URL`.\n\n## Notes\n\n- The extractor is designed to decode StreamTa's obfuscated inline HTML assignments rather than execute JavaScript.\n- It supports string concatenation and `.substring()` operations in the extracted JS expression.\n- The returned URL may be an actual redirect to the final media file, or a signed access URL used by the site.\n\n## Example\n\n```powershell\npython streamta_extractor.py\n```\n\nThis will use the default demo URL and print the resolved direct link.\n",
+    "history": [
+      {
+        "id": "h_1779962415913",
+        "action": "created",
+        "detail": "\"https://streamta.site/e/1bZVvmXvZ4ueOvM  m3u8 link finder\" created",
+        "icon": "✨",
+        "ts": "2026-05-28T10:00:15.913Z"
+      }
+    ],
+    "createdAt": "2026-05-28T10:00:15.913Z",
+    "updatedAt": "2026-05-28T10:00:15.913Z"
+  },
+  {
     "id": "r_1779962049960_hp54q",
     "name": "https://streamruby.com/embed-2lsz9uozaoaa.html m3u8 url finder",
     "category": "general",
