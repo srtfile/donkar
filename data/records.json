@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780066031155_p4lks",
+    "name": "https://streamimdb.me/embed/movie/1200545  m3u8 url extractor",
+    "category": "code",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "import re\nimport sys\nimport requests\n\nDEFAULT_URL = \"https://streamimdb.me/embed/movie/1200545\"\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"Accept-Language\": \"en-US,en;q=0.9\",\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n}\n\nsession = requests.Session()\nsession.headers.update(HEADERS)\n\n\ndef get_cloudnestra_rcp_url(embed_url):\n    r = session.get(embed_url)\n    r.raise_for_status()\n\n    # Full URL form\n    match = re.search(r'(https://cloudnestra\\.com/rcp/[^\\s\"\\'<]+)', r.text)\n    if match:\n        return match.group(1)\n\n    # Relative /rcp/ path — build full URL\n    match = re.search(r'[\"\\']?(/rcp/[A-Za-z0-9+/=_\\-]+)', r.text)\n    if match:\n        return \"https://cloudnestra.com\" + match.group(1)\n\n    raise ValueError(\"cloudnestra /rcp/ URL not found in embed page\")\n\n\ndef get_prorcp_url(rcp_url):\n    r = session.get(rcp_url, headers={\"Referer\": DEFAULT_URL})\n    r.raise_for_status()\n\n    # src: '/prorcp/...' or src=\"/prorcp/...\"\n    match = re.search(r\"\"\"src:\\s*['\"]?(/prorcp/[A-Za-z0-9+/=_\\-]+)\"\"\", r.text)\n    if not match:\n        match = re.search(r\"\"\"src=['\"]?(/prorcp/[A-Za-z0-9+/=_\\-]+)\"\"\", r.text)\n    if not match:\n        match = re.search(r\"\"\"(/prorcp/[A-Za-z0-9+/=_\\-]{20,})\"\"\", r.text)\n    if not match:\n        raise ValueError(\"prorcp path not found in rcp page\")\n\n    return \"https://cloudnestra.com\" + match.group(1)\n\n\ndef get_m3u8_url(prorcp_url):\n    r = session.get(prorcp_url, headers={\"Referer\": \"https://cloudnestra.com/\"})\n    r.raise_for_status()\n\n    # Playerjs file with {v5} placeholder\n    match = re.search(r'file:\\s*[\"\\']?(https://app2\\.\\{v5\\}/cdnstr/[^\"\\'>\\s]+\\.m3u8)', r.text)\n    if match:\n        return match.group(1).replace(\"{v5}\", \"putgate.org\")\n\n    # Already resolved putgate URL\n    match = re.search(r'(https://app2\\.putgate\\.org/cdnstr/[^\"\\'>\\s]+\\.m3u8)', r.text)\n    if match:\n        return match.group(1)\n\n    # Any m3u8 URL\n    match = re.search(r'(https?://[^\\s\"\\'<]+\\.m3u8)', r.text)\n    if match:\n        return match.group(1)\n\n    raise ValueError(\"m3u8 URL not found in prorcp page\")\n\n\ndef verify_m3u8(m3u8_url):\n    try:\n        r = session.get(m3u8_url, headers={\"Referer\": \"https://cloudnestra.com/\"}, timeout=10)\n        return r.status_code == 200 and (\"#EXTM3U\" in r.text or \"#EXT-X\" in r.text)\n    except Exception:\n        return False\n\n\ndef extract(embed_url=DEFAULT_URL):\n    print(f\"[*] Source: {embed_url}\")\n\n    rcp_url = get_cloudnestra_rcp_url(embed_url)\n    print(f\"[*] cloudnestra rcp: {rcp_url[:90]}...\")\n\n    prorcp_url = get_prorcp_url(rcp_url)\n    print(f\"[*] cloudnestra prorcp: {prorcp_url[:90]}...\")\n\n    m3u8_url = get_m3u8_url(prorcp_url)\n    print(f\"\\n[+] m3u8 URL:\\n{m3u8_url}\\n\")\n\n    ok = verify_m3u8(m3u8_url)\n    print(f\"[{'OK' if ok else 'WARN'}] Stream {'accessible' if ok else 'may be expired or geo-blocked'}\")\n\n    return m3u8_url\n\n\nif __name__ == \"__main__\":\n    url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    try:\n        result = extract(url)\n    except Exception as e:\n        print(f\"[!] Error: {e}\")\n        sys.exit(1)\n"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780066031155",
+        "action": "created",
+        "detail": "\"https://streamimdb.me/embed/movie/1200545  m3u8 url extractor\" created",
+        "icon": "✨",
+        "ts": "2026-05-29T14:47:11.155Z"
+      }
+    ],
+    "createdAt": "2026-05-29T14:47:11.155Z",
+    "updatedAt": "2026-05-29T14:47:11.155Z"
+  },
+  {
     "id": "r_1780056122912_7itzi",
     "name": "vixsrc.to M3U8 / Stream URL Extractor",
     "category": "general",
