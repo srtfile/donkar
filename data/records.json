@@ -542,7 +542,7 @@
         "href": "https://f16px.com/e/d9kw957siitu"
       }
     ],
-    "info": "this link https://f16px.com/e/d9kw957siitu possibley found indian movie sites",
+    "info": "this link https://f16px.com/e/d9kw957siitu possibley found indian movie sites https://actvid.watch/series/the-boys-57425/,",
     "code": {
       "lang": "python",
       "content": "import sys\nimport re\nimport json\nimport base64\nfrom urllib.parse import urlparse\nfrom playwright.sync_api import sync_playwright\n\nDEFAULT_URL = \"https://f16px.com/e/d9kw957siitu\"\n\nHEADERS = {\n    \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\",\n    \"accept-language\": \"en-US,en;q=0.9\",\n    \"dnt\": \"1\",\n    \"sec-ch-ua\": '\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"',\n    \"sec-ch-ua-mobile\": \"?0\",\n    \"sec-ch-ua-platform\": '\"Windows\"',\n}\n\nJS_INTERCEPT = \"\"\"\n() => {\n    const origFetch = window.fetch;\n    window.fetch = async function(...args) {\n        const response = await origFetch.apply(this, args);\n        const url = typeof args[0] === 'string' ? args[0] : args[0].url;\n        if (url && url.includes('/embed/playback')) {\n            const clone = response.clone();\n            clone.json().then(data => {\n                window.__playbackData = data;\n            }).catch(() => {});\n        }\n        return response;\n    };\n}\n\"\"\"\n\nJS_DECRYPT = \"\"\"\nasync () => {\n    const data = window.__playbackData;\n    if (!data || !data.playback) return null;\n    const pb = data.playback;\n    const keyParts = pb.key_parts;\n    const iv = pb.iv;\n    const payload = pb.payload;\n    const version = parseInt(pb.version || '1');\n\n    function b64urlToBytes(s) {\n        s = s.replace(/-/g, '+').replace(/_/g, '/');\n        while (s.length % 4) s += '=';\n        const bin = atob(s);\n        return new Uint8Array([...bin].map(c => c.charCodeAt(0)));\n    }\n\n    const keyBytes = new Uint8Array(32);\n    for (const part of keyParts) {\n        const partBytes = b64urlToBytes(part);\n        for (let i = 0; i < 32 && i < partBytes.length; i++) {\n            keyBytes[i] ^= partBytes[i];\n        }\n    }\n\n    const cryptoKey = await crypto.subtle.importKey(\n        'raw', keyBytes, { name: 'AES-GCM' }, false, ['decrypt']\n    );\n\n    const ivBytes = b64urlToBytes(iv);\n    const cipherBytes = b64urlToBytes(payload);\n\n    try {\n        const decrypted = await crypto.subtle.decrypt(\n            { name: 'AES-GCM', iv: ivBytes },\n            cryptoKey,\n            cipherBytes\n        );\n        return new TextDecoder().decode(decrypted);\n    } catch(e) {\n        return 'DECRYPT_ERROR: ' + e.message;\n    }\n}\n\"\"\"\n\n\ndef extract_video_id(url: str) -> str:\n    return url.rstrip(\"/\").split(\"/\")[-1]\n\n\ndef extract_m3u8(embed_url: str = DEFAULT_URL) -> list[str]:\n    m3u8_urls = []\n    video_id = extract_video_id(embed_url)\n\n    with sync_playwright() as p:\n        browser = p.chromium.launch(headless=True)\n        context = browser.new_context(\n            user_agent=HEADERS[\"user-agent\"],\n            extra_http_headers={k: v for k, v in HEADERS.items() if k != \"user-agent\"},\n        )\n        page = context.new_page()\n\n        page.add_init_script(JS_INTERCEPT)\n\n        def on_response(response):\n            url = response.url\n            if \".m3u8\" in url and url not in m3u8_urls:\n                m3u8_urls.append(url)\n                print(f\"[m3u8] {url}\")\n\n        page.on(\"response\", on_response)\n\n        print(f\"[*] Loading: {embed_url}\")\n        try:\n            page.goto(embed_url, wait_until=\"networkidle\", timeout=30000)\n        except Exception:\n            pass\n\n        page.wait_for_timeout(4000)\n\n        if not m3u8_urls:\n            print(\"[*] No m3u8 from network, attempting JS decryption of playback...\")\n            try:\n                decrypted = page.evaluate(JS_DECRYPT)\n                if decrypted and not decrypted.startswith(\"DECRYPT_ERROR\"):\n                    found = re.findall(r'https?://[^\\s\"\\'<>]+\\.m3u8[^\\s\"\\'<>]*', decrypted)\n                    for u in found:\n                        if u not in m3u8_urls:\n                            m3u8_urls.append(u)\n                            print(f\"[m3u8 decrypted] {u}\")\n                elif decrypted:\n                    print(f\"[!] Decryption failed: {decrypted}\")\n            except Exception as e:\n                print(f\"[!] JS eval error: {e}\")\n\n        if not m3u8_urls:\n            content = page.content()\n            found = re.findall(r'https?://[^\\s\"\\'<>]+\\.m3u8[^\\s\"\\'<>]*', content)\n            for u in found:\n                if u not in m3u8_urls:\n                    m3u8_urls.append(u)\n                    print(f\"[m3u8 html] {u}\")\n\n        browser.close()\n\n    master = [u for u in m3u8_urls if \"master\" in u]\n    others = [u for u in m3u8_urls if \"master\" not in u]\n    return master + others\n\n\ndef main():\n    url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL\n    results = extract_m3u8(url)\n\n    if results:\n        print(\"\\n=== Stream Links ===\")\n        for i, u in enumerate(results, 1):\n            print(f\"{i}. {u}\")\n    else:\n        print(\"[!] No stream links found.\")\n\n    return results\n\n\nif __name__ == \"__main__\":\n    main()\n"
@@ -555,10 +555,17 @@
         "detail": "\"https://f16px.com/e/d9kw957siitu   m3u8 direct link extractor\" created",
         "icon": "✨",
         "ts": "2026-05-27T14:29:20.712Z"
+      },
+      {
+        "id": "h_1780042268195",
+        "action": "updated",
+        "detail": "\"https://f16px.com/e/d9kw957siitu   m3u8 direct link extractor\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-29T08:11:08.194Z"
       }
     ],
     "createdAt": "2026-05-27T14:29:20.712Z",
-    "updatedAt": "2026-05-27T14:29:20.712Z"
+    "updatedAt": "2026-05-29T08:11:08.194Z"
   },
   {
     "id": "r_1779891453326_z6po7",
@@ -778,7 +785,7 @@
       "lang": "plaintext",
       "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1\nhttps://vidfast.pro/movie/tt6263850, https://vidfast.pro/tv/{id}/{season}/{episode}?autoPlay=true\nhttps://player.videasy.net/movie/299534, https://player.videasy.net/tv/show_id/season/episode\nhttps://primesrc.me/embed/tv?tmdb=32726&season=1&episode=1, https://primesrc.me/embed/movie?tmdb=123\nhttps://vidnest.fun/movie/[TMDB_ID], https://vidnest.fun/tv/[TMDB_ID]/[SEASON]/[EPISODE]\nhttps://vaplayer.ru/embed/movie/tt2948356, https://vaplayer.ru/embed/tv/205715/1/1\nThis domain only store or used to movies storage\n1.dood.watch\n2.voe.sx\n3.streamtape.com\n4.https://streamruby.com/embed-2lsz9uozaoaa.html"
     },
-    "readme": "https://player2.vidplus.pro/embed/movie/1439930  from https://ww2-fmovies.com/movie-details/\nhttps://www.vidsrc.wtf/1/movie/1439930?id=1439930&color=215fb3  from https://ww2-fmovies.com/movie-details/",
+    "readme": "https://player2.vidplus.pro/embed/movie/1439930  from https://ww2-fmovies.com/movie-details/\nhttps://www.vidsrc.wtf/1/movie/1439930?id=1439930&color=215fb3  from https://ww2-fmovies.com/movie-details/\nhttps://vidify.top/embed/movie/1439930",
     "history": [
       {
         "id": "h_1779879614583",
@@ -898,10 +905,17 @@
         "detail": "\"Movies sites api list\" updated",
         "icon": "✏️",
         "ts": "2026-05-29T08:06:53.682Z"
+      },
+      {
+        "id": "h_1780042056345",
+        "action": "updated",
+        "detail": "\"Movies sites api list\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-29T08:07:36.345Z"
       }
     ],
     "createdAt": "2026-05-27T11:00:14.582Z",
-    "updatedAt": "2026-05-29T08:06:53.682Z"
+    "updatedAt": "2026-05-29T08:07:36.345Z"
   },
   {
     "id": "r_1779871689458_watdy",
