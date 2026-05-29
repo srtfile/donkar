@@ -778,7 +778,7 @@
       "lang": "plaintext",
       "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1\nhttps://vidfast.pro/movie/tt6263850, https://vidfast.pro/tv/{id}/{season}/{episode}?autoPlay=true\nhttps://player.videasy.net/movie/299534, https://player.videasy.net/tv/show_id/season/episode\nhttps://primesrc.me/embed/tv?tmdb=32726&season=1&episode=1, https://primesrc.me/embed/movie?tmdb=123\nhttps://vidnest.fun/movie/[TMDB_ID], https://vidnest.fun/tv/[TMDB_ID]/[SEASON]/[EPISODE]\nhttps://vaplayer.ru/embed/movie/tt2948356, https://vaplayer.ru/embed/tv/205715/1/1\nThis domain only store or used to movies storage\n1.dood.watch\n2.voe.sx\n3.streamtape.com\n4.https://streamruby.com/embed-2lsz9uozaoaa.html"
     },
-    "readme": "",
+    "readme": "https://player2.vidplus.pro/embed/movie/1439930  from https://ww2-fmovies.com/movie-details/",
     "history": [
       {
         "id": "h_1779879614583",
@@ -884,10 +884,17 @@
         "detail": "\"Movies sites api list\" updated",
         "icon": "✏️",
         "ts": "2026-05-29T08:03:03.051Z"
+      },
+      {
+        "id": "h_1780041932717",
+        "action": "updated",
+        "detail": "\"Movies sites api list\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-29T08:05:32.717Z"
       }
     ],
     "createdAt": "2026-05-27T11:00:14.582Z",
-    "updatedAt": "2026-05-29T08:03:03.051Z"
+    "updatedAt": "2026-05-29T08:05:32.717Z"
   },
   {
     "id": "r_1779871689458_watdy",
