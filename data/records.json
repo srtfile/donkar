@@ -95,10 +95,17 @@
         "detail": "\"List of anime sites\" updated",
         "icon": "✏️",
         "ts": "2026-05-30T07:08:31.160Z"
+      },
+      {
+        "id": "h_1780125139917",
+        "action": "updated",
+        "detail": "\"List of anime sites\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-30T07:12:19.917Z"
       }
     ],
     "createdAt": "2026-05-30T06:09:41.570Z",
-    "updatedAt": "2026-05-30T07:08:31.160Z"
+    "updatedAt": "2026-05-30T07:12:19.917Z"
   },
   {
     "id": "r_1780076276393_56usi",
