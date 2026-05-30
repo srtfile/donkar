@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780121381571_9d0vp",
+    "name": "List of anime sites",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://anikototv.to/watch/akashic-records-of-bastard-magic-instructor-sv7tl/ep-12   it has the https://vidwish.live/stream/s-2/29099/sub?autostart=true,  https://megaplay.buzz/stream/s-3/29099/dub?autostart=true- its play directly on browser without iframe the magic is s-3, if s-2 it need to iframe",
+    "code": {
+      "lang": "plaintext",
+      "content": ""
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780121381572",
+        "action": "created",
+        "detail": "\"List of anime sites\" created",
+        "icon": "✨",
+        "ts": "2026-05-30T06:09:41.570Z"
+      }
+    ],
+    "createdAt": "2026-05-30T06:09:41.570Z",
+    "updatedAt": "2026-05-30T06:09:41.570Z"
+  },
+  {
     "id": "r_1780076276393_56usi",
     "name": "https://www.vidking.net/embed/tv/76479/5/8/  m3u8 finder",
     "category": "code",
