@@ -32,7 +32,7 @@
     "info": "",
     "code": {
       "lang": "plaintext",
-      "content": "https://fmhy.net/video"
+      "content": "https://fmhy.net/video\nhttps://everythingmoe.com/"
     },
     "readme": "",
     "history": [
@@ -42,10 +42,17 @@
         "detail": "\"info list websits\" created",
         "icon": "✨",
         "ts": "2026-05-30T08:44:58.271Z"
+      },
+      {
+        "id": "h_1780197608100",
+        "action": "updated",
+        "detail": "\"info list websits\" updated",
+        "icon": "✏️",
+        "ts": "2026-05-31T03:20:08.100Z"
       }
     ],
     "createdAt": "2026-05-30T08:44:58.271Z",
-    "updatedAt": "2026-05-30T08:44:58.271Z"
+    "updatedAt": "2026-05-31T03:20:08.100Z"
   },
   {
     "id": "r_1780121381571_9d0vp",
