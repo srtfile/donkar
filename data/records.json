@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780242270129_5hfzw",
+    "name": "kiwi api solver by id",
+    "category": "code",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "\"\"\"\nTest if kwik.cx/e/ is accessible without Cloudflare.\nThe /e/ page contains the m3u8 hash directly in obfuscated JS.\nNo CF challenge, no POST needed.\n\"\"\"\nfrom curl_cffi import requests as cffi_requests\nimport re\n\nUA = \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36\"\n\n# Known /e/ IDs from the capture\ne_ids = {\n    \"sub_360p\":  \"rTbUBmkXBD1p\",\n    \"sub_720p\":  \"L1oMlMNQF6BH\",\n    \"sub_1080p\": \"7aFgAnHn8Vrs\",\n    \"dub_360p\":  \"T1gM9y4lA0P8\",\n    \"dub_720p\":  \"CCVrlf0gYtBE\",\n    \"dub_1080p\": \"7DF5CVGCkQjb\",\n}\n\nfor name, eid in e_ids.items():\n    url = f\"https://kwik.cx/e/{eid}\"\n    r = cffi_requests.get(url, headers={\"User-Agent\": UA, \"Referer\": \"https://kwik.cx/\"}, \n                          impersonate=\"chrome131\", verify=False, timeout=15)\n    \n    # Extract hash from the obfuscated JS\n    # The hash appears at the end of the eval string before 'uwu.m3u8'\n    hash_match = re.search(r'([a-f0-9]{60,})\\|06\\|stream\\|top\\|uwucdn\\|vault\\|https', r.text)\n    \n    print(f\"{name}: status={r.status_code}, CF={'Just a moment' in r.text}\")\n    if hash_match:\n        h = hash_match.group(1)\n        print(f\"  m3u8: https://vault-11.uwucdn.top/stream/11/06/{h}/uwu.m3u8\")\n        print(f\"  mp4:  https://vault-11.uwucdn.top/mp4/11/06/{h}\")\n    else:\n        print(f\"  hash not found. Body[:200]: {r.text[:200]}\")\n    print()\n"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780242270129",
+        "action": "created",
+        "detail": "\"kiwi api solver by id\" created",
+        "icon": "✨",
+        "ts": "2026-05-31T15:44:30.127Z"
+      }
+    ],
+    "createdAt": "2026-05-31T15:44:30.127Z",
+    "updatedAt": "2026-05-31T15:44:30.127Z"
+  },
+  {
     "id": "r_1780208563424_koh70",
     "name": "anikototv. to anime site scraper version 3 with episode select capabiltiy and als mal id capability",
     "category": "code",
