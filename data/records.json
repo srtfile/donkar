@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780340545690_gfjnq",
+    "name": "my anime and movies .json database urls list",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://raw.githubusercontent.com/srtfile/alist/main/index.json",
+    "code": {
+      "lang": "plaintext",
+      "content": ""
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780340545690",
+        "action": "created",
+        "detail": "\"my anime and movies .json database urls list\" created",
+        "icon": "✨",
+        "ts": "2026-06-01T19:02:25.690Z"
+      }
+    ],
+    "createdAt": "2026-06-01T19:02:25.690Z",
+    "updatedAt": "2026-06-01T19:02:25.690Z"
+  },
+  {
     "id": "r_1780291288698_alq6n",
     "name": "https://vibeplayer.site/a9bc97b7092b5bc1  m3u8 extractor",
     "category": "general",
