@@ -5,7 +5,7 @@
     "category": "general",
     "tags": [],
     "urls": [],
-    "info": "https://raw.githubusercontent.com/srtfile/alist/main/index.json\nhttps://github.com/himanshu8443/8StreamApi/tree/main",
+    "info": "https://raw.githubusercontent.com/srtfile/alist/main/index.json\nhttps://github.com/himanshu8443/8StreamApi/tree/main\nhttps://github.com/Zayrix-bit/AnimeKai-API",
     "code": {
       "lang": "plaintext",
       "content": ""
@@ -25,10 +25,17 @@
         "detail": "\"my anime and movies .json database urls list\" updated",
         "icon": "✏️",
         "ts": "2026-06-01T19:09:01.125Z"
+      },
+      {
+        "id": "h_1780341206265",
+        "action": "updated",
+        "detail": "\"my anime and movies .json database urls list\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-01T19:13:26.264Z"
       }
     ],
     "createdAt": "2026-06-01T19:02:25.690Z",
-    "updatedAt": "2026-06-01T19:09:01.125Z"
+    "updatedAt": "2026-06-01T19:13:26.264Z"
   },
   {
     "id": "r_1780291288698_alq6n",
