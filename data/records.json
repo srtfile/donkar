@@ -5,7 +5,7 @@
     "category": "general",
     "tags": [],
     "urls": [],
-    "info": "",
+    "info": "https://www.youtube.com/watch?v=xAliCZE0nxQ",
     "code": {
       "lang": "plaintext",
       "content": "https://youtu.be/Yb4rzMNPsOc"
@@ -18,10 +18,17 @@
         "detail": "\"lisft of info site which is about ai\" created",
         "icon": "✨",
         "ts": "2026-06-03T08:40:59.279Z"
+      },
+      {
+        "id": "h_1780477465078",
+        "action": "updated",
+        "detail": "\"lisft of info site which is about ai\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-03T09:04:25.078Z"
       }
     ],
     "createdAt": "2026-06-03T08:40:59.279Z",
-    "updatedAt": "2026-06-03T08:40:59.279Z"
+    "updatedAt": "2026-06-03T09:04:25.078Z"
   },
   {
     "id": "r_1780391173111_ihl1u",
