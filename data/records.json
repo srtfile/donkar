@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780476059280_n0053",
+    "name": "lisft of info site which is about ai",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "https://youtu.be/Yb4rzMNPsOc"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780476059280",
+        "action": "created",
+        "detail": "\"lisft of info site which is about ai\" created",
+        "icon": "✨",
+        "ts": "2026-06-03T08:40:59.279Z"
+      }
+    ],
+    "createdAt": "2026-06-03T08:40:59.279Z",
+    "updatedAt": "2026-06-03T08:40:59.279Z"
+  },
+  {
     "id": "r_1780391173111_ihl1u",
     "name": "Daily Schudule bot for hianime.ad",
     "category": "general",
