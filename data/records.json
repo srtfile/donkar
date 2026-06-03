@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780487403593_r7nob",
+    "name": "URLS EXTRACTOR FROM  https://raw.githubusercontent.com/srtfile/alist/main/index.json",
+    "category": "code",
+    "tags": [],
+    "urls": [],
+    "info": "    if \"/anime/\" in anime_url:\n        watch_url = anime_url.replace(\"/anime/\", \"/watch/\").rstrip(\"/\")\n        watch_url += \"/ep-1\"\n        urls.append(watch_url)",
+    "code": {
+      "lang": "python",
+      "content": "import requests\n\nINDEX_URL = \"https://raw.githubusercontent.com/srtfile/alist/main/index.json\"\n\ndata = requests.get(INDEX_URL, timeout=30).json()\n\nurls = []\n\nfor item in data:\n    anime_url = item.get(\"anime_url\", \"\").strip()\n\n    if \"/anime/\" in anime_url:\n        watch_url = anime_url.replace(\"/anime/\", \"/watch/\").rstrip(\"/\")\n        watch_url += \"/ep-1\"\n        urls.append(watch_url)\n\nwith open(\"watch_urls.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"\\n\".join(urls))\n\nprint(f\"Saved {len(urls)} URLs to watch_urls.txt\")"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780487403593",
+        "action": "created",
+        "detail": "\"URLS EXTRACTOR FROM  https://raw.githubusercontent.com/srtfile/alist/main/index.json\" created",
+        "icon": "✨",
+        "ts": "2026-06-03T11:50:03.593Z"
+      }
+    ],
+    "createdAt": "2026-06-03T11:50:03.593Z",
+    "updatedAt": "2026-06-03T11:50:03.593Z"
+  },
+  {
     "id": "r_1780476059280_n0053",
     "name": "lisft of info site which is about ai",
     "category": "general",
