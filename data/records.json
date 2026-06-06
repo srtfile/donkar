@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780759839306_9szh7",
+    "name": "primesrc extractro by using nodrive",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "import asyncio\nimport json\nimport warnings\nimport sys\n\n# Suppress the event loop warnings on Windows\nwarnings.filterwarnings(\"ignore\", category=ResourceWarning)\n\nasync def bypass_cloudflare_nodriver():\n    \"\"\"\n    Bypass Cloudflare protection using nodriver (Undetected Chrome)\n    \"\"\"\n    print(\"=\"*60)\n    print(\"CLOUDFLARE BYPASS - NODRIVER METHOD\")\n    print(\"=\"*60)\n    \n    browser = None\n    \n    try:\n        import nodriver as uc\n        \n        api_url = \"https://primesrc.me/api/v1/l?key=K8Jau\"\n        \n        print(f\"\\n🎯 Target URL: {api_url}\")\n        print(\"🔄 Starting undetected Chrome browser...\")\n        \n        # Start browser with headless=False\n        browser = await uc.start(\n            headless=False,\n            browser_args=[\n                '--disable-blink-features=AutomationControlled',\n                '--window-size=1280,800',\n            ]\n        )\n        \n        # Navigate to the API URL\n        print(f\"📄 Navigating to API...\")\n        page = await browser.get(api_url)\n        \n        # Wait for Cloudflare challenge to resolve\n        print(\"⏳ Waiting for Cloudflare challenge to resolve...\")\n        print(\"   (This may take 10-30 seconds)\")\n        \n        for i in range(60):\n            await page.wait(1)\n            \n            try:\n                title = await page.evaluate(\"document.title\")\n                \n                if 'Just a moment' not in title and 'Verify' not in title:\n                    print(f\"   ✅ Challenge solved after {i+1} seconds!\")\n                    await page.wait(2)\n                    break\n                    \n                if i % 10 == 0 and i > 0:\n                    print(f\"   Still waiting... {i}s\")\n                    \n            except:\n                pass\n        \n        # Extract JSON data\n        print(\"🔍 Extracting data...\")\n        \n        # Get inner text\n        text = await page.evaluate(\"document.body.innerText\")\n        data = json.loads(text)\n        \n        print(\"\\n✅ SUCCESS!\")\n        print(\"=\"*60)\n        print(json.dumps(data, indent=2))\n        print(\"=\"*60)\n        \n        print(f\"\\n📋 Extracted Information:\")\n        print(f\"   Link: {data.get('link', 'N/A')}\")\n        print(f\"   Host: {data.get('host', 'N/A')}\")\n        print(f\"   Host ID: {data.get('host_id', 'N/A')}\")\n        \n        return data\n        \n    except json.JSONDecodeError:\n        print(\"   ❌ Could not parse JSON response\")\n        return None\n    except ImportError:\n        print(\"\\n❌ nodriver is not installed!\")\n        print(\"Install it with: pip install nodriver\")\n        return None\n    except Exception as e:\n        print(f\"\\n❌ Error: {e}\")\n        return None\n    finally:\n        # Proper cleanup\n        if browser:\n            try:\n                print(\"\\n🔒 Closing browser...\")\n                browser.stop()\n                # Give it a moment to clean up\n                await asyncio.sleep(1)\n            except:\n                pass\n\n\nasync def main():\n    \"\"\"Main function\"\"\"\n    print(\"\\n🔧 CLOUDFLARE BYPASS TOOL\")\n    print(\"Using nodriver (Undetected Chrome)\\n\")\n    \n    result = await bypass_cloudflare_nodriver()\n    \n    if result:\n        print(\"\\n\" + \"=\"*60)\n        print(\"✅ FINAL RESULT:\")\n        print(\"=\"*60)\n        print(f\"Video Link: {result.get('link', 'N/A')}\")\n        print(f\"Host: {result.get('host', 'N/A')}\")\n        print(f\"Host ID: {result.get('host_id', 'N/A')}\")\n    else:\n        print(\"\\n❌ Failed to retrieve data\")\n\n\nif __name__ == \"__main__\":\n    # Run with proper event loop handling\n    try:\n        asyncio.run(main())\n    except KeyboardInterrupt:\n        print(\"\\n\\n⚠️ Interrupted by user\")\n    except Exception as e:\n        print(f\"\\n❌ Unexpected error: {e}\")\n    \n    # Force clean exit\n    sys.exit(0)"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780759839306",
+        "action": "created",
+        "detail": "\"primesrc extractro by using nodrive\" created",
+        "icon": "✨",
+        "ts": "2026-06-06T15:30:39.305Z"
+      }
+    ],
+    "createdAt": "2026-06-06T15:30:39.305Z",
+    "updatedAt": "2026-06-06T15:30:39.305Z"
+  },
+  {
     "id": "r_1780743624097_g3ttn",
     "name": "cloudflare bypassing",
     "category": "general",
