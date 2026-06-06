@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780725927825_zsel4",
+    "name": "cards list",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "Live | 5154620022096521|07|2031|817 | [BIN: 🇺🇸 - mastercard - prepaid] | Charge OK. [GATE_01@chkr.cc]\nLive | 5154620022685596|05|2029|676 | [BIN: 🇺🇸 - mastercard - prepaid] | Charge OK. [GATE_01@chkr.cc]"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780725927825",
+        "action": "created",
+        "detail": "\"cards list\" created",
+        "icon": "✨",
+        "ts": "2026-06-06T06:05:27.824Z"
+      }
+    ],
+    "createdAt": "2026-06-06T06:05:27.824Z",
+    "updatedAt": "2026-06-06T06:05:27.824Z"
+  },
+  {
     "id": "r_1780724297322_p7o7i",
     "name": "some facebook profiles",
     "category": "general",
