@@ -8,7 +8,7 @@
     "info": "",
     "code": {
       "lang": "plaintext",
-      "content": "https://doxy1.andruilsyestems.workers.dev/ =https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/doxy1/production\nhttps://donkar.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/donkar/production\nhttps://frosty-queen-c06f.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/frosty-queen-c06f/production/deployments\nhttps://doxy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/doxy/production/deployments"
+      "content": "https://doxy1.andruilsyestems.workers.dev/ =https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/doxy1/production\nhttps://donkar.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/donkar/production\nhttps://frosty-queen-c06f.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/frosty-queen-c06f/production/deployments\nhttps://doxy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/doxy/production/deployments\nhttps://vibplayer.andruilsyestems.workers.dev/ https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/vibplayer/production\nhttps://foxy-doxy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/foxy-doxy/production\nhttps://fuckboy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/fuckboy/production"
     },
     "readme": "",
     "history": [
@@ -18,10 +18,17 @@
         "detail": "\"cloudflare and render proxy worker list\" created",
         "icon": "✨",
         "ts": "2026-06-08T17:07:25.848Z"
+      },
+      {
+        "id": "h_1780938722054",
+        "action": "updated",
+        "detail": "\"cloudflare and render proxy worker list\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-08T17:12:02.054Z"
       }
     ],
     "createdAt": "2026-06-08T17:07:25.848Z",
-    "updatedAt": "2026-06-08T17:07:25.848Z"
+    "updatedAt": "2026-06-08T17:12:02.054Z"
   },
   {
     "id": "r_1780935671782_2dpmp",
