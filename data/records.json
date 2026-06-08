@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780900203967_qcmd0",
+    "name": "proxy stream list and code and infos",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://github.com/Danushka-Madushan/stream-proxy-worker",
+    "code": {
+      "lang": "plaintext",
+      "content": ""
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780900203967",
+        "action": "created",
+        "detail": "\"proxy stream list and code and infos\" created",
+        "icon": "✨",
+        "ts": "2026-06-08T06:30:03.967Z"
+      }
+    ],
+    "createdAt": "2026-06-08T06:30:03.967Z",
+    "updatedAt": "2026-06-08T06:30:03.967Z"
+  },
+  {
     "id": "r_1780842736975_4btu9",
     "name": "https://megaplalyermoy.onrender.com/",
     "category": "general",
