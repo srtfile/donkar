@@ -8,7 +8,7 @@
     "info": "",
     "code": {
       "lang": "plaintext",
-      "content": "https://doxy1.andruilsyestems.workers.dev/ =https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/doxy1/production\nhttps://donkar.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/donkar/production\nhttps://frosty-queen-c06f.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/frosty-queen-c06f/production/deployments\nhttps://doxy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/doxy/production/deployments\nhttps://fuckboy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/fuckboy/production\nhttps://silent-shadow-7e8a.khantara922.workers.dev/\n"
+      "content": "https://doxy1.andruilsyestems.workers.dev/ =https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/doxy1/production\nhttps://donkar.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/donkar/production\nhttps://frosty-queen-c06f.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/frosty-queen-c06f/production/deployments\nhttps://doxy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/view/doxy/production/deployments\nhttps://fuckboy.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/fuckboy/production\nhttps://vibplayer.andruilsyestems.workers.dev/ = https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/vibplayer/production\nhttps://foxy-doxy.andruilsyestems.workers.dev/ =https://dash.cloudflare.com/373d4700372448976f33ead27096f82f/workers/services/edit/foxy-doxy/production\n\n\n\nhttps://silent-shadow-7e8a.khantara922.workers.dev/\n"
     },
     "readme": "",
     "history": [
@@ -39,10 +39,17 @@
         "detail": "\"cloudflare and render proxy worker list\" updated",
         "icon": "✏️",
         "ts": "2026-06-08T17:14:32.269Z"
+      },
+      {
+        "id": "h_1780939086221",
+        "action": "updated",
+        "detail": "\"cloudflare and render proxy worker list\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-08T17:18:06.220Z"
       }
     ],
     "createdAt": "2026-06-08T17:07:25.848Z",
-    "updatedAt": "2026-06-08T17:14:32.269Z"
+    "updatedAt": "2026-06-08T17:18:06.220Z"
   },
   {
     "id": "r_1780935671782_2dpmp",
