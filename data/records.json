@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780935671782_2dpmp",
+    "name": "devtool disble script",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "https://theajack.github.io/disable-devtool/404.html?h=cinemaos.tech"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780935671783",
+        "action": "created",
+        "detail": "\"devtool disble script\" created",
+        "icon": "✨",
+        "ts": "2026-06-08T16:21:11.782Z"
+      }
+    ],
+    "createdAt": "2026-06-08T16:21:11.782Z",
+    "updatedAt": "2026-06-08T16:21:11.782Z"
+  },
+  {
     "id": "r_1780900203967_qcmd0",
     "name": "proxy stream list and code and infos",
     "category": "general",
