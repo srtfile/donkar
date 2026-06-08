@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1780947344786_bqwyj",
+    "name": "replit web apps list",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "https://zip-repl--hablasharif.replit.app/  which is stylegangnam emgail which is m3u8 playr with movie player"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1780947344786",
+        "action": "created",
+        "detail": "\"replit web apps list\" created",
+        "icon": "✨",
+        "ts": "2026-06-08T19:35:44.785Z"
+      }
+    ],
+    "createdAt": "2026-06-08T19:35:44.785Z",
+    "updatedAt": "2026-06-08T19:35:44.785Z"
+  },
+  {
     "id": "r_1780938445850_h02i7",
     "name": "cloudflare and render proxy worker list",
     "category": "general",
