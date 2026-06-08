@@ -29,9 +29,9 @@
     "category": "general",
     "tags": [],
     "urls": [],
-    "info": "it is found in srtfile and it github also deploayed from srtfile github link",
+    "info": "it is found in srtfile and it github also deploayed from srtfile github link\nhttps://megaplayversion2.onrender.com/  its also srtfile and reder account in the srtfile",
     "code": {
-      "lang": "plaintext",
+      "lang": "python",
       "content": ""
     },
     "readme": "",
@@ -42,10 +42,17 @@
         "detail": "\"https://megaplalyermoy.onrender.com/\" created",
         "icon": "✨",
         "ts": "2026-06-07T14:32:16.974Z"
+      },
+      {
+        "id": "h_1780909683875",
+        "action": "updated",
+        "detail": "\"https://megaplalyermoy.onrender.com/\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-08T09:08:03.874Z"
       }
     ],
     "createdAt": "2026-06-07T14:32:16.974Z",
-    "updatedAt": "2026-06-07T14:32:16.974Z"
+    "updatedAt": "2026-06-08T09:08:03.874Z"
   },
   {
     "id": "r_1780827503457_bs5a9",
