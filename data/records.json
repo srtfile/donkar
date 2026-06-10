@@ -8,7 +8,7 @@
     "info": "",
     "code": {
       "lang": "python",
-      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json \nhttps://srtfile.github.io/doss/\nhttps://rivestream.ru/download?type=movie&id=603"
+      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json \nhttps://srtfile.github.io/doss/\nhttps://rivestream.ru/download?type=movie&id=603\nhttps://anime-stream-finder.onrender.com/\nhttps://dot-gbqc.onrender.com/"
     },
     "readme": "",
     "history": [
@@ -25,10 +25,17 @@
         "detail": "\"all media and video file extractor\" updated",
         "icon": "✏️",
         "ts": "2026-06-10T12:00:10.385Z"
+      },
+      {
+        "id": "h_1781093100130",
+        "action": "updated",
+        "detail": "\"all media and video file extractor\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-10T12:05:00.130Z"
       }
     ],
     "createdAt": "2026-06-10T11:58:54.968Z",
-    "updatedAt": "2026-06-10T12:00:10.385Z"
+    "updatedAt": "2026-06-10T12:05:00.130Z"
   },
   {
     "id": "r_1781035798767_mgt6j",
