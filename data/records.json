@@ -1,14 +1,14 @@
 [
   {
     "id": "r_1781092734975_yqqxb",
-    "name": "torabuilder",
+    "name": "all media and video file extractor",
     "category": "general",
     "tags": [],
     "urls": [],
     "info": "",
     "code": {
       "lang": "python",
-      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json tolo"
+      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json \nhttps://srtfile.github.io/doss/\nhttps://rivestream.ru/download?type=movie&id=603"
     },
     "readme": "",
     "history": [
@@ -18,10 +18,17 @@
         "detail": "\"torabuilder\" created",
         "icon": "✨",
         "ts": "2026-06-10T11:58:54.968Z"
+      },
+      {
+        "id": "h_1781092810385",
+        "action": "updated",
+        "detail": "\"all media and video file extractor\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-10T12:00:10.385Z"
       }
     ],
     "createdAt": "2026-06-10T11:58:54.968Z",
-    "updatedAt": "2026-06-10T11:58:54.968Z"
+    "updatedAt": "2026-06-10T12:00:10.385Z"
   },
   {
     "id": "r_1781035798767_mgt6j",
