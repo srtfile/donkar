@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781092734975_yqqxb",
+    "name": "torabuilder",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json tolo"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781092734976",
+        "action": "created",
+        "detail": "\"torabuilder\" created",
+        "icon": "✨",
+        "ts": "2026-06-10T11:58:54.968Z"
+      }
+    ],
+    "createdAt": "2026-06-10T11:58:54.968Z",
+    "updatedAt": "2026-06-10T11:58:54.968Z"
+  },
+  {
     "id": "r_1781035798767_mgt6j",
     "name": "check this movies sites within 12 june",
     "category": "general",
