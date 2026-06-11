@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781193879143_4r91m",
+    "name": "chatgpt or other ai api or m3u8 extractor command",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "Please deeply analyze the complete captured web traffic dataset in the current project folder, including all files, folders, and subfolders.\n\nThe dataset may contain files such as:\n- full request/response captures\n- JSONL traffic logs\n- request headers\n- cookies\n- auth tokens\n- API endpoint lists\n- XHR/fetch requests\n- XHR responses\n- HTML pages\n- JavaScript files\n- media URL lists\n- WebSocket frames\n- referrer chains\n- crypto or obfuscation findings\n\nYour task is to understand the full technical flow of the target website or embed system and identify how it eventually reaches the final usable media/resource URLs.\n\nThe final target URLs may include:\n- `.m3u8` HLS playlists\n- `.mpd` DASH manifests\n- `.mp4` video files\n- iframe player URLs\n- signed media URLs\n- API-generated source URLs\n- other final resource URLs used by the browser\n\nBuild a local testing API in Python that can reproduce this resolution flow as much as possible.\n\nThe API should accept an input URL from the same type of website or embed system, for example:\n\nhttps://example.com/embed?id=123\nhttps://example.com/?video_id=123&type=movie\nhttps://example.com/player/abc123\n\nThe goal is to resolve that input URL into the final media/resource URLs discovered from the traffic flow.\n\nImplementation requirements:\n\n1. Analyze the capture data first.\n   - Inspect every relevant file and subfolder.\n   - Identify redirects, request chains, referrers, headers, cookies, tokens, source APIs, iframe pages, player scripts, and media requests.\n   - Determine which steps are required to go from the original input URL to the final media/resource URL.\n\n2. Prefer a raw Python solution first.\n   - Use Python HTTP requests or standard networking.\n   - Follow redirects when needed.\n   - Preserve important headers, referers, cookies, and tokens.\n   - Parse HTML, JSON, JavaScript snippets, iframe URLs, and API responses.\n   - Extract final URLs such as `.m3u8`, `.mpd`, `.mp4`, iframe or embeded urls or other stream/resource links.\n\n3. Add fallback logic when raw Python cannot complete the flow.\n   - If the site depends on JavaScript execution, dynamic browser APIs, anti-bot pages, or complex runtime behavior, add an advanced Python fallback.\n   - The fallback may use browser automation such as Playwright.\n   - It should observe network traffic and collect final media/resource URLs.\n   - It should not bypass CAPTCHA, DRM, authentication, paywalls, or access controls.\n\n4. Create a clean local testing API.\n   - The API should expose a `/resolve` endpoint.\n   - It should accept an input URL as a query parameter.\n   - It should return structured JSON with:\n     - original input URL\n     - resolved redirect URL\n     - discovered tokens or IDs\n     - source/server list if available\n     - iframe/player URLs\n     - final media/resource URLs\n     - request steps followed\n     - errors or blocked status\n\n5. Also support command-line usage.\n   - The script should be runnable directly from terminal.\n   - It should accept a URL argument.\n   - It may include a default test URL inside the code.\n   - It should print the resolved result as JSON or other comfortable formats.\n\n6. Make the code reusable.\n   - Do not hardcode only one captured URL unless it is used as a default example.\n   - Write the parser so it can work with similar projects and similar capture structures.\n   - Keep extraction patterns flexible for different embed/player/API flows.\n   - Use clear function names and structured output.\n\n7. Include safe and honest behavior.\n   - If the live site blocks raw Python because it requires a real browser, CAPTCHA, login, DRM, or protected access, return a clear status explaining that.\n   - Do not attempt to bypass protections. but find all of this vulnerability and test it and tell the users\n   - Use saved capture data only as a fallback for analysis/testing, and do not incorrectly reuse captured streams for unrelated input IDs.\n\n8. Name the generated Python file clearly, for example:\n\nweb_dev_learing_testing.py\n\nAfter implementation, test the script with available captured examples and explain:\n- what flow was discovered\n- how to run the CLI mode\n- how to start the API server\n- how to call the `/resolve` endpoint\n- what limitations remain"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781193879143",
+        "action": "created",
+        "detail": "\"chatgpt or other ai api or m3u8 extractor command\" created",
+        "icon": "✨",
+        "ts": "2026-06-11T16:04:39.143Z"
+      }
+    ],
+    "createdAt": "2026-06-11T16:04:39.143Z",
+    "updatedAt": "2026-06-11T16:04:39.143Z"
+  },
+  {
     "id": "r_1781193004567_zu554",
     "name": "Chatgpt api or m3u8 extractor command",
     "category": "general",
