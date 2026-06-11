@@ -8,7 +8,7 @@
     "info": "",
     "code": {
       "lang": "python",
-      "content": "https://github.com/smy778/EncDecEndpoints/blob/main/samples/vidfast.py"
+      "content": "https://github.com/smy778/EncDecEndpoints/blob/main/samples/vidfast.py\nhttps://www.youtube.com/watch?v=8XZyjp8uTJk"
     },
     "readme": "",
     "history": [
@@ -18,10 +18,17 @@
         "detail": "\"working media extractors list\" created",
         "icon": "✨",
         "ts": "2026-06-11T11:53:53.060Z"
+      },
+      {
+        "id": "h_1781179717444",
+        "action": "updated",
+        "detail": "\"working media extractors list\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-11T12:08:37.444Z"
       }
     ],
     "createdAt": "2026-06-11T11:53:53.060Z",
-    "updatedAt": "2026-06-11T11:53:53.060Z"
+    "updatedAt": "2026-06-11T12:08:37.444Z"
   },
   {
     "id": "r_1781178503351_9rrab",
