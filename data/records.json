@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781193004567_zu554",
+    "name": "Chatgpt api or m3u8 extractor command",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "Please deeply analyze all captured data in this folder, including every subfolder and file such as JSON logs, HTML pages, JavaScript files, XHR responses, cookies, headers, media URLs, and full capture records.\n\nYour main goal is to understand the complete request flow and discover how the site reaches the final playable streaming URLs. These final URLs are usually `.m3u8` HLS playlist links, but they may also be other streaming formats such as `.mp4`, `.mpd`, or iframe-based player URLs.\n\nAfter analyzing the data, create a local testing API in Python named:\n\nweb_dev_learing_testing.py\n\nThe API should accept input URLs such as:\n\nhttps://multiembed.mov/?video_id=280&tmdb=1\nhttps://multiembed.mov/?video_id=218&tmdb=1\n\nand also support other similar `video_id` values.\n\nThe purpose of this API is to resolve the input embed URL into the last/final streaming URL whenever possible.\n\nImplementation requirements:\n\n1. First, inspect and analyze the saved capture data.\n   - Read all folders and subfolders.\n   - Identify redirects, API endpoints, XHR calls, player pages, iframe URLs, tokens, cookies, request headers, and media playlist URLs.\n   - Understand the chain from `multiembed.mov` to the final player or stream URL.\n\n2. First try a raw Python implementation.\n   - Use normal Python HTTP requests or standard library networking.\n   - Follow redirects.\n   - Extract tokens and parameters.\n   - Call discovered endpoints such as source-list APIs or player endpoints.\n   - Parse HTML/JavaScript responses to find `.m3u8`, `.mp4`, `.mpd`, or iframe URLs.\n\n3. If raw Python is not enough because of JavaScript execution, Cloudflare, CAPTCHA, browser-only behavior, or dynamic player logic, then add an advanced Python fallback.\n   - The fallback may use a browser automation approach such as Playwright.\n   - It should observe network requests and collect final media URLs.\n   - It should not bypass CAPTCHA, DRM, paywalls, or access restrictions.\n\n4. The final Python file should expose a simple local testing API.\n   - Example endpoint:\n     `/resolve?url=<input_embed_url>`\n   - It should return JSON containing:\n     - input URL\n     - resolved redirect/play URL\n     - discovered source/server list\n     - iframe URLs\n     - final stream URLs\n     - `.m3u8` playlist URLs\n     - errors or blocked status if raw Python cannot complete\n\n5. The script should also support direct command-line testing.\n   - If no URL is provided, it should use a default test URL inside the code.\n   - Example default:\n     `https://multiembed.mov/?video_id=280&tmdb=1`\n\n6. The script should be named exactly:\n\nweb_dev_learing_testing.py\n\nPlease analyze everything carefully, build the API, test it with the captured data, and explain how to run it."
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781193004567",
+        "action": "created",
+        "detail": "\"Chatgpt api or m3u8 extractor command\" created",
+        "icon": "✨",
+        "ts": "2026-06-11T15:50:04.566Z"
+      }
+    ],
+    "createdAt": "2026-06-11T15:50:04.566Z",
+    "updatedAt": "2026-06-11T15:50:04.566Z"
+  },
+  {
     "id": "r_1781192564738_dit9d",
     "name": "multiembed .mov or streamingnow.mov are both host extractor",
     "category": "general",
