@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781194298560_gk0ea",
+    "name": "ONly for chatgpt ai m3u8 or api extractton tricky command",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "Security and vulnerability analysis requirements:\n\nWhile analyzing the captured traffic and building the local testing API, also perform a defensive security review of the observed flow.\n\nThe goal is to identify possible weaknesses, misconfigurations, or risky behaviors in the captured system, but only in a legal and authorized testing context.\n\nImportant restrictions:\n- Do not bypass CAPTCHA, DRM, authentication, paywalls, rate limits, signed URL protections, or access controls.\n- Do not exploit third-party systems.\n- Do not perform destructive or intrusive testing.\n- Do not attack live services without explicit authorization.\n- Only test vulnerabilities against local captured data, local mock endpoints, or systems the user owns or is authorized to test.\n\nVulnerability analysis should include:\n\n1. Passive analysis of captured data.\n   - Inspect request/response headers.\n   - Check cookies for missing `HttpOnly`, `Secure`, or `SameSite`.\n   - Look for exposed tokens, API keys, session IDs, signed URLs, or secrets.\n   - Identify overly permissive CORS headers.\n   - Check whether sensitive URLs are leaked through referrers.\n   - Identify replayable tokens or URLs inside the capture.\n   - Detect insecure HTTP usage, weak redirects, or mixed content.\n   - Review JavaScript files for exposed endpoints, hardcoded credentials, debug flags, or suspicious obfuscation.\n\n2. Safe validation with code.\n   - Write local-only Python checks that validate findings from the captured files.\n   - The code may parse headers, cookies, HTML, JavaScript, JSON, and media URLs.\n   - The code should classify issues by severity.\n   - The code should explain why each finding may be risky.\n   - The code should avoid sending exploit payloads to live services.\n   - If live testing is needed, only perform harmless checks such as `HEAD` or normal `GET` requests, and only when clearly allowed.\n\n3. Report findings clearly.\n   - Return a structured JSON report with:\n     - vulnerability or risk name\n     - affected URL/file/header/cookie/token\n     - severity\n     - evidence from the capture\n     - safe explanation\n     - recommended fix\n     - whether it was passively detected or safely validated\n\n4. Keep vulnerability testing separate from stream resolution.\n   - The `/resolve` endpoint should focus on resolving media/player URLs.\n   - Add a separate endpoint such as `/security-report`.\n   - Add a CLI option such as `--security-report`.\n   - The security report should not expose full secrets by default; redact sensitive values.\n\n5. Tell the user about the results.\n   - After analysis, summarize what was found.\n   - Clearly separate confirmed issues from possible risks.\n   - Explain limitations.\n   - Recommend fixes without providing harmful exploit instructions."
+    },
+    "readme": "Also include a defensive vulnerability review. The script should passively analyze the captured traffic for exposed tokens, insecure cookies, weak headers, risky CORS, referrer leakage, replayable signed URLs, hardcoded secrets, and other security misconfigurations. It may safely validate findings using local capture data or authorized harmless checks, but it must not bypass CAPTCHA, DRM, authentication, paywalls, or access controls, and it must not exploit third-party systems. After testing, generate a clear security report for the user with severity, evidence, impact, and recommended fixes.",
+    "history": [
+      {
+        "id": "h_1781194298560",
+        "action": "created",
+        "detail": "\"ONly for chatgpt ai m3u8 or api extractton tricky command\" created",
+        "icon": "✨",
+        "ts": "2026-06-11T16:11:38.560Z"
+      }
+    ],
+    "createdAt": "2026-06-11T16:11:38.560Z",
+    "updatedAt": "2026-06-11T16:11:38.560Z"
+  },
+  {
     "id": "r_1781193879143_4r91m",
     "name": "chatgpt or other ai api or m3u8 extractor command",
     "category": "general",
