@@ -2457,7 +2457,7 @@
     "category": "general",
     "tags": [],
     "urls": [],
-    "info": "1.https://vsembed.ru/api/, https://vidsrc.domains/, vidsrc.to\nhttps://vidsrc.domains/\n2.https://vidnest.fun/  api documentation\n3.https://www.vidfast.net/ api documentation\n4.https://www.videasy.net/docs\n5.https://megaplay.buzz/api same as https://megaplay.buzz/stream/s-2/136197/dub  some of are iframe supported some of are direct support , also some of support other urls masking\n6.https://primesrc.me/#api -found almost any movies \n7.https://vidapi.ru/api its apply this websites also https://vaplayer.ru/embed/movie/tt2948356\n8.https://vixsrc.to/\n9.https://vidup.to/movie/218\nhttps://www.vidking.net/embed/tv/76479/5/8/\n11.https://streamimdb.me/embed/movie/1200545\n12.https://vidcore.net/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "info": "1.https://vsembed.ru/api/, https://vidsrc.domains/, vidsrc.to\nhttps://vidsrc.domains/\n2.https://vidnest.fun/  api documentation\n3.https://www.vidfast.net/ api documentation\n4.https://www.videasy.net/docs\n5.https://megaplay.buzz/api same as https://megaplay.buzz/stream/s-2/136197/dub  some of are iframe supported some of are direct support , also some of support other urls masking\n6.https://primesrc.me/#api -found almost any movies \n7.https://vidapi.ru/api its apply this websites also https://vaplayer.ru/embed/movie/tt2948356\n8.https://vixsrc.to/\n9.https://vidup.to/movie/218\nhttps://www.vidking.net/embed/tv/76479/5/8/\n11.https://streamimdb.me/embed/movie/1200545\n12.https://vidcore.net/\nhttps://myflixer.vg/watch/movie-obsession-2qz144ou\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
     "code": {
       "lang": "plaintext",
       "content": "https://vidsrc-embed.ru/embed/movie/tt5433140, https://vidsrc-embed.ru/embed/tv?tmdb=1399&season=1&episode=1\nhttps://vidfast.pro/movie/tt6263850, https://vidfast.pro/tv/{id}/{season}/{episode}?autoPlay=true\nhttps://player.videasy.net/movie/299534, https://player.videasy.net/tv/show_id/season/episode\nhttps://primesrc.me/embed/tv?tmdb=32726&season=1&episode=1, https://primesrc.me/embed/movie?tmdb=123\nhttps://vidnest.fun/movie/[TMDB_ID], https://vidnest.fun/tv/[TMDB_ID]/[SEASON]/[EPISODE]\nhttps://vaplayer.ru/embed/movie/tt2948356, https://vaplayer.ru/embed/tv/205715/1/1\nThis domain only store or used to movies storage\n1.dood.watch\n2.voe.sx\n3.streamtape.com\n4.https://streamruby.com/embed-2lsz9uozaoaa.html"
@@ -2589,10 +2589,17 @@
         "detail": "\"Movies sites api list\" updated",
         "icon": "✏️",
         "ts": "2026-05-29T08:07:36.345Z"
+      },
+      {
+        "id": "h_1781293927993",
+        "action": "updated",
+        "detail": "\"Movies sites api list\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-12T19:52:07.992Z"
       }
     ],
     "createdAt": "2026-05-27T11:00:14.582Z",
-    "updatedAt": "2026-05-29T08:07:36.345Z"
+    "updatedAt": "2026-06-12T19:52:07.992Z"
   },
   {
     "id": "r_1779871689458_watdy",
