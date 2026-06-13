@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781384947576_ltrdn",
+    "name": "udy channel",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "udy"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781384947576",
+        "action": "created",
+        "detail": "\"udy channel\" created",
+        "icon": "✨",
+        "ts": "2026-06-13T21:09:07.575Z"
+      }
+    ],
+    "createdAt": "2026-06-13T21:09:07.575Z",
+    "updatedAt": "2026-06-13T21:09:07.575Z"
+  },
+  {
     "id": "r_1781373190431_suhin",
     "name": "footbal world cup",
     "category": "general",
