@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781321611753_0bp7z",
+    "name": "jailbreak resistance",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "No testers have yet been able to find a universal jailbreak—a jailbreak method that can very broadly bypass the model’s safeguards, unblocking a wide range of cyber capabilities.\nWe suspect that perfect jailbreak resistance is not currently possible for any model provider. Every safeguard used in the industry is vulnerable to non-universal jailbreaks (which can elicit some cyber information in specific circumstances), and it is likely that universal jailbreaks will eventually be found in the future. We stated this clearly when we released Fable 5.\nGiven that perfect jailbreak resistance does not appear to be possible today, Anthropic adopted a defense in depth strategy with Fable 5. We aimed to make jailbreaks either narrow (in the case of non-universal jailbreaks) or very expensive to produce (in the case of universal jailbreaks), and to combine this with thorough monitoring to quickly detect and shut down any successful attacks. This is also why Anthropic has required 30-day retention of customer data with Fable—a policy change that carries real costs for us with customers, but that allows us to research and mitigate jailbreaks.\nWe stand by this defense in depth strategy. It reduces the risks posed by Fable, making them comparable to the risks of existing models already deployed across the industry.\nWe have not even received a disclosure of a concerning non-universal potential jailbreak that led to a harmful result. The potential jailbreaks that have been disclosed to us are either entirely benign responses or are minor findings that provide no Mythos-specific uplift."
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781321611753",
+        "action": "created",
+        "detail": "\"jailbreak resistance\" created",
+        "icon": "✨",
+        "ts": "2026-06-13T03:33:31.752Z"
+      }
+    ],
+    "createdAt": "2026-06-13T03:33:31.752Z",
+    "updatedAt": "2026-06-13T03:33:31.752Z"
+  },
+  {
     "id": "r_1781282557747_f9bgu",
     "name": "vidnest pro m3u8 or other streaming urls",
     "category": "code",
