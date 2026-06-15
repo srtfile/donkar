@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781491746397_bzwm2",
+    "name": "https://vidlink.pro/  m3u8 extracor using https://enc-dec.app/ and from https://github.com/smy778/EncDecEndpoints/blob/main/samples/vidlink.py",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://enc-dec.app/ and from https://github.com/smy778/EncDecEndpoints/blob/main/samples/vidlink.py  whre this code found",
+    "code": {
+      "lang": "python",
+      "content": "import requests\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0\",\n    \"Origin\": \"https://vidlink.pro\",\n    \"Referer\": \"https://vidlink.pro/\"\n}\n\nAPI = \"https://enc-dec.app/api\"\n\ndef validate(data):\n    if data[\"status\"] != 200:\n        raise Exception(data.get(\"error\", \"API Error\"))\n    return data[\"result\"]\n\n# Movie TMDB ID\ntmdb_id = \"245891\"\n\n# Encrypt TMDB ID\nenc_url = f\"{API}/enc-vidlink?text={tmdb_id}\"\nencrypted = validate(requests.get(enc_url).json())\n\n# Get stream data\nurl = f\"https://vidlink.pro/api/b/movie/{encrypted}\"\ndata = requests.get(url, headers=HEADERS).json()\n\n# Only print streaming URL\nstream_url = data[\"stream\"][\"playlist\"]\n\nprint(\"\\nStreaming URL:\\n\")\nprint(stream_url)"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781491746397",
+        "action": "created",
+        "detail": "\"https://vidlink.pro/  m3u8 extracor using https://enc-dec.app/ and from https://github.com/smy778/EncDecEndpoints/blob/main/samples/vidlink.py\" created",
+        "icon": "✨",
+        "ts": "2026-06-15T02:49:06.397Z"
+      }
+    ],
+    "createdAt": "2026-06-15T02:49:06.397Z",
+    "updatedAt": "2026-06-15T02:49:06.397Z"
+  },
+  {
     "id": "r_1781491369731_lbnmr",
     "name": "vidfast pro  m3u extractor using https://enc-dec.app/",
     "category": "general",
