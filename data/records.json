@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781490640220_9dug9",
+    "name": "https://animex.one/watch/naruto-shippuden-1735-episode-1  m3u8 iframe embed stram server extractor",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://pp.animex.one/rest/api/sources?id=naruto-shippuden-c20p8&epNum=20&type=sub&providerId=mimi\n\nonly replace [sub, dub, and server name mimi, mochi, kimi]",
+    "code": {
+      "lang": "python",
+      "content": "import requests\n\nANIME_ID = \"naruto-shippuden-c20p8\"\nEPISODE = 20\n\nproviders = {\n    \"sub\": [\"beep\", \"mimi\", \"neko\", \"mochi\", \"koto\", \"uwu\", \"yuki\"],\n    \"dub\": [\"mimi\", \"yuki\", \"mochi\", \"uwu\", \"koto\"]\n}\n\nfor media_type, provider_list in providers.items():\n    print(f\"\\n=== {media_type.upper()} ===\")\n\n    for provider in provider_list:\n        url = (\n            \"https://pp.animex.one/rest/api/sources\"\n            f\"?id={ANIME_ID}\"\n            f\"&epNum={EPISODE}\"\n            f\"&type={media_type}\"\n            f\"&providerId={provider}\"\n        )\n\n        try:\n            r = requests.get(url, timeout=15)\n            r.raise_for_status()\n\n            data = r.json()\n\n            for source in data.get(\"sources\", []):\n                stream_url = source.get(\"url\")\n                quality = source.get(\"quality\")\n\n                if stream_url:\n                    print(f\"[{provider}] {quality}\")\n                    print(stream_url)\n                    print()\n\n        except Exception as e:\n            print(f\"[{provider}] ERROR: {e}\")"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781490640220",
+        "action": "created",
+        "detail": "\"https://animex.one/watch/naruto-shippuden-1735-episode-1  m3u8 iframe embed stram server extractor\" created",
+        "icon": "✨",
+        "ts": "2026-06-15T02:30:40.219Z"
+      }
+    ],
+    "createdAt": "2026-06-15T02:30:40.219Z",
+    "updatedAt": "2026-06-15T02:30:40.219Z"
+  },
+  {
     "id": "r_1781439730521_66nob",
     "name": "anime sites and animie server list anime api list",
     "category": "general",
