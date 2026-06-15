@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781492236430_9sbwi",
+    "name": "https://player.videasy.to  m3u8 extractpr using https://github.com/smy778/EncDecEndpoints/blob/main/samples/videasy.py",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://enc-dec.app/\nhttps://github.com/smy778/EncDecEndpoints/blob/main/samples/videasy.py",
+    "code": {
+      "lang": "python",
+      "content": "import requests\nfrom urllib.parse import quote\n\nHEADERS = {\n    \"Accept\": \"*/*\",\n    \"Origin\": \"https://player.videasy.to\",\n    \"Referer\": \"https://player.videasy.to/\",\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\"\n}\n\nAPI = \"https://enc-dec.app/api\"\n\ndef validate(data, path):\n    if data[\"status\"] != 200:\n        print(f\"\\n{'-'*25} API ERROR {'-'*25}\\n\")\n        print(f\"Path: {path}\")\n        print(f\"Status Code: {data['status']}\")\n        print(f\"Error: {data.get('error', 'unknown')}\")\n        raise SystemExit\n    return data[\"result\"]\n\n'''\nServer     Language     URL\n-----------------------------------------------------------------------------------------------\nNeon       Original     https://api.videasy.to/mb-flix/sources-with-title\nYoru       Original     https://api.videasy.to/cdn/sources-with-title [Movies only, may have 4K]\nCypher     Original     https://api.videasy.to/downloader2/sources-with-title\nSage       Original     https://api.videasy.to/1movies/sources-with-title\nBreach     Original     https://api.videasy.to/m4uhd/sources-with-title\nVyse       Original     https://api.videasy.to/hdmovie/sources-with-title  [FILTERS quality == \"English\"]\nKilljoy    German       https://api.videasy.to/meine/sources-with-title?language=german\nFade       Hindi        https://api.videasy.to/hdmovie/sources-with-title  [FILTERS quality == \"Hindi\"]\nOmen       Spanish      https://api.videasy.to/lamovie/sources-with-title\nRaze       Portuguese   https://api.videasy.to/superflix/sources-with-title\n\n** Note: Use api.videasy.to or api2.videasy.to\n'''\n\n# Movie format: <https://api.videasy.to/{server}/sources-with-title?title={title}&mediaType=movie&year={year}&tmdbId={tmdb_id}&imdbId={imdb_id}>\n# Tv format: <https://api.videasy.to/{server}/sources-with-title?title={title}&mediaType=tv&year={year}&episodeId={episode_number}&seasonId={season_number}&tmdbId={tmdb_id}&imdbId={imdb_id}>\n\n# --- Game of Thrones ---\ntitle = \"Game of Thrones\"\ntype = \"tv\"\nyear = \"2011\"\nimdb_id = \"tt0944947\"\ntmdb_id = \"1399\"\nseason = \"1\"\nepisode = \"1\"\n\n# Note: double URL-encoding for title\n# Game of Thrones -> Game%20of%20Thrones -> Game%2520of%2520Thrones\nenc_title = quote(quote(title, safe=\"\"), safe=\"\")\n\n# Get encrypted text\nserver = \"cdn\"\nurl = f\"https://api.videasy.to/{server}/sources-with-title?title={enc_title}&mediaType={type}&year={year}&episodeId={episode}&seasonId={season}&tmdbId={tmdb_id}&imdbId={imdb_id}\"\nenc_data = requests.get(url, headers=HEADERS).text\n\n# Decrypt\ndec_videasy = f\"{API}/dec-videasy\"\nresponse = requests.post(dec_videasy, json={\"text\": enc_data, \"id\": tmdb_id}).json()\ndecrypted = validate(response, dec_videasy)\n\nprint(f\"\\n{'-'*25} Decrypted Data {'-'*25}\\n\")\nprint(f\"Referer: {HEADERS['Referer']}\\n\")\nprint(decrypted)"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781492236430",
+        "action": "created",
+        "detail": "\"https://player.videasy.to  m3u8 extractpr using https://github.com/smy778/EncDecEndpoints/blob/main/samples/videasy.py\" created",
+        "icon": "✨",
+        "ts": "2026-06-15T02:57:16.430Z"
+      }
+    ],
+    "createdAt": "2026-06-15T02:57:16.430Z",
+    "updatedAt": "2026-06-15T02:57:16.430Z"
+  },
+  {
     "id": "r_1781491746397_bzwm2",
     "name": "https://vidlink.pro/  m3u8 extracor using https://enc-dec.app/ and from https://github.com/smy778/EncDecEndpoints/blob/main/samples/vidlink.py",
     "category": "general",
