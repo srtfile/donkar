@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781491369731_lbnmr",
+    "name": "vidfast pro  m3u extractor using https://enc-dec.app/",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "import requests\nimport re, time\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\",\n    \"Referer\": \"https://vidfast.pro/\",\n    \"X-Requested-With\": \"XMLHttpRequest\"\n}\n\nAPI = \"https://enc-dec.app/api\"\nVERSION = \"1\"\n\ndef validate(data, path):\n    if data[\"status\"] != 200:\n        print(f\"\\n{'-'*25} API ERROR {'-'*25}\\n\")\n        print(f\"Path: {path}\")\n        print(f\"Status Code: {data['status']}\")\n        print(f\"Error: {data.get('error', 'unknown')}\")\n        raise SystemExit\n    return data[\"result\"]\n\n# Movie format: <https://vidfast.pro/movie/{IMDB_ID or TMDB_ID}>\n# Tv format: <https://vidlink.pro//tv/{IMDB_ID or TMDB_ID}/{season_number}/{episode_number}>\n\n# --- Game of Thrones ---\ntitle = \"Game of Thrones\"\ntype = \"tv\"\nyear = \"2011\"\nimdb_id = \"tt0944947\"\ntmdb_id = \"1399\"\nseason = \"1\"\nepisode = \"1\"\n\n# Fetch page content\nbase_url = f\"https://vidfast.pro/tv/{tmdb_id}/{season}/{episode}/\"\nresponse = requests.get(base_url).text\n\n# Extract text\nmatch = re.search(r'\\\\\"en\\\\\":\\\\\"(.*?)\\\\\"', response)\ntext = match.group(1)\n\n# Get vidfast urls\nenc_vidfast = f\"{API}/enc-vidfast?text={text}&version={VERSION}\"\nresponse = requests.get(enc_vidfast).json()\nparts = validate(response, enc_vidfast)\nservers = parts['servers']\nstream = parts['stream']\ntoken = parts['token']\n\n# Update headers with token\nHEADERS[\"X-CSRF-Token\"] = token\n\n# Get streaming servers and decrypt\nservers_encrypted = requests.post(servers, headers=HEADERS).text\n\ndec_vidfast = f\"{API}/dec-vidfast\"\nresponse = requests.post(dec_vidfast, json={\"text\": servers_encrypted, \"version\": VERSION}).json()\nservers_decrypted = validate(response, dec_vidfast)\n\n# Sample the first server\n# Note: there are multiple server options in servers_decrypted, create the stream urls with different 'data' values.\n# For reference, run: print(servers_decrypted)\nserver = servers_decrypted[0]\ndata = server['data']\n\n# Get stream and decrypt\nstream = f\"{stream}/{data}\"\nstream_encrypted = requests.post(stream, headers=HEADERS).text\n\ndec_vidfast = f\"{API}/dec-vidfast\"\nresponse = requests.post(dec_vidfast, json={\"text\": stream_encrypted, \"version\": VERSION}).json()\nstream_decrypted = validate(response, dec_vidfast)\n\nprint(f\"\\n{'-'*25} Decrypted Data {'-'*25}\\n\")\nprint(f\"Referer: {HEADERS['Referer']}\\n\")\nprint(stream_decrypted)\n"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781491369732",
+        "action": "created",
+        "detail": "\"vidfast pro  m3u extractor using https://enc-dec.app/\" created",
+        "icon": "✨",
+        "ts": "2026-06-15T02:42:49.730Z"
+      }
+    ],
+    "createdAt": "2026-06-15T02:42:49.730Z",
+    "updatedAt": "2026-06-15T02:42:49.730Z"
+  },
+  {
     "id": "r_1781490846651_uq5qd",
     "name": "https://animex.one/watch/naruto-shippuden-1735-episode-1  m3u8 or main server extractor",
     "category": "general",
