@@ -480,7 +480,7 @@
     "info": "",
     "code": {
       "lang": "python",
-      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json \nhttps://srtfile.github.io/doss/\nhttps://rivestream.ru/download?type=movie&id=603\nhttps://anime-stream-finder.onrender.com/\nhttps://srtfile.github.io/doss/  from anikoto which is inside srtfile\nhttps://dot-gbqc.onrender.com/  this extract from  primesrc.me\nhttps://srtfile.github.io/stream_extractor/  this webpage also extract from primesrc me"
+      "content": "https://raw.githubusercontent.com/srtfile/alist/main/index.json \nhttps://srtfile.github.io/doss/\nhttps://rivestream.ru/download?type=movie&id=603\nhttps://megaplayversion2.onrender.com/  m3u player  which is also hosted in srtfile email github and same account render\nhttps://anime-stream-finder.onrender.com/\nhttps://srtfile.github.io/doss/  from anikoto which is inside srtfile\nhttps://dot-gbqc.onrender.com/  this extract from  primesrc.me\nhttps://srtfile.github.io/stream_extractor/  this webpage also extract from primesrc me"
     },
     "readme": "",
     "history": [
@@ -525,10 +525,17 @@
         "detail": "\"all media and video file extractor\" updated",
         "icon": "✏️",
         "ts": "2026-06-17T16:03:21.282Z"
+      },
+      {
+        "id": "h_1781712299377",
+        "action": "updated",
+        "detail": "\"all media and video file extractor\" updated",
+        "icon": "✏️",
+        "ts": "2026-06-17T16:04:59.377Z"
       }
     ],
     "createdAt": "2026-06-10T11:58:54.968Z",
-    "updatedAt": "2026-06-17T16:03:21.282Z"
+    "updatedAt": "2026-06-17T16:04:59.377Z"
   },
   {
     "id": "r_1781035798767_mgt6j",
