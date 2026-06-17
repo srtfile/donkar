@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781728287525_qm7da",
+    "name": "football worldcup ip tv online tv",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "plaintext",
+      "content": "https://ntv.cx/watch/kobra/england-vs-croatia-2391743"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781728287525",
+        "action": "created",
+        "detail": "\"football worldcup ip tv online tv\" created",
+        "icon": "✨",
+        "ts": "2026-06-17T20:31:27.524Z"
+      }
+    ],
+    "createdAt": "2026-06-17T20:31:27.524Z",
+    "updatedAt": "2026-06-17T20:31:27.524Z"
+  },
+  {
     "id": "r_1781724875656_s9ljn",
     "name": "primesrc file extractor and saving",
     "category": "general",
