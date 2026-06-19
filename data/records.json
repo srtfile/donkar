@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1781879335564_1fi2k",
+    "name": "empty or problemtatic primsrc.me urls list",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "https://primesrc.me/embed/movie?tmdb=10757  only vidsrc server and it didont extract",
+    "code": {
+      "lang": "plaintext",
+      "content": ""
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1781879335564",
+        "action": "created",
+        "detail": "\"empty or problemtatic primsrc.me urls list\" created",
+        "icon": "✨",
+        "ts": "2026-06-19T14:28:55.563Z"
+      }
+    ],
+    "createdAt": "2026-06-19T14:28:55.563Z",
+    "updatedAt": "2026-06-19T14:28:55.563Z"
+  },
+  {
     "id": "r_1781728287525_qm7da",
     "name": "football worldcup ip tv online tv",
     "category": "general",
