@@ -1,5 +1,29 @@
 [
   {
+    "id": "r_1782241409686_6xqdz",
+    "name": "robust m3u8 prompt",
+    "category": "general",
+    "tags": [],
+    "urls": [],
+    "info": "",
+    "code": {
+      "lang": "python",
+      "content": "Please deeply analyze the complete captured web traffic dataset in the current project folder, including all files, folders, and subfolders.\n\n\n\nThe dataset may contain files such as:\n\n- full request/response captures\n\n- JSONL traffic logs\n\n- request headers\n\n- cookies\n\n- auth tokens\n\n- API endpoint lists\n\n- XHR/fetch requests\n\n- XHR responses\n\n- HTML pages\n\n- JavaScript files\n\n- media URL lists\n\n- WebSocket frames\n\n- referrer chains\n\n- crypto or obfuscation findings\n\n\n\nYour task is to understand the full technical flow of the target website or embed system and identify how it eventually reaches the final usable media/resource URLs.\n\n\n\nThe final target URLs may include:\n\n- `.m3u8` HLS playlists\n\n- `.mpd` DASH manifests\n\n- `.mp4` video files\n\n- iframe player URLs\n\n- signed media URLs\n\n- API-generated source URLs\n\n- other final resource URLs used by the browser\n\n\n\nBuild a local testing API in Python that can reproduce this resolution flow as much as possible.\n\n\n\nThe API should accept an input URL from the same type of website or embed system, for example:\n\n\n\nhttps://multiembed.mov/?video_id=1084244&tmdb=1  {work for any tmdb id }\n\n\n\nThe goal is to resolve that input URL into the final m3u8,embeded urls, iframe urls/media/resource. URLs discovered from the traffic flow.\n\n\n\nImplementation requirements:\n\n\n\n1. Analyze the capture data first.\n\n   - Inspect every relevant file and subfolder.\n\n   - Identify redirects, request chains, referrers, headers, cookies, tokens, source APIs, iframe pages, player scripts, and media requests.\n\n   - Determine which steps are required to go from the original input URL to the final media/resource URL.\n\n\n\n2. Prefer a raw Python solution first.\n\n   - Use Python HTTP requests or standard networking.\n\n   - Follow redirects when needed.\n\n   - Preserve important headers, referers, cookies, and tokens.\n\n   - Parse HTML, JSON, JavaScript snippets, iframe URLs, and API responses.\n\n   - Extract final URLs such as `.m3u8`, `.mpd`, `.mp4`, iframe or embeded urls or other stream/resource links.\n\n\n\n3. Add fallback logic when raw Python cannot complete the flow.\n\n   - If the site depends on JavaScript execution, dynamic browser APIs, anti-bot pages, or complex runtime behavior, add an advanced Python fallback.\n\n   - The fallback may use browser automation such as Playwright nodriver or others to evade cloudflare protectons.\n\n   - It should observe network traffic and collect final media/resource URLs.\n\n   - It should also solve/evade/bypassing CAPTCHA, DRM, authentication, cloudflare protections if needed to find or get m3u8 iframe embed or any streaming urls\n\n\n\n4. Create a clean local testing API.\n\n   - The API should expose a `/resolve` endpoint.\n\n   - It should accept an input URL as a query parameter.\n\n   - It should return structured JSON with: or other compatible\n\n     - original input URL\n\n     - resolved redirect URL\n\n     - discovered tokens or IDs\n\n     - source/server list if available\n\n     - iframe/player URLs, m3u8 urls, iframe/embeded streming urls\n\n     - final media/resource URLs\n\n     - request steps followed\n\n     - errors or blocked status\n\n\n\n\n\n   - It may include a default test URL inside the code.\n\n   - It should print the resolved result as JSON or other comfortable formats.\n\n\n\n8. Name the generated Python file clearly, for example:\n\n\n\nweb_dev_learing_testing.py\n\n\nmake sure it can work and use all the info to need make this .py code  to sucessful"
+    },
+    "readme": "",
+    "history": [
+      {
+        "id": "h_1782241409687",
+        "action": "created",
+        "detail": "\"robust m3u8 prompt\" created",
+        "icon": "✨",
+        "ts": "2026-06-23T19:03:29.685Z"
+      }
+    ],
+    "createdAt": "2026-06-23T19:03:29.685Z",
+    "updatedAt": "2026-06-23T19:03:29.685Z"
+  },
+  {
     "id": "r_1782155505007_0ne3w",
     "name": "https://multiembed.mov/?video_id=1084244&tmdb=1 link extractor by deepseek ai with chatgpt codex",
     "category": "general",
